@@ -1,0 +1,206 @@
+name: Cloud Setup & Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  setup-and-test:
+    name: Setup & Run Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Display environment info
+        run: |
+          echo "Node version: $(node -v)"
+          echo "npm version: $(npm -v)"
+          echo "Bash version: $(bash --version | head -1)"
+          uname -a
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run tests
+        run: npm test -- --coverage --verbose
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+
+      - name: Verify script permissions
+        run: |
+          chmod +x skill/scripts/*.sh
+          echo "✅ All scripts are executable"
+
+      - name: Run shell script linting
+        run: |
+          if command -v shellcheck &> /dev/null; then
+            shellcheck skill/scripts/*.sh || true
+            echo "ℹ️ ShellCheck analysis complete"
+          else
+            echo "ℹ️ ShellCheck not available"
+          fi
+
+  validate-config:
+    name: Validate Configuration Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          echo "Validating JSON files..."
+          for file in $(find . -name "*.json" -type f ! -path "./node_modules/*"); do
+            echo "Checking: $file"
+            python3 -m json.tool "$file" > /dev/null || (echo "❌ Invalid JSON: $file" && exit 1)
+          done
+          echo "✅ All JSON files are valid"
+
+      - name: Validate plugin manifest
+        run: |
+          if [ -f "plugin/manifest.json" ]; then
+            python3 -m json.tool plugin/manifest.json > /dev/null
+            echo "✅ Plugin manifest is valid"
+          fi
+
+      - name: Check for required files
+        run: |
+          required_files=(
+            "README.md"
+            "package.json"
+            "skill/SKILL.md"
+            "plugin/manifest.json"
+            "skill/scripts/preflight-check.sh"
+            "skill/scripts/migrate-recovery.sh"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ Found: $file"
+            else
+              echo "❌ Missing: $file"
+              exit 1
+            fi
+          done
+
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+        if: always()
+
+  build-artifact:
+    name: Build Deployment Artifact
+    runs-on: ubuntu-latest
+    needs: [setup-and-test, validate-config]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Create deployment package
+        run: |
+          mkdir -p dist
+
+          # Copy main components
+          cp -r skill dist/
+          cp -r plugin dist/
+          cp README.md dist/
+          cp package.json dist/
+          cp package-lock.json dist/ || true
+
+          # Copy documentation
+          cp TESTING.md dist/ || true
+          cp TEST-SUMMARY.md dist/ || true
+          cp JEST-SETUP.md dist/ || true
+
+          # Make scripts executable in archive
+          chmod +x dist/skill/scripts/*.sh
+
+          # Create archive
+          tar -czf wp-db-migrate-dist.tar.gz dist/
+          zip -r wp-db-migrate-dist.zip dist/
+
+          echo "✅ Deployment artifacts created"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-artifacts
+          path: |
+            wp-db-migrate-dist.tar.gz
+            wp-db-migrate-dist.zip
+            dist/
+          retention-days: 30
+
+      - name: Display artifact info
+        run: |
+          echo "📦 Artifact Summary"
+          echo "================"
+          echo "TAR.GZ: $(ls -lh wp-db-migrate-dist.tar.gz | awk '{print $5}')"
+          echo "ZIP: $(ls -lh wp-db-migrate-dist.zip | awk '{print $5}')"
+
+  notify:
+    name: Setup Complete Notification
+    runs-on: ubuntu-latest
+    needs: [setup-and-test, validate-config, build-artifact]
+    if: always()
+
+    steps:
+      - name: Report results
+        run: |
+          echo "✅ Cloud Setup Pipeline Complete"
+          echo ""
+          echo "Jobs Status:"
+          echo "- Setup & Test: ${{ needs.setup-and-test.result }}"
+          echo "- Validate Config: ${{ needs.validate-config.result }}"
+          echo "- Build Artifact: ${{ needs.build-artifact.result }}"

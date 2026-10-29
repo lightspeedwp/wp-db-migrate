@@ -1,8 +1,10 @@
 #!/bin/bash
 # migrate-recovery-enhanced.sh — Complete recovery workflow with advanced options
 # Usage: ./migrate-recovery-enhanced.sh [OPTIONS] /path/to/site "old-url" "new-url"
+#        ./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf
 #
 # Options:
+#   --config FILE          Load configuration from file
 #   --dry-run              Preview all steps without making changes
 #   --no-backup            Skip backup creation (NOT recommended)
 #   --verbose              Show detailed output
@@ -19,6 +21,11 @@ VERBOSE=false
 LOG_FILE=""
 FORCE=false
 TEMP_LOG=""
+CONFIG_FILE=""
+
+# Source libraries
+source "${SCRIPT_DIR}/lib-progress.sh"
+source "${SCRIPT_DIR}/lib-config.sh"
 
 # Color codes
 RED='\033[0;31m'
@@ -31,6 +38,10 @@ NC='\033[0m' # No Color
 parse_args() {
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --config)
+                CONFIG_FILE="$2"
+                shift 2
+                ;;
             --dry-run)
                 DRY_RUN=true
                 shift
@@ -61,9 +72,29 @@ parse_args() {
         esac
     done
 
-    SITE_PATH="$1"
-    OLD_URL="$2"
-    NEW_URL="$3"
+    # If config file specified, load it
+    if [ -n "$CONFIG_FILE" ]; then
+        if ! config_load "$CONFIG_FILE"; then
+            log "❌ Error: Could not load config file: $CONFIG_FILE" "$RED"
+            exit 1
+        fi
+        config_apply_env_overrides
+
+        SITE_PATH=$(config_get 'studio_site_path' '')
+        OLD_URL=$(config_get 'source_url' '')
+        NEW_URL=$(config_get 'target_url' '')
+
+        # Override with command line flags
+        [ "$DRY_RUN" = false ] && DRY_RUN=$(config_get 'mode_dry_run' 'false')
+        [ "$VERBOSE" = false ] && VERBOSE=$(config_get 'logging_verbose' 'false')
+        [ -z "$LOG_FILE" ] && LOG_FILE=$(config_get 'logging_file' '')
+        [ "$FORCE" = false ] && FORCE=$(config_get 'mode_force' 'false')
+        [ "$CREATE_BACKUP" = true ] && CREATE_BACKUP=$(config_get 'backup_create' 'true')
+    else
+        SITE_PATH="$1"
+        OLD_URL="$2"
+        NEW_URL="$3"
+    fi
 }
 
 show_help() {
@@ -72,8 +103,10 @@ WordPress Database Migration Recovery Workflow
 
 USAGE:
   ./migrate-recovery-enhanced.sh [OPTIONS] /path/to/site "old-url" "new-url"
+  ./migrate-recovery-enhanced.sh --config <config-file> [OPTIONS]
 
 OPTIONS:
+  --config FILE           Load configuration from .wp-db-migrate.conf or .yml
   --dry-run               Preview all steps without making changes
   --no-backup             Skip backup creation (NOT recommended)
   --verbose               Show detailed output
@@ -90,11 +123,17 @@ EXAMPLES:
   ./migrate-recovery-enhanced.sh --dry-run /Users/ash/Studio/my-site \
     "https://old.com" "https://new.local"
 
+  # Load from config file
+  ./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf
+
+  # Config with dry-run
+  ./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf --dry-run
+
   # Verbose with logging
   ./migrate-recovery-enhanced.sh --verbose --log-file recovery.log \
     /Users/ash/Studio/my-site "https://old.com" "https://new.local"
 
-  # Force mode (no prompts)
+  # Force mode (no prompts, for CI/CD)
   ./migrate-recovery-enhanced.sh --force /Users/ash/Studio/my-site \
     "https://old.com" "https://new.local"
 EOF
@@ -175,43 +214,58 @@ main() {
         fi
     fi
 
-    # Step 1: Verify Import
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
-    log "Step 1️⃣  Verifying import..." "$BLUE"
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
+    # Progress tracking
+    TOTAL_STEPS=3
 
+    # Step 1: Verify Import
+    stage_start 1 "Verifying import" $TOTAL_STEPS
     if [ "$DRY_RUN" = true ]; then
         log "   [DRY-RUN] Would verify: $SITE_PATH"
     else
-        "$SCRIPT_DIR/verify-import.sh" "$SITE_PATH"
+        spinner_start "Verifying database..."
+        if "$SCRIPT_DIR/verify-import.sh" "$SITE_PATH" > /dev/null 2>&1; then
+            spinner_complete "Database verified"
+        else
+            spinner_fail "Database verification failed"
+            exit 1
+        fi
     fi
+    stage_complete
     echo ""
 
     # Step 2: Replace URLs
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
-    log "Step 2️⃣  Preparing URL replacement..." "$BLUE"
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
-
+    stage_start 2 "Preparing URL replacement" $TOTAL_STEPS
     if [ "$DRY_RUN" = true ]; then
         log "   [DRY-RUN] Would replace URLs:"
         log "   From: $OLD_URL"
         log "   To:   $NEW_URL"
         log "   In site: $SITE_PATH"
     else
-        "$SCRIPT_DIR/replace-urls.sh" "$SITE_PATH" "$OLD_URL" "$NEW_URL"
+        spinner_start "Replacing URLs..."
+        if "$SCRIPT_DIR/replace-urls.sh" "$SITE_PATH" "$OLD_URL" "$NEW_URL" > /dev/null 2>&1; then
+            spinner_complete "URLs replaced"
+        else
+            spinner_fail "URL replacement failed"
+            exit 1
+        fi
     fi
+    stage_complete
     echo ""
 
     # Step 3: Start Server
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
-    log "Step 3️⃣  Starting server..." "$BLUE"
-    log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "$BLUE"
-
+    stage_start 3 "Starting WordPress server" $TOTAL_STEPS
     if [ "$DRY_RUN" = true ]; then
         log "   [DRY-RUN] Would start server at: $SITE_PATH"
     else
-        "$SCRIPT_DIR/start-server.sh" "$SITE_PATH"
+        spinner_start "Starting server..."
+        if "$SCRIPT_DIR/start-server.sh" "$SITE_PATH" > /dev/null 2>&1; then
+            spinner_complete "Server started"
+        else
+            spinner_fail "Server startup failed"
+            exit 1
+        fi
     fi
+    stage_complete
     echo ""
 
     # Summary

@@ -1,0 +1,27 @@
+#!/bin/bash
+# WordPress Database Migration Configuration (bash format)
+# Copy this to .wp-db-migrate.conf and customize for your project
+
+# Studio site path
+CONFIG_STUDIO_SITE_PATH="/Users/ash/Studio/my-project"
+
+# Database source URL (production/staging)
+CONFIG_SOURCE_URL="https://example.com"
+
+# Database target URL (local studio)
+CONFIG_TARGET_URL="https://example.local"
+
+# Tables to exclude (comma-separated)
+CONFIG_DATABASE_EXCLUDE_TABLES="wp_wf_*,wp_actionscheduler_logs,wp_redirection_*"
+
+# Backup settings
+CONFIG_BACKUP_CREATE="true"
+CONFIG_BACKUP_ALLOW_ROLLBACK="true"
+
+# Logging
+CONFIG_LOGGING_VERBOSE="false"
+# CONFIG_LOGGING_FILE="migration.log"
+
+# Migration mode
+CONFIG_MODE_DRY_RUN="false"
+CONFIG_MODE_FORCE="false"

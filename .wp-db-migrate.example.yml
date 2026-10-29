@@ -1,0 +1,63 @@
+# WordPress Database Migration Configuration
+# Copy this to .wp-db-migrate.yml and customize for your project
+
+# Studio site configuration
+studio:
+  site_path: "/Users/ash/Studio/my-project"
+
+# Database source and target
+database:
+  # URL to replace (from production/staging)
+  from_url: "https://example.com"
+
+  # URL to replace with (local studio)
+  to_url: "https://example.local"
+
+  # Tables to exclude from migration (comma-separated)
+  # Safe defaults: wp_wf*, wp_actionscheduler_logs, wp_redirection_*
+  exclude_tables: "wp_wf_*,wp_actionscheduler_logs,wp_redirection_*"
+
+# Backup and safety
+backup:
+  # Create backup before import (recommended: true)
+  create: true
+
+  # Allow rollback if import fails (recommended: true)
+  allow_rollback: true
+
+# Logging and output
+logging:
+  # Enable verbose output
+  verbose: false
+
+  # Save output to file (optional)
+  # file: "migration.log"
+
+# Migration mode
+mode:
+  # Dry run — preview changes without applying (recommended for first run)
+  dry_run: false
+
+  # Force mode — skip confirmation prompts (for CI/CD)
+  force: false
+
+# Environment-specific profiles (optional)
+# Use: export WP_DB_MIGRATE_PROFILE=staging
+profiles:
+  development:
+    database:
+      from_url: "https://staging.dev"
+      to_url: "https://local.dev"
+
+  staging:
+    database:
+      from_url: "https://staging.example.com"
+      to_url: "https://staging.local"
+
+  production:
+    database:
+      from_url: "https://example.com"
+      to_url: "https://prod.local"
+    backup:
+      create: true
+      allow_rollback: true

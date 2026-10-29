@@ -6,6 +6,128 @@ This document tracks the high-impact polish improvements applied to the skill an
 
 ---
 
+## ✨ NEW: Progress Bars & Config Files (2026-10-29)
+
+### Progress Bar Library ✨
+**File:** `scripts/lib-progress.sh`
+
+Visual progress tracking for long operations:
+- **Progress bars** with percentage completion
+- **Spinners** for indeterminate operations
+- **Stage tracking** for multi-phase workflows
+- **Color-coded status** (success, failure, in-progress)
+
+**Functions:**
+- `progress_start <total> [label]` — Begin progress bar
+- `progress_update <current>` — Update progress
+- `progress_complete [message]` — Complete successfully
+- `progress_fail [message]` — Mark as failed
+- `spinner_start [label]` — Begin spinner
+- `spinner_complete [message]` — Complete spinner
+- `stage_start <num> <name> <total>` — Start stage tracking
+
+**Usage in scripts:**
+```bash
+source lib-progress.sh
+
+# Progress bar
+progress_start 100 "Importing database"
+for i in {1..100}; do
+  progress_update $i "Processing table $i"
+  sleep 0.1
+done
+progress_complete "All tables imported"
+
+# Spinner
+spinner_start "Verifying database..."
+verify_database
+spinner_complete "Database verified"
+```
+
+### Config File Support 🎛️
+**Files:** 
+- `scripts/lib-config.sh` — Config parser
+- `.wp-db-migrate.example.yml` — YAML example
+- `.wp-db-migrate.sh.example` — Bash format example
+
+Load configuration from files or environment variables:
+- **YAML format** — `.wp-db-migrate.yml`
+- **Bash format** — `.wp-db-migrate.conf`
+- **Environment overrides** — `WP_DB_MIGRATE_*` variables
+
+**Functions:**
+- `config_load <file>` — Load YAML or bash config
+- `config_get <key> [default]` — Get config value
+- `config_require <key1> [key2]...` — Validate required keys
+- `config_apply_env_overrides` — Apply `WP_DB_MIGRATE_*` env vars
+- `config_print_summary` — Show config summary
+
+**Config keys supported:**
+```
+studio_site_path
+source_url
+target_url
+database_exclude_tables
+backup_create
+backup_allow_rollback
+logging_verbose
+logging_file
+mode_dry_run
+mode_force
+```
+
+**Usage:**
+```bash
+# Load from file
+source lib-config.sh
+config_load ".wp-db-migrate.conf"
+config_apply_env_overrides
+
+# Get values
+SITE_PATH=$(config_get 'studio_site_path' '/path/to/site')
+VERBOSE=$(config_get 'logging_verbose' 'false')
+
+# Check required
+config_require 'studio_site_path' 'source_url' 'target_url'
+```
+
+**Environment variable overrides:**
+```bash
+WP_DB_MIGRATE_SITE_PATH="/Users/ash/Studio/my-site"
+WP_DB_MIGRATE_FROM_URL="https://old.com"
+WP_DB_MIGRATE_TO_URL="https://new.local"
+WP_DB_MIGRATE_VERBOSE="true"
+WP_DB_MIGRATE_DRY_RUN="true"
+```
+
+### Integration with Enhanced Script 🚀
+**Updated:** `migrate-recovery-enhanced.sh`
+
+New capability:
+- `--config FILE` — Load settings from config file
+- Combined with existing CLI flags
+- Environment variable support
+- Visual progress tracking during operations
+
+**Usage:**
+```bash
+# Traditional CLI
+./migrate-recovery-enhanced.sh --dry-run \
+  /Users/ash/Studio/site "https://old.com" "https://new.local"
+
+# From config file
+./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf
+
+# Config + override
+./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf --dry-run
+
+# With environment variables
+export WP_DB_MIGRATE_VERBOSE=true
+./migrate-recovery-enhanced.sh --config .wp-db-migrate.conf
+```
+
+---
+
 ## ✅ Completed Improvements
 
 ### 1. Pre-Flight Checks Script ✨
