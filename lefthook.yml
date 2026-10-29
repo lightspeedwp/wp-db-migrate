@@ -26,7 +26,7 @@ pre-push:
 post-merge:
   commands:
     install-deps:
-      run: npm install --prefer-offline
+      run: npm ci --ignore-scripts --prefer-offline
       skip:
         - squash
         - fast-forward
@@ -34,6 +34,6 @@ post-merge:
 post-checkout:
   commands:
     install-deps:
-      run: npm install --prefer-offline
+      run: npm ci --ignore-scripts --prefer-offline
       skip:
         - merge
