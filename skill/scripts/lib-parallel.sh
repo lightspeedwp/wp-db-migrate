@@ -24,7 +24,7 @@ fi
 
 # Temp directory for parallel work
 PARALLEL_TMPDIR=$(mktemp -d)
-trap "rm -rf $PARALLEL_TMPDIR" EXIT
+trap 'rm -rf "$PARALLEL_TMPDIR"' EXIT
 
 # Counter for progress tracking
 TABLES_PROCESSED=0
@@ -59,9 +59,7 @@ import_single_table() {
     fi
 
     # Import using sqlite3
-    sqlite3 "$db_path" < "$table_sql" 2>/dev/null
-
-    if [[ $? -eq 0 ]]; then
+    if sqlite3 "$db_path" < "$table_sql" 2>/dev/null; then
         ((TABLES_PROCESSED++))
         return 0
     else
@@ -86,12 +84,12 @@ wait_jobs() {
         done
 
         if (( completed < total )); then
-            printf "\r${BLUE}Processing tables... $completed/$total complete${NC}"
+            printf "\rProcessing tables... %d/%d complete" "$completed" "$total"
             sleep 0.5
         fi
     done
 
-    printf "\r${GREEN}✓ All tables imported${NC}\n"
+    printf "\n✓ All tables imported\n"
 }
 
 # Main parallel import function
@@ -115,8 +113,11 @@ parallel_import() {
     # Extract table names
     local -a tables=()
     while IFS= read -r line; do
-        if [[ $line =~ ^CREATE\ TABLE\ \`([^`]+)\` ]]; then
-            tables+=("${BASH_REMATCH[1]}")
+        if [[ "$line" =~ ^CREATE\ TABLE ]]; then
+            table_name=$(echo "$line" | sed -n "s/^CREATE TABLE \`\(.*\)\`.*/\1/p")
+            if [[ -n "$table_name" ]]; then
+                tables+=("$table_name")
+            fi
         fi
     done < <(grep "^CREATE TABLE" "$dump_file")
 
@@ -153,7 +154,7 @@ parallel_import() {
         ((active_jobs++))
 
         # Progress indicator
-        printf "\r${BLUE}Launching imports... $((${#pids[@]}))/$total_tables${NC}"
+        printf "\rLaunching imports... %d/%d" "$((${#pids[@]}))" "$total_tables"
     done
 
     printf "\n"
@@ -192,9 +193,7 @@ sequential_import() {
     fi
 
     # Simple sequential import
-    sqlite3 "$db_path" < "$dump_file" 2>/dev/null
-
-    if [[ $? -eq 0 ]]; then
+    if sqlite3 "$db_path" < "$dump_file" 2>/dev/null; then
         echo -e "${GREEN}✓ Sequential import complete${NC}"
         return 0
     else
@@ -206,14 +205,15 @@ sequential_import() {
 # Get optimal job count
 get_optimal_jobs() {
     # Use half of available CPUs to avoid system overload
-    local cpu_count=$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)
+    local cpu_count
+    cpu_count=$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)
     local optimal=$((cpu_count / 2))
 
     # Minimum 2, maximum 10
     if (( optimal < 2 )); then optimal=2; fi
     if (( optimal > 10 )); then optimal=10; fi
 
-    echo $optimal
+    echo "$optimal"
 }
 
 # Export functions

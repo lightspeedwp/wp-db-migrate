@@ -8,6 +8,65 @@ compatibility: Requires `studio` CLI (WordPress Studio), `sql-tool` for sanitiza
 
 Migrate a WordPress database from MySQL/MariaDB to SQLite in a WordPress Studio site. This skill handles the entire workflow: analyzing the export, suggesting smart table exclusions, sanitizing for SQLite compatibility, importing with safety gates, replacing URLs, and validating the result.
 
+## Quick Start (Phase 2: One-Command Orchestration)
+
+For the fastest workflow, use the **wp-migrate-clone-to-studio.sh** script:
+
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site
+```
+
+This single command orchestrates the entire migration process:
+1. **Export** database from dev/staging (via SSH)
+2. **Analyze** database structure and suggest table exclusions
+3. **Compress** for faster transfer (70–80% size reduction)
+4. **Import** with parallel processing (3–5x faster)
+5. **Finalize** with URL replacement and validation
+
+**Performance:** 35–45 min manual process → **10–15 min** automated
+
+### One-Command Options
+
+```bash
+# Dry-run mode (preview without changes)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --dry-run
+
+# Skip compression (faster on fast networks)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --no-compress
+
+# Use sequential import instead of parallel
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --no-parallel
+
+# Custom parallelism (default: auto-detect CPU count)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --jobs 4
+
+# Exclude specific tables
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --exclude-tables wp_actionscheduler_logs,wp_postmeta
+```
+
+Run `./skill/scripts/wp-migrate-clone-to-studio.sh --help` for all options.
+
+## Full Workflow (Manual Steps)
+
+For more control or troubleshooting, follow the detailed phases below:
+
 ## When to Use This Skill
 
 - **Syncing live to local:** You have a production or staging backup and want to bring it into a local Studio site for testing

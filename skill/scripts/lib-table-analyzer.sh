@@ -47,8 +47,8 @@ analyze_dump() {
     local row_estimate
 
     while IFS= read -r line; do
-        if [[ $line =~ ^CREATE\ TABLE\ \`([^`]+)\` ]]; then
-            table_name="${BASH_REMATCH[1]}"
+        if [[ "$line" =~ ^CREATE\ TABLE\ \`\(.*\)\` ]]; then
+            table_name=$(echo "$line" | sed -n "s/^CREATE TABLE \`\(.*\)\`.*/\1/p")
             ANALYZED_TABLES+=("$table_name")
 
             # Count rows in INSERT statements (rough estimate)
@@ -91,9 +91,12 @@ show_table_summary() {
     echo ""
 
     # Sort tables by size (descending)
-    local -a indices=($(for i in "${!ANALYZED_SIZES[@]}"; do
-        echo "$i:${ANALYZED_SIZES[$i]}"
-    done | sort -t: -k2 -rn | cut -d: -f1))
+    local -a indices=()
+    while IFS= read -r i; do
+        indices+=("$i")
+    done < <(for idx in "${!ANALYZED_SIZES[@]}"; do
+        echo "$idx:${ANALYZED_SIZES[$idx]}"
+    done | sort -t: -k2 -rn | cut -d: -f1)
 
     echo -e "${CYAN}Top 10 Largest Tables${NC}"
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -105,7 +108,7 @@ show_table_summary() {
         if (( shown >= 10 )); then break; fi
         printf "%-40s %-12s %-8s\n" \
             "${ANALYZED_TABLES[$i]}" \
-            "$(format_size ${ANALYZED_SIZES[$i]})" \
+            "$(format_size "${ANALYZED_SIZES[$i]}")" \
             "${ANALYZED_ROWS[$i]}"
         ((shown++))
     done
@@ -119,7 +122,7 @@ suggest_exclusions() {
     # Check each table against safe exclude patterns
     for table in "${ANALYZED_TABLES[@]}"; do
         for category in "${!SAFE_EXCLUDES[@]}"; do
-            if [[ " ${SAFE_EXCLUDES[$category]} " =~ " $table " ]]; then
+            if [[ " ${SAFE_EXCLUDES[$category]} " =~ ${table} ]]; then
                 suggestions+=("$table")
 
                 # Find index and add to total
@@ -146,15 +149,15 @@ suggest_exclusions() {
 
     for table in "${suggestions[@]}"; do
         local reason=""
-        if [[ "$table" =~ actionscheduler_logs ]]; then
+        if [[ "$table" == *"actionscheduler_logs"* ]]; then
             reason="Action scheduler logs (safe to exclude)"
-        elif [[ "$table" =~ logs? ]]; then
+        elif [[ "$table" == *"logs"* ]]; then
             reason="Debug/activity logs (safe to exclude)"
-        elif [[ "$table" =~ cache ]]; then
+        elif [[ "$table" == *"cache"* ]]; then
             reason="Cache tables (rebuilt on first load)"
-        elif [[ "$table" =~ session ]]; then
+        elif [[ "$table" == *"session"* ]]; then
             reason="Session data (temporary, can be reset)"
-        elif [[ "$table" =~ queue ]]; then
+        elif [[ "$table" == *"queue"* ]]; then
             reason="Job queue (will re-queue on next run)"
         fi
         printf "%-40s %s\n" "$table" "$reason"
