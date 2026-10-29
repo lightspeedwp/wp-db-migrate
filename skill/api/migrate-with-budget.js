@@ -26,10 +26,40 @@ const { promisify } = require("util");
 
 const execPromise = promisify(exec);
 
+// Whitelist of approved API hosts (prevent SSRF)
+const APPROVED_HOSTS = [
+  "api.anthropic.com",
+  "localhost:3000",    // For local testing only
+  "localhost:8000"     // For local testing only
+];
+
+// Validate and sanitize API base URL
+function validateApiUrl(urlString) {
+  try {
+    const url = new URL(urlString);
+
+    // Only allow https except for localhost
+    if (url.protocol !== "https:" && !url.hostname.includes("localhost")) {
+      throw new Error("Only HTTPS URLs allowed (except localhost)");
+    }
+
+    // Check against whitelist
+    if (!APPROVED_HOSTS.includes(url.hostname) && !url.hostname.includes("localhost")) {
+      throw new Error(`Host not in whitelist: ${url.hostname}`);
+    }
+
+    return url.origin;
+  } catch (error) {
+    log(colors.red, "❌", `Invalid API URL: ${error.message}`);
+    log(colors.yellow, "⚠️ ", "Using default Anthropic API endpoint");
+    return "https://api.anthropic.com";
+  }
+}
+
 // Configuration from environment
 const config = {
   apiKey: process.env.ANTHROPIC_API_KEY,
-  apiBase: process.env.ANTHROPIC_API_URL || "https://api.anthropic.com",
+  apiBase: validateApiUrl(process.env.ANTHROPIC_API_URL || "https://api.anthropic.com"),
   model: process.env.CLAUDE_MODEL || "claude-opus-4-1",
   betaHeader: "task-budgets-2026-03-13",
 
