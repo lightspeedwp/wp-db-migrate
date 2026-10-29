@@ -1,0 +1,33 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wp-db-migrate Setup",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["setup-cloud.sh"],
+      "port": 3000,
+      "url": "http://localhost:3000",
+      "description": "WordPress database migration cloud setup"
+    },
+    {
+      "name": "wp-db-migrate Dev (Docker)",
+      "runtimeExecutable": "docker-compose",
+      "runtimeArgs": ["up", "dev"],
+      "port": 3000,
+      "url": "http://localhost:3000",
+      "description": "Development environment with Docker Compose"
+    },
+    {
+      "name": "wp-db-migrate Tests",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["test", "--", "--coverage"],
+      "description": "Run Jest test suite with coverage"
+    },
+    {
+      "name": "wp-db-migrate Linting",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["skill/scripts/preflight-check.sh"],
+      "description": "Verify all dependencies and configuration"
+    }
+  ]
+}
