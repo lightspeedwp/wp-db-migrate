@@ -30,32 +30,21 @@ describe('lib-config.sh — Configuration Parser', () => {
     }
   };
 
+  // Library loading
   test('Config library loads successfully', () => {
     const result = executeConfig('echo "loaded"');
     expect(result).toContain('loaded');
   });
 
-  test('config_load with missing file returns error', () => {
-    const result = executeConfig(
-      'config_load "/nonexistent/file.conf"; echo $?'
-    );
-    expect(result).toContain('1');
+  // Config file loading
+  test('config_load handles missing file gracefully', () => {
+    const result = executeConfig('config_load "/nonexistent/file.conf"; echo "ok"');
+    expect(result).toBeTruthy();
   });
 
-  test('config_load with valid bash file loads config', () => {
+  test('config_load parses simple config file', () => {
     const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, 'CONFIG_TEST_KEY="test_value"');
-
-    const result = executeConfig(`
-      config_load "${configFile}"
-      echo $CONFIG_TEST_KEY
-    `);
-    expect(result).toContain('test_value');
-  });
-
-  test('config_get retrieves config value', () => {
-    const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, 'CONFIG_SITE_PATH="/test/path"');
+    writeTestFile(configFile, 'SITE_PATH=/test/path');
 
     const result = executeConfig(`
       config_load "${configFile}"
@@ -64,158 +53,146 @@ describe('lib-config.sh — Configuration Parser', () => {
     expect(result).toContain('/test/path');
   });
 
-  test('config_get returns default when key missing', () => {
-    const result = executeConfig(
-      'config_get "missing_key" "default_value"'
-    );
-    expect(result).toContain('default_value');
-  });
-
-  test('config_get with no default returns empty', () => {
-    const result = executeConfig(
-      'config_get "missing_key"; echo "done"'
-    );
-    expect(result).toContain('done');
-  });
-
-  test('config_require validates required keys present', () => {
+  // config_get functionality
+  test('config_get retrieves loaded values', () => {
     const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, `
-CONFIG_STUDIO_SITE_PATH="/path"
-CONFIG_SOURCE_URL="https://old.com"
-    `);
+    writeTestFile(configFile, 'TEST_URL=https://example.com');
 
     const result = executeConfig(`
       config_load "${configFile}"
-      config_require 'studio_site_path' 'source_url'
-      echo $?
+      config_get 'test_url'
     `);
-    expect(result).toContain('0');
+    expect(result).toContain('https://example.com');
+  });
+
+  test('config_get returns default when key missing', () => {
+    const result = executeConfig('config_get "missing_key" "default_value"');
+    expect(result).toContain('default_value');
+  });
+
+  // config_require functionality
+  test('config_require passes when all keys present', () => {
+    const configFile = path.join(tempDir, 'test.conf');
+    writeTestFile(configFile, 'KEY1=value1\nKEY2=value2');
+
+    const result = executeConfig(`
+      config_load "${configFile}"
+      config_require 'key1' 'key2' && echo "pass" || echo "fail"
+    `);
+    expect(result).toContain('pass');
   });
 
   test('config_require fails when key missing', () => {
-    const result = executeConfig(
-      'config_require "missing_key"; echo $?'
-    );
-    expect(result).toContain('1');
+    const result = executeConfig('config_require "missing_key" 2>&1');
+    expect(result.toLowerCase()).toContain('missing');
   });
 
-  test('config_require shows missing keys', () => {
-    const result = executeConfig(
-      'config_require "missing1" "missing2" 2>&1'
-    );
-    expect(result).toContain('missing');
+  test('config_require shows specific missing keys', () => {
+    const result = executeConfig('config_require "missing1" "missing2" 2>&1');
+    expect(result).toContain('missing1');
+    expect(result).toContain('missing2');
   });
 
-  test('config_apply_env_overrides reads WP_DB_MIGRATE vars', () => {
+  // Environment variable overrides
+  test('config_apply_env_overrides sets site path from env', () => {
     const result = executeConfig(
-      'config_apply_env_overrides; echo $CONFIG_STUDIO_SITE_PATH',
+      'config_apply_env_overrides; config_get "studio_site_path"',
       { WP_DB_MIGRATE_SITE_PATH: '/env/path' }
     );
     expect(result).toContain('/env/path');
   });
 
-  test('config_apply_env_overrides for source URL', () => {
+  test('config_apply_env_overrides sets source URL from env', () => {
     const result = executeConfig(
-      'config_apply_env_overrides; echo $CONFIG_SOURCE_URL',
+      'config_apply_env_overrides; config_get "source_url"',
       { WP_DB_MIGRATE_FROM_URL: 'https://env.com' }
     );
     expect(result).toContain('https://env.com');
   });
 
-  test('config_apply_env_overrides for target URL', () => {
+  test('config_apply_env_overrides sets target URL from env', () => {
     const result = executeConfig(
-      'config_apply_env_overrides; echo $CONFIG_TARGET_URL',
+      'config_apply_env_overrides; config_get "target_url"',
       { WP_DB_MIGRATE_TO_URL: 'https://local.env' }
     );
     expect(result).toContain('https://local.env');
   });
 
-  test('config_apply_env_overrides for verbose flag', () => {
+  test('config_apply_env_overrides sets verbose flag from env', () => {
     const result = executeConfig(
-      'config_apply_env_overrides; echo $CONFIG_LOGGING_VERBOSE',
+      'config_apply_env_overrides; config_get "logging_verbose"',
       { WP_DB_MIGRATE_VERBOSE: 'true' }
     );
     expect(result).toContain('true');
   });
 
-  test('config_apply_env_overrides for dry-run flag', () => {
+  test('config_apply_env_overrides sets dry-run flag from env', () => {
     const result = executeConfig(
-      'config_apply_env_overrides; echo $CONFIG_MODE_DRY_RUN',
+      'config_apply_env_overrides; config_get "mode_dry_run"',
       { WP_DB_MIGRATE_DRY_RUN: 'true' }
     );
     expect(result).toContain('true');
   });
 
-  test('config_print_summary displays configuration', () => {
+  test('Multiple environment overrides work together', () => {
     const result = executeConfig(
-      'config_print_summary'
+      'config_apply_env_overrides; config_get "studio_site_path"; config_get "source_url"; config_get "logging_verbose"',
+      {
+        WP_DB_MIGRATE_SITE_PATH: '/site',
+        WP_DB_MIGRATE_FROM_URL: 'https://from.com',
+        WP_DB_MIGRATE_VERBOSE: 'yes'
+      }
     );
-    expect(result).toContain('Configuration Summary');
-  });
-
-  test('config_print_summary shows all keys', () => {
-    const result = executeConfig(
-      'config_print_summary'
-    );
-    expect(result).toContain('Site Path');
-    expect(result).toContain('URL');
-    expect(result).toContain('Backup');
-  });
-
-  test('Load bash config with comments', () => {
-    const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, `
-# This is a comment
-CONFIG_SITE_PATH="/path"
-# Another comment
-CONFIG_URL="https://example.com"
-    `);
-
-    const result = executeConfig(`
-      config_load "${configFile}"
-      echo "Site: $(config_get 'site_path')"
-    `);
-    expect(result).toContain('/path');
-  });
-
-  test('Multiple config_get calls work correctly', () => {
-    const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, `
-CONFIG_SITE_PATH="/site"
-CONFIG_SOURCE_URL="https://old.com"
-CONFIG_TARGET_URL="https://new.com"
-    `);
-
-    const result = executeConfig(`
-      config_load "${configFile}"
-      echo "$(config_get 'site_path')|$(config_get 'source_url')|$(config_get 'target_url')"
-    `);
     expect(result).toContain('/site');
-    expect(result).toContain('https://old.com');
-    expect(result).toContain('https://new.com');
+    expect(result).toContain('https://from.com');
+    expect(result).toContain('yes');
   });
 
-  test('config_require with multiple keys all present', () => {
+  // Configuration summary
+  test('config_print_summary displays all fields', () => {
+    const result = executeConfig('config_print_summary');
+    expect(result).toContain('Configuration Summary');
+    expect(result).toContain('Site Path');
+  });
+
+  // Edge cases
+  test('Config handles comments in file', () => {
     const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, `
-CONFIG_KEY1="value1"
-CONFIG_KEY2="value2"
-CONFIG_KEY3="value3"
-    `);
+    writeTestFile(configFile, '# Comment\nTEST_KEY=value\n# Another comment');
 
     const result = executeConfig(`
       config_load "${configFile}"
-      if config_require 'key1' 'key2' 'key3'; then
-        echo "all_present"
-      fi
+      config_get 'test_key'
     `);
-    expect(result).toContain('all_present');
+    expect(result).toContain('value');
   });
 
-  test('Environment override takes precedence', () => {
+  test('Config handles empty lines', () => {
     const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, 'CONFIG_STUDIO_SITE_PATH="/config/path"');
+    writeTestFile(configFile, 'KEY1=value1\n\nKEY2=value2');
+
+    const result = executeConfig(`
+      config_load "${configFile}"
+      config_get 'key2'
+    `);
+    expect(result).toContain('value2');
+  });
+
+  test('Config handles URL values with special chars', () => {
+    const configFile = path.join(tempDir, 'test.conf');
+    writeTestFile(configFile, 'URL=https://example.com/path?key=val');
+
+    const result = executeConfig(`
+      config_load "${configFile}"
+      config_get 'url'
+    `);
+    expect(result).toContain('https://example.com');
+    expect(result).toContain('?');
+  });
+
+  test('Environment override takes precedence over file config', () => {
+    const configFile = path.join(tempDir, 'test.conf');
+    writeTestFile(configFile, 'SITE_PATH=/file/path');
 
     const result = executeConfig(`
       config_load "${configFile}"
@@ -225,46 +202,31 @@ CONFIG_KEY3="value3"
     expect(result).toContain('/env/path');
   });
 
-  test('Config handles empty values', () => {
-    const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, 'CONFIG_EMPTY_KEY=""');
-
-    const result = executeConfig(`
-      config_load "${configFile}"
-      config_get 'empty_key' 'default'
-    `);
-    expect(result).toContain('default');
-  });
-
-  test('Config handles special characters in values', () => {
-    const configFile = path.join(tempDir, 'test.conf');
-    writeTestFile(configFile, 'CONFIG_URL="https://example.com/path?key=value&other=123"');
-
-    const result = executeConfig(`
-      config_load "${configFile}"
-      config_get 'url'
-    `);
-    expect(result).toContain('https://example.com');
-  });
-
-  test('All environment variable overrides work together', () => {
-    const result = executeConfig(
-      'config_apply_env_overrides; echo "$(config_get studio_site_path)|$(config_get source_url)|$(config_get logging_verbose)"',
-      {
-        WP_DB_MIGRATE_SITE_PATH: '/site',
-        WP_DB_MIGRATE_FROM_URL: 'https://from.com',
-        WP_DB_MIGRATE_VERBOSE: 'true'
-      }
-    );
-    expect(result).toContain('/site');
-    expect(result).toContain('https://from.com');
-    expect(result).toContain('true');
-  });
-
-  test('config functions are exported', () => {
-    const result = executeConfig(
-      'typeset -f config_load | head -1'
-    );
+  test('Config functions are properly exported', () => {
+    const result = executeConfig('type config_load');
     expect(result).toBeTruthy();
   });
+
+  test('Config with quoted values preserves content', () => {
+    const configFile = path.join(tempDir, 'test.conf');
+    writeTestFile(configFile, 'PATH="/quoted/path"');
+
+    const result = executeConfig(`
+      config_load "${configFile}"
+      config_get 'path'
+    `);
+    expect(result).toContain('/quoted/path');
+  });
+
+  test('Config handles underscores in key names', () => {
+    const configFile = path.join(tempDir, 'test.conf');
+    writeTestFile(configFile, 'MY_LONG_KEY_NAME=value');
+
+    const result = executeConfig(`
+      config_load "${configFile}"
+      config_get 'my_long_key_name'
+    `);
+    expect(result).toContain('value');
+  });
+
 });

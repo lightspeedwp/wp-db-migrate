@@ -1,6 +1,6 @@
 ---
 name: wp-db-migrate
-description: Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Use this when syncing live or staging databases to local development, setting up new Studio sites with live data, or performing any MySQL→SQLite database migration. Handles sanitization (smart table exclusion analysis), safe import with backup + rollback options, automatic or manual URL replacement with dry-run verification, and post-import validation. Works for databases of any size.
+description: Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Use this when syncing live or staging databases to local development, setting up new Studio sites with live data, or performing any MySQL→SQLite database migration. Handles sanitization (smart table exclusion analysis), safe import with backup + rollback options, automatic or manual URL replacement with dry-run verification, and post-import validation. Features visual progress tracking, configuration file support, and works for databases of any size.
 compatibility: Requires `studio` CLI (WordPress Studio), `sql-tool` for sanitization, access to MySQL export files or running WordPress sites
 ---
 
