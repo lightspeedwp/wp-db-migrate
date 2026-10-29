@@ -4,6 +4,16 @@
 
 This document tracks the high-impact polish improvements applied to the skill and plugin.
 
+### 🎯 Claude Marketplace Integration (2026-10-29)
+
+The skill is now available as a Claude Marketplace plugin:
+- Created `.claude-plugin/marketplace.json` with marketplace metadata
+- Created `.claude-plugin/plugin.json` with plugin definition
+- Updated plugin manifests with correct paths and v1.1.0
+- Updated README with marketplace installation instructions
+
+**Installation:** Users can now install via Claude Code → Settings → Plugins → Add marketplace → https://github.com/lightspeedwp/wp-db-migrate
+
 ---
 
 ## ✨ NEW: Progress Bars & Config Files (2026-10-29)
