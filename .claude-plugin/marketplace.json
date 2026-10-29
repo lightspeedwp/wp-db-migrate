@@ -1,0 +1,15 @@
+{
+	"name": "wp-db-migrate",
+	"description": "WordPress Database Migration for Claude Code - migrate MySQL/MariaDB databases to SQLite in WordPress Studio with smart table exclusion, safe import workflows, URL replacement, and comprehensive validation.",
+	"owner": {
+		"name": "LightSpeed",
+		"url": "https://github.com/lightspeedwp"
+	},
+	"plugins": [
+		{
+			"name": "wp-db-migrate",
+			"source": "./",
+			"description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio with progress tracking and configuration file support."
+		}
+	]
+}

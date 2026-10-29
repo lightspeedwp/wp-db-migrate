@@ -1,0 +1,46 @@
+{
+	"$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/refs/heads/main/schemas/plugin.schema.json",
+	"name": "WordPress Database Migration",
+	"id": "wp-db-migrate",
+	"version": "1.1.0",
+	"description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Features smart table exclusion analysis, safe import with backup & rollback, automatic URL replacement with dry-run verification, post-import validation, visual progress tracking, and configuration file support.",
+	"author": {
+		"name": "Ash Shaw",
+		"email": "ashley@lightspeedwp.agency"
+	},
+	"repository": "https://github.com/lightspeedwp/wp-db-migrate",
+	"homepage": "https://github.com/lightspeedwp/wp-db-migrate",
+	"license": "MIT",
+	"skills": [
+		"./skill/SKILL.md"
+	],
+	"keywords": [
+		"wordpress",
+		"database",
+		"migration",
+		"mysql",
+		"sqlite",
+		"studio",
+		"export",
+		"import",
+		"backup",
+		"cli"
+	],
+	"requirements": {
+		"cli": [
+			"studio",
+			"wp"
+		],
+		"tools": [
+			"bash",
+			"grep",
+			"sed",
+			"sqlite3"
+		],
+		"features": [
+			"bash-execution",
+			"file-operations",
+			"database-access"
+		]
+	}
+}

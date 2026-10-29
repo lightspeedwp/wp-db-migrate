@@ -84,7 +84,25 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
 
 ## 🛠️ Installation
 
-### As a Claude Skill
+### ⭐ Option 1: Via Claude Code Marketplace (Recommended)
+The easiest way to install wp-db-migrate into Claude Code:
+
+1. **In Claude Code**, go to **Settings → Plugins → Add marketplace**
+2. **Paste this marketplace URL:**
+   ```
+   https://github.com/lightspeedwp/wp-db-migrate
+   ```
+3. **Click "Sync"** to add the marketplace
+4. The `wp-db-migrate` skill will now be available in Claude Code
+
+Once installed, use the skill in any chat:
+- Ask Claude to migrate your database
+- Reference specific databases and URLs
+- Use configuration files for repeated workflows
+
+### 🔧 Option 2: As a Local Claude Skill
+For development or local use:
+
 1. Add to `.claude/skills/` in your project:
    ```bash
    ln -s /path/to/wp-db-migrate/skill ~/.claude/skills/wp-db-migrate
@@ -95,12 +113,9 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
    cp -r skill /path/to/your/org/.github/skills/wp-db-migrate
    ```
 
-### As a Claude Plugin
-1. Install the plugin from `/plugin/` into Claude's plugin system
-2. Enable it in your Claude settings
-3. Use `/wp-db-migrate` command in any chat
+### 🎯 Option 3: CLI Scripts Only
+Use just the migration scripts without Claude integration:
 
-### CLI Scripts Only
 Add scripts to your PATH:
 ```bash
 export PATH="$PATH:/path/to/wp-db-migrate/skill/scripts"
@@ -110,6 +125,7 @@ Then run from anywhere:
 ```bash
 preflight-check.sh
 migrate-recovery.sh /path/to/site "old-url" "new-url"
+migrate-recovery-enhanced.sh --config .wp-db-migrate.conf
 ```
 
 ## 💡 Usage Examples
