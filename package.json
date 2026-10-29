@@ -1,0 +1,42 @@
+{
+  "name": "wp-db-migrate",
+  "version": "1.1.0",
+  "description": "WordPress database migration skill for MySQL→SQLite in WordPress Studio",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:verbose": "jest --verbose --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "__tests__/**/*.js",
+      "!__tests__/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ],
+    "verbose": true
+  },
+  "keywords": [
+    "wordpress",
+    "database",
+    "migration",
+    "sqlite",
+    "mysql"
+  ],
+  "author": "Ash Shaw",
+  "license": "MIT"
+}
