@@ -1,0 +1,39 @@
+# Lefthook configuration for wp-db-migrate
+# See: https://lefthook.dev
+
+version: 2
+
+pre-commit:
+  parallel: true
+  commands:
+    shellcheck:
+      glob: "skill/scripts/*.sh"
+      run: shellcheck {staged_files}
+
+    json-validate:
+      glob: "*.json"
+      exclude: "node_modules"
+      run: python3 -m json.tool {staged_files} > /dev/null
+
+pre-push:
+  commands:
+    tests:
+      run: npm test -- --coverage
+      skip:
+        - merge
+        - rebase
+
+post-merge:
+  commands:
+    install-deps:
+      run: npm install --prefer-offline
+      skip:
+        - squash
+        - fast-forward
+
+post-checkout:
+  commands:
+    install-deps:
+      run: npm install --prefer-offline
+      skip:
+        - merge
