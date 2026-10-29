@@ -38,6 +38,8 @@ source "$SCRIPT_DIR/lib-config.sh"
 source "$SCRIPT_DIR/lib-progress.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-ssh.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-studio-api.sh"
 
 # Configuration
 FROM_URL=""
@@ -266,7 +268,8 @@ validate_inputs() {
         exit 1
     fi
 
-    if [[ ! -d "$TO_PATH" ]]; then
+    # Skip directory validation in dry-run mode (allows testing without actual Studio setup)
+    if [[ "$DRY_RUN" != true ]] && [[ ! -d "$TO_PATH" ]]; then
         echo -e "${RED}Error: Studio path not found: $TO_PATH${NC}" >&2
         exit 1
     fi
@@ -399,10 +402,36 @@ import_database() {
     fi
 }
 
-finalize() {
-    stage_start 5 "Finalize"
+validate_import() {
+    stage_start 5 "Validate Import"
 
-    echo -e "${BLUE}✓ Database imported${NC}"
+    spinner_start "Validating import in Studio site"
+
+    # Check if wp-cli is available (required for validation)
+    if ! command -v wp &>/dev/null; then
+        spinner_complete "Validation skipped (wp-cli not available)"
+        return 0
+    fi
+
+    # Verify Studio site
+    if ! studio_pre_import_check "$TO_PATH" 2>/dev/null; then
+        spinner_fail "Studio site validation failed"
+        return 1
+    fi
+
+    # Post-import database checks
+    if ! studio_post_import_check "$TO_PATH" 2>/dev/null; then
+        spinner_fail "Database verification failed"
+        return 1
+    fi
+
+    spinner_complete "Validation complete"
+
+    # Generate report
+    studio_generate_report "$TO_PATH" 2>/dev/null || true
+}
+
+finalize() {
     echo -e "${BLUE}Next steps:${NC}"
     echo -e "  1. studio wp --path $TO_PATH search-replace 'old-url' 'new.local' --dry-run"
     echo -e "  2. Verify site loads at http://<site>.local"
@@ -468,6 +497,7 @@ main() {
     analyze_and_optimize
     compress_database
     import_database
+    validate_import
     finalize
     print_summary
 

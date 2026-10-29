@@ -160,6 +160,47 @@ SSH_PORT=22
 WP_PATH=/var/www/html
 ```
 
+### Studio API Validation (Phase 3.3)
+
+Automatic validation of WordPress Studio sites before and after database import:
+
+**Pre-import validation:**
+- Verifies Studio site directory exists
+- Checks wp-config.php is present
+- Confirms wp-content directory structure
+- Validates WordPress installation
+
+**Post-import validation:**
+- Verifies database tables were imported
+- Validates database integrity
+- Checks WordPress can access the database
+- Generates site report with table count
+
+**Validation workflow:**
+The script automatically runs validation after database import when wp-cli is available:
+```bash
+Stage 5: Validate Import
+✓ Studio installation verified
+✓ Database verified (45 tables)
+✓ Database check passed
+```
+
+**Skip validation:**
+Validation is skipped if wp-cli is not available (allowing dry-runs without full Studio setup):
+```bash
+Stage 5: Validate Import
+⠷ Validating import in Studio site
+✓ Validation skipped (wp-cli not available)
+```
+
+**Manual validation:**
+You can manually validate a Studio site after import:
+```bash
+studio_pre_import_check ~/Studio/my-site
+studio_post_import_check ~/Studio/my-site
+studio_generate_report ~/Studio/my-site
+```
+
 ### Progress Tracking (Phase 3.2)
 
 The migration script includes real-time progress tracking and visual feedback:
