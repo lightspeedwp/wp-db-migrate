@@ -1,0 +1,15 @@
+{
+  "name": "lightspeedwp",
+  "description": "LightSpeed's WordPress database migration skill and plugin.",
+  "owner": {
+    "name": "LightSpeed",
+    "url": "https://github.com/lightspeedwp"
+  },
+  "plugins": [
+    {
+      "name": "wp-db-migrate",
+      "source": "./",
+      "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio with smart table exclusion, safe import workflows, URL replacement, and validation."
+    }
+  ]
+}
