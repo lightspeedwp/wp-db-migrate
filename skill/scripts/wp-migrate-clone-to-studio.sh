@@ -405,6 +405,12 @@ import_database() {
 validate_import() {
     stage_start 5 "Validate Import"
 
+    # Skip validation in dry-run mode (no actual import occurred)
+    if [[ "$DRY_RUN" == true ]]; then
+        echo -e "${YELLOW}Validation skipped (dry-run mode)${NC}"
+        return 0
+    fi
+
     spinner_start "Validating import in Studio site"
 
     # Check if wp-cli is available (required for validation)
