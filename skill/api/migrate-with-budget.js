@@ -27,25 +27,41 @@ const { promisify } = require("util");
 const execPromise = promisify(exec);
 
 // Whitelist of approved API hosts (prevent SSRF)
-const APPROVED_HOSTS = [
-  "api.anthropic.com",
-  "localhost:3000",    // For local testing only
-  "localhost:8000"     // For local testing only
-];
+const APPROVED_HOSTS = new Set([
+  "api.anthropic.com"
+]);
 
-// Validate and sanitize API base URL
+// Loopback addresses allowed for local testing only
+const LOOPBACK_HOSTS = new Set([
+  "localhost",
+  "127.0.0.1",
+  "[::1]"
+]);
+
+// Validate and sanitize API base URL with exact hostname matching
 function validateApiUrl(urlString) {
   try {
     const url = new URL(urlString);
 
-    // Only allow https except for localhost
-    if (url.protocol !== "https:" && !url.hostname.includes("localhost")) {
+    // Normalize hostname (remove trailing dot, lowercase)
+    const host = url.hostname.toLowerCase().replace(/\.$/, "");
+
+    // Check if it's a loopback address
+    const isLoopback = LOOPBACK_HOSTS.has(host);
+
+    // Verify hostname is in approved list or is loopback
+    if (!APPROVED_HOSTS.has(host) && !isLoopback) {
+      throw new Error(`Host not allowed: ${host}`);
+    }
+
+    // Require HTTPS except for loopback
+    if (url.protocol !== "https:" && !isLoopback) {
       throw new Error("Only HTTPS URLs allowed (except localhost)");
     }
 
-    // Check against whitelist
-    if (!APPROVED_HOSTS.includes(url.hostname) && !url.hostname.includes("localhost")) {
-      throw new Error(`Host not in whitelist: ${url.hostname}`);
+    // Prevent credentials in URL
+    if (url.username || url.password) {
+      throw new Error("Credentials in URL not allowed");
     }
 
     return url.origin;
@@ -183,7 +199,8 @@ Output concisely. No unnecessary explanations.`,
         "anthropic-beta": config.betaHeader,
         "content-type": "application/json"
       },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(requestBody),
+      redirect: "manual"  // Prevent redirects from carrying API key to untrusted hosts
     });
 
     if (!response.ok) {
