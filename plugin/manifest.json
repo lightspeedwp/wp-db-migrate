@@ -2,12 +2,12 @@
   "schema_version": "1.0",
   "name": "WordPress Database Migration",
   "id": "wp-db-migrate",
-  "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio with smart table exclusion, safe import workflows, URL replacement, comprehensive validation, visual progress tracking, and configuration file support.",
-  "version": "1.1.0",
+  "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio with smart table exclusion, safe import workflows, URL replacement, and comprehensive validation.",
+  "version": "1.0.0",
   "author": "Ash Shaw",
   "author_email": "ashley@lightspeedwp.agency",
-  "homepage": "https://github.com/lightspeedwp/wp-db-migrate",
-  "repository": "https://github.com/lightspeedwp/wp-db-migrate",
+  "homepage": "https://github.com/lightspeedwp/thisonetimeonacid",
+  "repository": "https://github.com/lightspeedwp/thisonetimeonacid",
   "keywords": [
     "wordpress",
     "database",
@@ -21,9 +21,9 @@
   "skills": [
     {
       "id": "wp-db-migrate",
-      "path": "skill/SKILL.md",
+      "path": "skills/wp-db-migrate",
       "name": "WordPress Database Migration",
-      "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite Studio with sanitization, safe import, URL replacement, validation, progress tracking, and configuration file support"
+      "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite Studio with sanitization, safe import, URL replacement, and validation"
     }
   ],
   "commands": [

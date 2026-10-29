@@ -1,46 +1,38 @@
 {
-	"$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/refs/heads/main/schemas/plugin.schema.json",
-	"name": "WordPress Database Migration",
-	"id": "wp-db-migrate",
-	"version": "1.1.0",
-	"description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Features smart table exclusion analysis, safe import with backup & rollback, automatic URL replacement with dry-run verification, post-import validation, visual progress tracking, and configuration file support.",
-	"author": {
-		"name": "Ash Shaw",
-		"email": "ashley@lightspeedwp.agency"
-	},
-	"repository": "https://github.com/lightspeedwp/wp-db-migrate",
-	"homepage": "https://github.com/lightspeedwp/wp-db-migrate",
-	"license": "MIT",
-	"skills": [
-		"./skill/SKILL.md"
-	],
-	"keywords": [
-		"wordpress",
-		"database",
-		"migration",
-		"mysql",
-		"sqlite",
-		"studio",
-		"export",
-		"import",
-		"backup",
-		"cli"
-	],
-	"requirements": {
-		"cli": [
-			"studio",
-			"wp"
-		],
-		"tools": [
-			"bash",
-			"grep",
-			"sed",
-			"sqlite3"
-		],
-		"features": [
-			"bash-execution",
-			"file-operations",
-			"database-access"
-		]
-	}
+  "$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/refs/heads/main/schemas/plugin.schema.json",
+  "name": "wp-db-migrate",
+  "version": "1.1.0",
+  "description": "Migrate WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Handles sanitization, safe import with backup + rollback, automatic or manual URL replacement with dry-run verification, and post-import validation.",
+  "author": {
+    "name": "Ash Shaw",
+    "email": "ashley@lightspeedwp.agency"
+  },
+  "repository": "https://github.com/lightspeedwp/wp-db-migrate",
+  "homepage": "https://github.com/lightspeedwp/wp-db-migrate",
+  "skills": [
+    "./skill/SKILL.md"
+  ],
+  "scripts": {
+    "preflight": "./skill/scripts/preflight-check.sh",
+    "migrate": "./skill/scripts/migrate-recovery.sh",
+    "migrate:enhanced": "./skill/scripts/migrate-recovery-enhanced.sh",
+    "verify": "./skill/scripts/verify-import.sh",
+    "urls": "./skill/scripts/replace-urls.sh",
+    "start": "./skill/scripts/start-server.sh"
+  },
+  "requirements": {
+    "cli": [
+      "studio",
+      "wp",
+      "bash",
+      "grep",
+      "sed"
+    ]
+  },
+  "documentation": {
+    "main": "./SKILL.md",
+    "installation": "./INSTALLATION.md",
+    "testing": "./TESTING.md",
+    "setup": "./JEST-SETUP.md"
+  }
 }
