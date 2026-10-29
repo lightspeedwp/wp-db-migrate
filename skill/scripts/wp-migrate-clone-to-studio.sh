@@ -36,6 +36,8 @@ source "$SCRIPT_DIR/lib-parallel.sh"
 source "$SCRIPT_DIR/lib-config.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-progress.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-ssh.sh"
 
 # Configuration
 FROM_URL=""
@@ -48,6 +50,11 @@ DRY_RUN=false
 VERBOSE=false
 CONFIG_FILE=""
 USE_CONFIG=false
+SSH_HOST=""
+SSH_USER=""
+SSH_PORT=22
+SSH_KEY=""
+WP_PATH=""
 
 # State tracking
 DUMP_FILE=""
@@ -100,6 +107,11 @@ OPTIONS:
   --parallel             Enable parallel import (default: yes)
   --no-parallel          Disable parallel import (sequential mode)
   --jobs N               Number of parallel jobs (default: auto-detect)
+  --ssh-host HOST        SSH host for remote export (e.g., staging.example.com)
+  --ssh-user USER        SSH user (default: deploy)
+  --ssh-port PORT        SSH port (default: 22)
+  --ssh-key PATH         Path to SSH private key (optional)
+  --wp-path PATH         Remote WordPress path (e.g., /var/www/html)
   --dry-run              Analyze without making changes
   --verbose              Show detailed output
   --help                 Show this help message
@@ -110,11 +122,25 @@ EXAMPLES:
     --from https://staging.dev \
     --to ~/Studio/my-site
 
+  # Remote export via SSH
+  ./wp-migrate-clone-to-studio.sh \
+    --from https://staging.example.com \
+    --to ~/Studio/my-site \
+    --ssh-host staging.example.com \
+    --ssh-user deploy \
+    --wp-path /var/www/html
+
+  # Remote export with SSH key
+  ./wp-migrate-clone-to-studio.sh \
+    --from https://staging.example.com \
+    --to ~/Studio/my-site \
+    --ssh-host staging.example.com \
+    --ssh-user deploy \
+    --wp-path /var/www/html \
+    --ssh-key ~/.ssh/staging_key
+
   # Load from config file
   ./wp-migrate-clone-to-studio.sh --use-config
-
-  # Load specific config file
-  ./wp-migrate-clone-to-studio.sh --config ~/.wp-db-migrate.conf
 
   # Exclude specific tables
   ./wp-migrate-clone-to-studio.sh \
@@ -195,6 +221,27 @@ parse_args() {
                 VERBOSE=true
                 shift
                 ;;
+            --ssh-host)
+                SSH_HOST="$2"
+                shift 2
+                ;;
+            --ssh-user)
+                SSH_USER="$2"
+                shift 2
+                ;;
+            --ssh-port)
+                SSH_PORT="$2"
+                shift 2
+                ;;
+            --ssh-key)
+                # shellcheck disable=SC2034
+                SSH_KEY="$2"
+                shift 2
+                ;;
+            --wp-path)
+                WP_PATH="$2"
+                shift 2
+                ;;
             --help)
                 show_help
                 exit 0
@@ -239,17 +286,41 @@ print_banner() {
 export_database() {
     stage_start 1 "Export Database"
 
-    # Placeholder: In real implementation, would SSH to server and export
-    # For now, we'll look for existing dumps
-
     DUMP_FILE="$WORK_DIR/export.sql"
 
-    spinner_start "Exporting database from $FROM_URL"
-    sleep 0.5
-    spinner_complete "Export ready"
+    # Check if SSH credentials are provided
+    if [[ -z "$SSH_HOST" ]] || [[ -z "$SSH_USER" ]] || [[ -z "$WP_PATH" ]]; then
+        spinner_start "Looking for local database export"
+        sleep 0.3
+        spinner_complete "Using local export mode"
+        echo -e "${YELLOW}Note: SSH not configured. Set SSH_HOST, SSH_USER, WP_PATH for remote export.${NC}"
+        return 0
+    fi
 
-    echo -e "${YELLOW}Note: Actual export requires SSH access to dev server${NC}"
-    echo -e "Example: ssh user@host 'wp db export -' > $DUMP_FILE"
+    # Use SSH for remote export
+    spinner_start "Connecting to $SSH_USER@$SSH_HOST:$SSH_PORT"
+
+    # Test SSH connection
+    if ! ssh_test_connection "$SSH_USER@$SSH_HOST" "$WP_PATH" 2>/dev/null; then
+        spinner_fail "SSH connection failed"
+        return 1
+    fi
+
+    # Verify WordPress installation
+    if ! ssh_verify_wordpress 2>/dev/null; then
+        spinner_fail "WordPress verification failed"
+        return 1
+    fi
+
+    # Export database via SSH
+    spinner_start "Exporting database from $FROM_URL"
+
+    if ! ssh_export_db "$SSH_USER@$SSH_HOST" "$WP_PATH" "$DUMP_FILE" "$EXCLUDE_TABLES" 2>/dev/null; then
+        spinner_fail "Database export failed"
+        return 1
+    fi
+
+    spinner_complete "Export complete"
 }
 
 analyze_and_optimize() {

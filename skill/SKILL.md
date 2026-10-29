@@ -112,6 +112,54 @@ VERBOSE=false
 - `DRY_RUN` — Preview mode (true/false)
 - `VERBOSE` — Verbose output (true/false)
 
+### Remote SSH Export (Phase 3.1)
+
+Automatically export databases from remote dev/staging servers via SSH:
+
+**Basic SSH export:**
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site \
+  --ssh-host staging.example.com \
+  --ssh-user deploy \
+  --wp-path /var/www/html
+```
+
+**SSH export with custom key:**
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site \
+  --ssh-host staging.example.com \
+  --ssh-user deploy \
+  --wp-path /var/www/html \
+  --ssh-key ~/.ssh/staging_key \
+  --ssh-port 2222
+```
+
+**SSH configuration options:**
+- `--ssh-host HOST` — SSH hostname or IP address
+- `--ssh-user USER` — SSH username (default: deploy)
+- `--ssh-port PORT` — SSH port (default: 22)
+- `--ssh-key PATH` — Path to SSH private key (optional, uses SSH agent if not provided)
+- `--wp-path PATH` — Remote WordPress installation path (e.g., /var/www/html)
+
+**How it works:**
+1. Tests SSH connection to remote host
+2. Verifies WordPress installation exists at specified path
+3. Checks WP-CLI is available on remote server
+4. Runs `wp db export` remotely, streaming output to local file
+5. Continues with compression and import workflow
+
+**Save SSH config in .wp-db-migrate.conf:**
+```bash
+SSH_HOST=staging.example.com
+SSH_USER=deploy
+SSH_PORT=22
+WP_PATH=/var/www/html
+```
+
 ### Progress Tracking (Phase 3.2)
 
 The migration script includes real-time progress tracking and visual feedback:
