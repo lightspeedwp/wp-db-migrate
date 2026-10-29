@@ -40,6 +40,10 @@ source "$SCRIPT_DIR/lib-progress.sh"
 source "$SCRIPT_DIR/lib-ssh.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-studio-api.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-error-recovery.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-reports.sh"
 
 # Configuration
 FROM_URL=""
@@ -57,6 +61,9 @@ SSH_USER=""
 SSH_PORT=22
 SSH_KEY=""
 WP_PATH=""
+ENABLE_RECOVERY=true
+ENABLE_REPORTS=true
+REPORTS_DIR=""
 
 # State tracking
 DUMP_FILE=""
@@ -242,6 +249,26 @@ parse_args() {
                 ;;
             --wp-path)
                 WP_PATH="$2"
+                shift 2
+                ;;
+            --enable-recovery)
+                ENABLE_RECOVERY=true
+                shift
+                ;;
+            --disable-recovery)
+                ENABLE_RECOVERY=false
+                shift
+                ;;
+            --enable-reports)
+                ENABLE_REPORTS=true
+                shift
+                ;;
+            --disable-reports)
+                ENABLE_REPORTS=false
+                shift
+                ;;
+            --reports-dir)
+                REPORTS_DIR="$2"
                 shift 2
                 ;;
             --help)
@@ -493,6 +520,19 @@ main() {
     load_config
     validate_inputs
 
+    # Initialize error recovery
+    if [[ "$ENABLE_RECOVERY" == true ]]; then
+        recovery_init "$TO_PATH"
+    fi
+
+    # Initialize reporting
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        if [[ -z "$REPORTS_DIR" ]]; then
+            REPORTS_DIR="$TO_PATH/.reports"
+        fi
+        reports_init "$REPORTS_DIR"
+    fi
+
     print_banner
 
     if [[ "$DRY_RUN" == true ]]; then
@@ -500,12 +540,59 @@ main() {
         echo ""
     fi
 
-    analyze_and_optimize
-    compress_database
-    import_database
-    validate_import
+    # Run migration stages with error tracking
+    local stage_status="success"
+
+    analyze_and_optimize || stage_status="failed"
+    if [[ "$ENABLE_RECOVERY" == true ]]; then
+        recovery_checkpoint "analyze-optimize"
+    fi
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        reports_log_stage "analyze-optimize" 0 "$stage_status"
+    fi
+
+    compress_database || stage_status="failed"
+    if [[ "$ENABLE_RECOVERY" == true ]]; then
+        recovery_checkpoint "compress"
+    fi
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        reports_log_stage "compress" 0 "$stage_status"
+    fi
+
+    import_database || stage_status="failed"
+    if [[ "$ENABLE_RECOVERY" == true ]]; then
+        recovery_checkpoint "import"
+    fi
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        reports_log_stage "import" 0 "$stage_status"
+    fi
+
+    local import_exit_code=$?
+    if [[ $import_exit_code -ne 0 && "$ENABLE_RECOVERY" == true ]]; then
+        recovery_detect_failure "$import_exit_code" "import"
+        recovery_suggest_remediation "$FAILURE_TYPE"
+        return 1
+    fi
+
+    validate_import || stage_status="failed"
+    if [[ "$ENABLE_RECOVERY" == true ]]; then
+        recovery_checkpoint "validate"
+    fi
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        reports_log_stage "validate" 0 "$stage_status"
+    fi
+
     finalize
     print_summary
+
+    # Calculate and export reports
+    if [[ "$ENABLE_REPORTS" == true ]]; then
+        reports_calculate_stats
+        reports_export_summary "$REPORTS_DIR/migration-summary.txt"
+        reports_export_json "$REPORTS_DIR/migration-metrics.json"
+        reports_export_csv "$REPORTS_DIR/table-statistics.csv"
+        echo -e "${GREEN}✓ Reports exported to: $REPORTS_DIR${NC}"
+    fi
 
     show_timing "$start_time" "Database migration"
 }
