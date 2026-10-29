@@ -34,6 +34,8 @@ source "$SCRIPT_DIR/lib-compress.sh"
 source "$SCRIPT_DIR/lib-parallel.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-config.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-progress.sh"
 
 # Configuration
 FROM_URL=""
@@ -235,39 +237,36 @@ print_banner() {
 }
 
 export_database() {
-    echo -e "${BLUE}Step 1: Export Database${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    stage_start 1 "Export Database"
 
     # Placeholder: In real implementation, would SSH to server and export
     # For now, we'll look for existing dumps
 
     DUMP_FILE="$WORK_DIR/export.sql"
 
-    echo -e "${YELLOW}Note: Export step requires SSH access to dev server${NC}"
-    echo -e "Would export from: $FROM_URL"
-    echo -e "Example command:"
-    echo -e "  ssh user@host 'wp db export -' > $DUMP_FILE"
+    spinner_start "Exporting database from $FROM_URL"
+    sleep 0.5
+    spinner_complete "Export ready"
 
-    echo ""
+    echo -e "${YELLOW}Note: Actual export requires SSH access to dev server${NC}"
+    echo -e "Example: ssh user@host 'wp db export -' > $DUMP_FILE"
 }
 
 analyze_and_optimize() {
-    echo -e "${BLUE}Step 2: Analyze & Optimize${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    stage_start 2 "Analyze & Optimize"
 
     if [[ ! -f "$DUMP_FILE" ]]; then
         echo -e "${YELLOW}Skipping analysis (no dump file yet)${NC}"
         return 0
     fi
 
-    echo -e "${BLUE}Analyzing database structure...${NC}"
-
-    # Analyze the dump
+    spinner_start "Analyzing database structure"
     analyze_dump "$DUMP_FILE"
+    spinner_complete "Analysis complete"
+
     show_table_summary
 
     # Get suggestions
-    echo ""
     local -a suggestions=()
     while IFS= read -r line; do
         suggestions+=("$line")
@@ -277,13 +276,10 @@ analyze_and_optimize() {
     if (( EXCLUDED_COUNT > 0 )); then
         echo -e "${GREEN}✓ Identified $EXCLUDED_COUNT excludable tables${NC}"
     fi
-
-    echo ""
 }
 
 compress_database() {
-    echo -e "${BLUE}Step 3: Compress${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    stage_start 3 "Compress"
 
     if [[ "$USE_COMPRESSION" != true ]]; then
         echo -e "${YELLOW}Compression disabled${NC}"
@@ -298,14 +294,13 @@ compress_database() {
     fi
 
     COMPRESSED_FILE="${DUMP_FILE}.gz"
+    spinner_start "Compressing database (gzip)"
     compress_file "$DUMP_FILE" "$COMPRESSED_FILE"
-
-    echo ""
+    spinner_complete "Compression complete"
 }
 
 import_database() {
-    echo -e "${BLUE}Step 4: Import${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    stage_start 4 "Import"
 
     if [[ ! -f "$COMPRESSED_FILE" ]]; then
         echo -e "${YELLOW}Skipping import (no dump file)${NC}"
@@ -315,32 +310,32 @@ import_database() {
     # Decompress if needed
     local import_file="$COMPRESSED_FILE"
     if is_compressed "$COMPRESSED_FILE"; then
+        spinner_start "Decompressing database"
         import_file="$WORK_DIR/import.sql"
         decompress_file "$COMPRESSED_FILE" "$import_file"
+        spinner_complete "Decompression complete"
     fi
 
     if [[ "$USE_PARALLEL" == true ]]; then
         local jobs="${PARALLEL_JOBS:-$(get_optimal_jobs)}"
-        echo -e "${BLUE}Importing with $jobs parallel processes...${NC}"
+        spinner_start "Importing database with $jobs parallel processes"
         parallel_import "$import_file" "$TO_PATH" "$jobs"
+        spinner_complete "Import complete"
     else
-        echo -e "${BLUE}Importing sequentially...${NC}"
+        spinner_start "Importing database sequentially"
         sequential_import "$import_file" "$TO_PATH"
+        spinner_complete "Import complete"
     fi
-
-    echo ""
 }
 
 finalize() {
-    echo -e "${BLUE}Step 5: Finalize${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    stage_start 5 "Finalize"
 
     echo -e "${BLUE}✓ Database imported${NC}"
     echo -e "${BLUE}Next steps:${NC}"
     echo -e "  1. studio wp --path $TO_PATH search-replace 'old-url' 'new.local' --dry-run"
     echo -e "  2. Verify site loads at http://<site>.local"
     echo -e "  3. Check wp-content/debug.log for any errors"
-    echo ""
 }
 
 print_summary() {
@@ -385,6 +380,9 @@ load_config() {
 }
 
 main() {
+    local start_time
+    start_time=$(date +%s)
+
     parse_args "$@"
     load_config
     validate_inputs
@@ -401,6 +399,8 @@ main() {
     import_database
     finalize
     print_summary
+
+    show_timing "$start_time" "Database migration"
 }
 
 main "$@"

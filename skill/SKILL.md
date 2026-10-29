@@ -112,6 +112,60 @@ VERBOSE=false
 - `DRY_RUN` — Preview mode (true/false)
 - `VERBOSE` — Verbose output (true/false)
 
+### Progress Tracking (Phase 3.2)
+
+The migration script includes real-time progress tracking and visual feedback:
+
+**Visual Elements:**
+- 🔵 **Stage headers** — Shows numbered stages (1-5) with labels
+- ⏳ **Spinners** — Animated spinners for indeterminate operations
+- 📊 **Progress bars** — Percentage-based progress for measured operations
+- ⏱️ **Timing information** — Elapsed time for each stage and total migration
+
+**Example output:**
+```
+╭──────────────────────────────────╮
+│ Stage 1: Export Database         │
+╰──────────────────────────────────╯
+⠧ Exporting database from https://staging.example.com
+✓ Export ready
+
+╭──────────────────────────────────╮
+│ Stage 2: Analyze & Optimize      │
+╰──────────────────────────────────╯
+⠼ Analyzing database structure
+✓ Analysis complete
+
+╭──────────────────────────────────╮
+│ Stage 3: Compress                │
+╰──────────────────────────────────╯
+⠦ Compressing database (gzip)
+✓ Compression complete
+
+╭──────────────────────────────────╮
+│ Stage 4: Import                  │
+╰──────────────────────────────────╯
+⠇ Importing database with 4 parallel processes
+✓ Import complete
+
+╭──────────────────────────────────╮
+│ Stage 5: Finalize                │
+╰──────────────────────────────────╯
+✓ Database imported
+
+✓ Database migration completed in 5m 42s
+```
+
+**Progress tracking functions** (for advanced use):
+- `stage_start <num> <label>` — Display stage header
+- `stage_complete` — Mark stage as complete
+- `spinner_start <message>` — Start animated spinner
+- `spinner_complete <message>` — Complete spinner with checkmark
+- `progress_start <label> <total>` — Initialize progress bar
+- `progress_update <current>` — Update progress percentage
+- `progress_complete <message>` — Mark progress complete
+- `show_timing <start_time> <label>` — Display elapsed time
+
 ## Full Workflow (Manual Steps)
 
 For more control or troubleshooting, follow the detailed phases below:
