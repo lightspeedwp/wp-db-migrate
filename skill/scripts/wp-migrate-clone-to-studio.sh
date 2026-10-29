@@ -21,6 +21,10 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Create secure temporary directory (mode 0700)
+WORK_DIR=$(mktemp -d)
+trap 'rm -rf "$WORK_DIR"' EXIT
+
 # Source optimization libraries
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-table-analyzer.sh"
@@ -206,7 +210,7 @@ export_database() {
     # Placeholder: In real implementation, would SSH to server and export
     # For now, we'll look for existing dumps
 
-    DUMP_FILE="/tmp/export-$(date +%s).sql"
+    DUMP_FILE="$WORK_DIR/export.sql"
 
     echo -e "${YELLOW}Note: Export step requires SSH access to dev server${NC}"
     echo -e "Would export from: $FROM_URL"
@@ -280,7 +284,7 @@ import_database() {
     # Decompress if needed
     local import_file="$COMPRESSED_FILE"
     if is_compressed "$COMPRESSED_FILE"; then
-        import_file="/tmp/import-$(date +%s).sql"
+        import_file="$WORK_DIR/import.sql"
         decompress_file "$COMPRESSED_FILE" "$import_file"
     fi
 
