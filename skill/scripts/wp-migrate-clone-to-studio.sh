@@ -32,6 +32,8 @@ source "$SCRIPT_DIR/lib-table-analyzer.sh"
 source "$SCRIPT_DIR/lib-compress.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib-parallel.sh"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib-config.sh"
 
 # Configuration
 FROM_URL=""
@@ -42,6 +44,8 @@ USE_PARALLEL=true
 PARALLEL_JOBS=""
 DRY_RUN=false
 VERBOSE=false
+CONFIG_FILE=""
+USE_CONFIG=false
 
 # State tracking
 DUMP_FILE=""
@@ -56,6 +60,24 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+# Detect configuration file
+detect_config_file() {
+    local -a search_paths=(
+        ".wp-db-migrate.conf"
+        "$HOME/.wp-db-migrate.conf"
+        "$(pwd)/.wp-db-migrate.conf"
+    )
+
+    for path in "${search_paths[@]}"; do
+        if [[ -f "$path" ]]; then
+            echo "$path"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 show_help() {
     cat << 'EOF'
 WordPress Database Migration to Studio (One-Command)
@@ -68,6 +90,8 @@ REQUIRED:
   --to PATH             Studio site path (e.g., /Users/ash/Studio/my-site)
 
 OPTIONS:
+  --config FILE           Load configuration from file (e.g., .wp-db-migrate.conf)
+  --use-config            Auto-detect and load .wp-db-migrate.conf from current dir
   --exclude-tables LIST   Comma-separated tables to skip (overrides auto-detect)
   --compress             Enable compression (default: yes)
   --no-compress          Disable compression
@@ -84,6 +108,12 @@ EXAMPLES:
     --from https://staging.dev \
     --to ~/Studio/my-site
 
+  # Load from config file
+  ./wp-migrate-clone-to-studio.sh --use-config
+
+  # Load specific config file
+  ./wp-migrate-clone-to-studio.sh --config ~/.wp-db-migrate.conf
+
   # Exclude specific tables
   ./wp-migrate-clone-to-studio.sh \
     --from https://staging.dev \
@@ -95,13 +125,6 @@ EXAMPLES:
     --from https://staging.dev \
     --to ~/Studio/my-site \
     --dry-run
-
-  # Verbose with custom parallelism
-  ./wp-migrate-clone-to-studio.sh \
-    --from https://staging.dev \
-    --to ~/Studio/my-site \
-    --jobs 4 \
-    --verbose
 
 WHAT IT DOES:
   1. Export database from dev with smart table exclusion
@@ -120,6 +143,14 @@ EOF
 parse_args() {
     while [[ $# -gt 0 ]]; do
         case "$1" in
+            --config)
+                CONFIG_FILE="$2"
+                shift 2
+                ;;
+            --use-config)
+                USE_CONFIG=true
+                shift
+                ;;
             --from)
                 FROM_URL="$2"
                 shift 2
@@ -326,8 +357,36 @@ print_summary() {
     echo ""
 }
 
+load_config() {
+    # Determine which config file to load
+    local config_to_load=""
+
+    if [[ -n "$CONFIG_FILE" ]]; then
+        config_to_load="$CONFIG_FILE"
+    elif [[ "$USE_CONFIG" == true ]]; then
+        config_to_load=$(detect_config_file) || true
+    fi
+
+    # Load config if found
+    if [[ -n "$config_to_load" && -f "$config_to_load" ]]; then
+        if config_load "$config_to_load"; then
+            echo -e "${GREEN}✓ Loaded configuration from: $config_to_load${NC}"
+            config_apply_env_overrides
+
+            # Apply config values to variables (command line args take precedence)
+            if [[ -z "$FROM_URL" ]]; then
+                FROM_URL=$(config_get "from_url" "$FROM_URL")
+            fi
+            if [[ -z "$TO_PATH" ]]; then
+                TO_PATH=$(config_get "to_path" "$TO_PATH")
+            fi
+        fi
+    fi
+}
+
 main() {
     parse_args "$@"
+    load_config
     validate_inputs
 
     print_banner

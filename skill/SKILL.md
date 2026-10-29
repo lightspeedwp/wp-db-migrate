@@ -63,6 +63,55 @@ This single command orchestrates the entire migration process:
 
 Run `./skill/scripts/wp-migrate-clone-to-studio.sh --help` for all options.
 
+### Configuration Profiles (Phase 3.4)
+
+Avoid typing the same options repeatedly by saving them to a `.wp-db-migrate.conf` file:
+
+**Create `.wp-db-migrate.conf` in your project:**
+```bash
+# .wp-db-migrate.conf
+FROM_URL=https://staging.example.com
+TO_PATH=~/Studio/my-site
+EXCLUDE_TABLES=wp_actionscheduler_logs,wp_cache
+COMPRESS=true
+PARALLEL_JOBS=4
+DRY_RUN=false
+VERBOSE=false
+```
+
+**Use the config file:**
+```bash
+# Auto-detect and load .wp-db-migrate.conf from current directory
+./skill/scripts/wp-migrate-clone-to-studio.sh --use-config
+
+# Or specify a config file explicitly
+./skill/scripts/wp-migrate-clone-to-studio.sh --config /path/to/.wp-db-migrate.conf
+```
+
+**Command-line args override config:**
+```bash
+# Load config but override with CLI arg
+./skill/scripts/wp-migrate-clone-to-studio.sh --use-config --jobs 8
+```
+
+**Config file search paths:**
+1. Specified path: `--config /path/to/file`
+2. Current directory: `./.wp-db-migrate.conf`
+3. Home directory: `~/.wp-db-migrate.conf`
+
+**Available config keys:**
+- `FROM_URL` — Source site URL
+- `TO_PATH` — Target Studio site path
+- `SSH_HOST` — SSH host for remote export (Phase 3)
+- `SSH_USER` — SSH user for remote export (Phase 3)
+- `WP_PATH` — Remote WordPress path (Phase 3)
+- `EXCLUDE_TABLES` — Tables to exclude (comma-separated)
+- `COMPRESS` — Enable compression (true/false)
+- `PARALLEL` — Enable parallel import (true/false)
+- `JOBS` — Number of parallel jobs
+- `DRY_RUN` — Preview mode (true/false)
+- `VERBOSE` — Verbose output (true/false)
+
 ## Full Workflow (Manual Steps)
 
 For more control or troubleshooting, follow the detailed phases below:
