@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 describe('lib-ssh.sh — SSH Utility Library', () => {
-    const libPath = path.join(__dirname, '../skill/scripts/lib-ssh.sh');
+    const libPath = path.join(__dirname, '../lib-ssh.sh');
 
     beforeAll(() => {
         if (!fs.existsSync(libPath)) {

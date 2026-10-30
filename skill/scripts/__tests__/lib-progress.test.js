@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 describe('lib-progress.sh — Progress Tracking Library', () => {
-    const libPath = path.join(__dirname, '../skill/scripts/lib-progress.sh');
+    const libPath = path.join(__dirname, '../lib-progress.sh');
 
     beforeAll(() => {
         if (!fs.existsSync(libPath)) {

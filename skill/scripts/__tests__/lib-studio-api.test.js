@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 describe('lib-studio-api.sh — Studio API Utilities', () => {
-    const libPath = path.join(__dirname, '../skill/scripts/lib-studio-api.sh');
+    const libPath = path.join(__dirname, '../lib-studio-api.sh');
     const testSitePath = path.join(__dirname, '../.tmp-studio-test');
 
     beforeAll(() => {

@@ -37,7 +37,7 @@ VERBOSE=false
     });
 
     test('Config library loads successfully', () => {
-        const result = execSync(`bash -c "source ${path.join(__dirname, '../skill/scripts/lib-config.sh')} && echo 'loaded'"`, {
+        const result = execSync(`bash -c "source ${path.join(__dirname, '../lib-config.sh')} && echo 'loaded'"`, {
             stdio: 'pipe'
         }).toString().trim();
 
@@ -46,7 +46,7 @@ VERBOSE=false
 
     test('config_load loads configuration file', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_get 'from_url'
         "`, { stdio: 'pipe' }).toString().trim();
@@ -56,7 +56,7 @@ VERBOSE=false
 
     test('config_get retrieves stored values', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_get 'ssh_host'
         "`, { stdio: 'pipe' }).toString().trim();
@@ -66,7 +66,7 @@ VERBOSE=false
 
     test('config_get returns default when key missing', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_get 'nonexistent_key' 'default_value'
         "`, { stdio: 'pipe' }).toString().trim();
@@ -76,7 +76,7 @@ VERBOSE=false
 
     test('config_require validates required keys present', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_require 'from_url'
         "`, { stdio: 'pipe' }).toString().trim();
@@ -86,7 +86,7 @@ VERBOSE=false
 
     test('config_require_keys validates multiple keys', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_require_keys 'from_url' 'to_path' 'ssh_host'
             echo 'success'
@@ -97,7 +97,7 @@ VERBOSE=false
 
     test('config_print_summary displays configuration', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_print_summary
         "`, { stdio: 'pipe' }).toString();
@@ -108,7 +108,7 @@ VERBOSE=false
 
     test('config handles comments in files', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_get 'from_url'
         "`, { stdio: 'pipe' }).toString().trim();
@@ -118,7 +118,7 @@ VERBOSE=false
 
     test('config_export_env exports as environment variables', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_export_env
             # In same shell, exported vars are accessible
@@ -130,7 +130,7 @@ VERBOSE=false
 
     test('config_clear resets configuration', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             config_load '${configFile}'
             config_clear
             config_get 'from_url' 'empty'
@@ -140,7 +140,7 @@ VERBOSE=false
     });
 
     test('lib-config.sh should be executable', () => {
-        const libPath = path.join(__dirname, '../skill/scripts/lib-config.sh');
+        const libPath = path.join(__dirname, '../lib-config.sh');
         const stats = fs.statSync(libPath);
 
         expect(stats.isFile()).toBe(true);
@@ -149,7 +149,7 @@ VERBOSE=false
 
     test('lib-config.sh functions are exported', () => {
         const result = execSync(`bash -c "
-            source ${path.join(__dirname, '../skill/scripts/lib-config.sh')}
+            source ${path.join(__dirname, '../lib-config.sh')}
             declare -f config_load config_get config_require config_apply_env_overrides
         "`, { stdio: 'pipe' }).toString();
 

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const scriptPath = path.join(__dirname, '..', 'skill', 'scripts', 'lib-error-recovery.sh');
+const scriptPath = path.join(__dirname, '..', 'lib-error-recovery.sh');
 
 describe('lib-error-recovery.sh — Error Recovery Library', () => {
     let tmpDir;

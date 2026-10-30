@@ -43,7 +43,7 @@ INSERT INTO \`wp_posts\` VALUES
         compressedFile = path.join(testDir, 'test-dump.sql.gz');
 
         const result = execSync(`
-            source ${path.join(__dirname, '../skill/scripts/lib-compress.sh')}
+            source ${path.join(__dirname, '../lib-compress.sh')}
             compress_file "${testDumpFile}" "${compressedFile}"
         `, { shell: '/bin/bash', stdio: 'pipe' }).toString();
 
@@ -63,7 +63,7 @@ INSERT INTO \`wp_posts\` VALUES
         const decompressedFile = path.join(testDir, 'test-dump-restored.sql');
 
         const result = execSync(`
-            source ${path.join(__dirname, '../skill/scripts/lib-compress.sh')}
+            source ${path.join(__dirname, '../lib-compress.sh')}
             decompress_file "${compressedFile}" "${decompressedFile}"
         `, { shell: '/bin/bash', stdio: 'pipe' }).toString();
 
@@ -81,7 +81,7 @@ INSERT INTO \`wp_posts\` VALUES
 
     test('should detect compressed files', () => {
         const isCompressed = execSync(`
-            source ${path.join(__dirname, '../skill/scripts/lib-compress.sh')}
+            source ${path.join(__dirname, '../lib-compress.sh')}
             is_compressed "${compressedFile}" && echo "true" || echo "false"
         `, { shell: '/bin/bash', stdio: 'pipe' }).toString().trim();
 
@@ -90,7 +90,7 @@ INSERT INTO \`wp_posts\` VALUES
 
     test('should estimate compression savings', () => {
         const result = execSync(`
-            source ${path.join(__dirname, '../skill/scripts/lib-compress.sh')}
+            source ${path.join(__dirname, '../lib-compress.sh')}
             estimate_compression "${testDumpFile}"
         `, { shell: '/bin/bash', stdio: 'pipe' }).toString();
 
@@ -101,7 +101,7 @@ INSERT INTO \`wp_posts\` VALUES
 
     test('should handle missing files gracefully', () => {
         const result = execSync(`
-            source ${path.join(__dirname, '../skill/scripts/lib-compress.sh')}
+            source ${path.join(__dirname, '../lib-compress.sh')}
             compress_file "/nonexistent/file.sql" "/tmp/output.gz" 2>&1 || echo "error"
         `, { shell: '/bin/bash', stdio: 'pipe' }).toString();
 

@@ -12,7 +12,7 @@ const os = require('os');
  */
 function executeScript(scriptPath, args = []) {
   try {
-    const fullPath = path.join(__dirname, '..', 'skill', 'scripts', scriptPath);
+    const fullPath = path.join(__dirname, '..', scriptPath);
 
     const result = spawnSync('bash', [fullPath, ...args], {
       encoding: 'utf-8',

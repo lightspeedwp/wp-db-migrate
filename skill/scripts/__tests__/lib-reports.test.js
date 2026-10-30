@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const scriptPath = path.join(__dirname, '..', 'skill', 'scripts', 'lib-reports.sh');
+const scriptPath = path.join(__dirname, '..', 'lib-reports.sh');
 
 describe('lib-reports.sh — Reports and Analytics Library', () => {
     let tmpDir;

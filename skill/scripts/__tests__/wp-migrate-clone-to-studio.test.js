@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 describe('wp-migrate-clone-to-studio.sh — Phase 2 Orchestration', () => {
-    const scriptPath = path.join(__dirname, '../skill/scripts/wp-migrate-clone-to-studio.sh');
+    const scriptPath = path.join(__dirname, '../wp-migrate-clone-to-studio.sh');
 
     test('script should exist and be executable', () => {
         expect(fs.existsSync(scriptPath)).toBe(true);

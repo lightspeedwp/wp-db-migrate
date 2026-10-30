@@ -76,7 +76,7 @@ INSERT INTO \`wp_actionscheduler_logs\` VALUES (2, 1, 'Action completed');
     });
 
     test('lib-table-analyzer.sh should be executable', () => {
-        const libPath = path.join(__dirname, '../skill/scripts/lib-table-analyzer.sh');
+        const libPath = path.join(__dirname, '../lib-table-analyzer.sh');
         const stats = fs.statSync(libPath);
 
         expect(stats.isFile()).toBe(true);
@@ -84,7 +84,7 @@ INSERT INTO \`wp_actionscheduler_logs\` VALUES (2, 1, 'Action completed');
     });
 
     test('should contain analyze_dump function', () => {
-        const libPath = path.join(__dirname, '../skill/scripts/lib-table-analyzer.sh');
+        const libPath = path.join(__dirname, '../lib-table-analyzer.sh');
         const content = fs.readFileSync(libPath, 'utf-8');
 
         expect(content).toContain('analyze_dump()');
@@ -92,7 +92,7 @@ INSERT INTO \`wp_actionscheduler_logs\` VALUES (2, 1, 'Action completed');
     });
 
     test('should contain suggest_exclusions function', () => {
-        const libPath = path.join(__dirname, '../skill/scripts/lib-table-analyzer.sh');
+        const libPath = path.join(__dirname, '../lib-table-analyzer.sh');
         const content = fs.readFileSync(libPath, 'utf-8');
 
         expect(content).toContain('suggest_exclusions()');
@@ -100,7 +100,7 @@ INSERT INTO \`wp_actionscheduler_logs\` VALUES (2, 1, 'Action completed');
     });
 
     test('should contain format_size function', () => {
-        const libPath = path.join(__dirname, '../skill/scripts/lib-table-analyzer.sh');
+        const libPath = path.join(__dirname, '../lib-table-analyzer.sh');
         const content = fs.readFileSync(libPath, 'utf-8');
 
         expect(content).toContain('format_size()');
