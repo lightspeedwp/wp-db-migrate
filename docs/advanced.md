@@ -420,7 +420,7 @@ echo "Migration successful at $(date)" >> /var/log/migrations.log
 - [Getting Started](./GETTING-STARTED.md) — Basic usage
 - [Configuration Guide](./CONFIGURATION.md) — Config file reference
 - [Best Practices](./BEST-PRACTICES.md) — Safety strategies
-- [Reliability & Error Recovery](./reliability.md) — Handle failures gracefully
+- [Reliability & Error Recovery](./RELIABILITY.md) — Handle failures gracefully
 - [Analytics & Reporting](./ANALYTICS.md) — Track performance and optimize
 - [FAQ](./FAQ.md) — Common questions
-- [Troubleshooting](./troubleshooting.md) — Problem solving
+- [Troubleshooting](./TROUBLESHOOTING.md) — Problem solving

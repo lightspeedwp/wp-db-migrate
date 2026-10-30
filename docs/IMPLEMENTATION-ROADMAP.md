@@ -21,7 +21,7 @@ cd wordpress-agent
 **Note:** Both `wp-db-migrate` and `wordpress-agent` should live in `~/.claude/skills/`
 
 **Step 2: Update documentation with installation path**
-- File: `docs/setup-requirements.md`
+- File: `docs/SETUP-REQUIREMENTS.md`
 - Add section: "WordPress Agent Skills Setup"
 - Include: curl-based installation option
 
@@ -282,10 +282,10 @@ code ~/.studio/sites/my-project/wp-content/themes/my-theme
 - [x] docs/LARGE-DATABASES.md
 - [x] docs/LOCAL-MEDIA-SETUP.md
 - [x] docs/ONBOARDING-CHECKLIST.md
-- [x] docs/setup-requirements.md
+- [x] docs/SETUP-REQUIREMENTS.md
 - [x] docs/FAQ.md
 - [x] docs/BEST-PRACTICES.md
-- [x] docs/troubleshooting.md
+- [x] docs/TROUBLESHOOTING.md
 
 ### Files to Create (In Order of Priority)
 - [ ] docs/LS-HOSTING-INTEGRATION.md ← CREATE NEXT
@@ -294,7 +294,7 @@ code ~/.studio/sites/my-project/wp-content/themes/my-theme
 - [ ] docs/VS-CODE-SETUP.md (theme/plugin development)
 
 ### Files to Update
-- [ ] docs/setup-requirements.md — Add WordPress agent skills section
+- [ ] docs/SETUP-REQUIREMENTS.md — Add WordPress agent skills section
 - [ ] docs/ONBOARDING-CHECKLIST.md — Add WordPress skills installation step
 - [ ] docs/README-GUIDE.md — Link to new guides
 - [ ] plugin/manifest.json — Ensure commands documented

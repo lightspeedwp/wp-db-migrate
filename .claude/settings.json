@@ -35,9 +35,19 @@
   ],
   "documentation": {
     "main": "README.md",
-    "setup": "docs/setup-requirements.md",
+    "setup": "docs/SETUP-REQUIREMENTS.md",
     "guide": "docs/GETTING-STARTED.md",
-    "troubleshooting": "docs/troubleshooting.md",
-    "api": "skill/SKILL.md"
+    "best-practices": "docs/BEST-PRACTICES.md",
+    "troubleshooting": "docs/TROUBLESHOOTING.md",
+    "faq": "docs/FAQ.md",
+    "integration": "docs/LS-HOSTING-INTEGRATION.md",
+    "advanced": "docs/ADVANCED.md",
+    "analytics": "docs/ANALYTICS.md",
+    "configuration": "docs/CONFIGURATION.md",
+    "large-databases": "docs/LARGE-DATABASES.md",
+    "reliability": "docs/RELIABILITY.md",
+    "api": "skill/SKILL.md",
+    "agents": "AGENTS.md",
+    "claude": "CLAUDE.md"
   }
 }

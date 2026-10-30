@@ -490,7 +490,7 @@ wp cache flush
 - [Large Database Handling](./LARGE-DATABASES.md) — Size reduction strategies
 - [Local Media Setup](./LOCAL-MEDIA-SETUP.md) — Media configuration details
 - [Best Practices](./BEST-PRACTICES.md) — Safe migration strategies
-- [Troubleshooting](./troubleshooting.md) — Problem solving guide
+- [Troubleshooting](./TROUBLESHOOTING.md) — Problem solving guide
 
 ---
 

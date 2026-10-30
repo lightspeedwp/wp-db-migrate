@@ -64,9 +64,9 @@ wp-db-migrate/
 │   └── README.md                   # Plugin docs
 ├── docs/                           # Documentation
 │   ├── GETTING-STARTED.md
-│   ├── setup-requirements.md
+│   ├── SETUP-REQUIREMENTS.md
 │   ├── BEST-PRACTICES.md
-│   ├── troubleshooting.md
+│   ├── TROUBLESHOOTING.md
 │   ├── FAQ.md
 │   ├── LS-HOSTING-INTEGRATION.md
 │   └── ... (14+ guides)
@@ -107,9 +107,9 @@ less ./skill/IMPROVEMENTS.md  # Changelog & roadmap
 - **[README.md](./README.md)** — Project overview and features
 - **[AGENTS.md](./AGENTS.md)** — Available agents and skills
 - **[docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)** — First migration walkthrough
-- **[docs/setup-requirements.md](./docs/setup-requirements.md)** — Dependencies and system setup
+- **[docs/SETUP-REQUIREMENTS.md](./docs/SETUP-REQUIREMENTS.md)** — Dependencies and system setup
 - **[docs/BEST-PRACTICES.md](./docs/BEST-PRACTICES.md)** — Safe migration strategies
-- **[docs/troubleshooting.md](./docs/troubleshooting.md)** — Problem solving
+- **[docs/TROUBLESHOOTING.md](./docs/TROUBLESHOOTING.md)** — Problem solving
 - **[docs/FAQ.md](./docs/FAQ.md)** — 30+ common questions
 - **[docs/LS-HOSTING-INTEGRATION.md](./docs/LS-HOSTING-INTEGRATION.md)** — Complete workflows
 
@@ -201,7 +201,7 @@ git status
 ## 📖 Team Collaboration
 
 ### For Team Members
-1. Clone and setup: See [docs/setup-requirements.md](./docs/setup-requirements.md)
+1. Clone and setup: See [docs/SETUP-REQUIREMENTS.md](./docs/SETUP-REQUIREMENTS.md)
 2. Enable skill: Settings → Skills → wp-db-migrate
 3. Run preflight check: `./skill/scripts/preflight-check.sh`
 4. Start with getting started guide: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
@@ -300,7 +300,7 @@ Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
 
 - **Skill Documentation**: `skill/SKILL.md`
 - **FAQ**: `docs/FAQ.md` (30+ answers)
-- **Troubleshooting**: `docs/troubleshooting.md`
+- **Troubleshooting**: `docs/TROUBLESHOOTING.md`
 - **Getting Started**: `docs/GETTING-STARTED.md`
 - **Best Practices**: `docs/BEST-PRACTICES.md`
 

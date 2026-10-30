@@ -334,7 +334,7 @@ cd ~/.claude/skills/wp-db-migrate
 
 ### 6.1 Check Setup Documentation
 **Have team member review:**
-- [ ] ✓ [Setup Requirements](./setup-requirements.md) — Accurate for their machine
+- [ ] ✓ [Setup Requirements](./SETUP-REQUIREMENTS.md) — Accurate for their machine
 - [ ] ✓ [Onboarding Checklist](./ONBOARDING-CHECKLIST.md) — Easy to follow
 - [ ] ✓ [Getting Started](./GETTING-STARTED.md) — Covers what they just did
 
@@ -344,7 +344,7 @@ cd ~/.claude/skills/wp-db-migrate
 - Did they need additional help?
 
 ### 6.2 Check Troubleshooting Guide
-- [ ] ✓ [Troubleshooting](./troubleshooting.md) — Covers errors they encountered
+- [ ] ✓ [Troubleshooting](./TROUBLESHOOTING.md) — Covers errors they encountered
 - [ ] ✓ [FAQ](./FAQ.md) — Answers their questions
 - [ ] ✓ [Best Practices](./BEST-PRACTICES.md) — Clear and actionable
 

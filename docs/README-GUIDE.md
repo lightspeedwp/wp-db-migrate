@@ -6,7 +6,7 @@ Welcome to the wp-db-migrate documentation. This guide helps you find what you n
 
 **Start here if you're new:**
 
-1. **[Setup Requirements](./setup-requirements.md)** — Verify your machine is ready (2 min)
+1. **[Setup Requirements](./SETUP-REQUIREMENTS.md)** — Verify your machine is ready (2 min)
 2. **[Team Installation Guide](./TEAM-INSTALLATION.md)** — Install in Claude for your team (5 min)
 3. **[Getting Started](./GETTING-STARTED.md)** — Your first migration in 5 minutes
 4. **[Quick FAQ](./FAQ.md)** — Answers to 30+ common questions
@@ -46,7 +46,7 @@ Welcome to the wp-db-migrate documentation. This guide helps you find what you n
 - Custom table exclusions
 
 #### I want it to be reliable
-→ **[Reliability & Error Recovery](./reliability.md)**
+→ **[Reliability & Error Recovery](./RELIABILITY.md)**
 - Automatic error detection
 - Recovery checkpoints
 - Failure type reference (6 types)
@@ -73,7 +73,7 @@ Welcome to the wp-db-migrate documentation. This guide helps you find what you n
 - Post-import validation
 
 #### Something went wrong
-→ **[Troubleshooting](./troubleshooting.md)**
+→ **[Troubleshooting](./TROUBLESHOOTING.md)**
 - Common error messages
 - Performance issues
 - SSH problems
@@ -97,7 +97,7 @@ docs/
 ├── README-GUIDE.md (← you are here)
 │   └── Navigation & overview
 │
-├── setup-requirements.md ⭐ START HERE
+├── SETUP-REQUIREMENTS.md ⭐ START HERE
 │   └── Verify dependencies & team setup
 │
 ├── TEAM-INSTALLATION.md
@@ -115,7 +115,7 @@ docs/
 ├── ADVANCED.md
 │   └── Power features & optimization
 │
-├── reliability.md
+├── RELIABILITY.md
 │   └── Error recovery & resilience
 │
 ├── ANALYTICS.md
@@ -124,7 +124,7 @@ docs/
 ├── FAQ.md
 │   └── 30+ common questions
 │
-└── troubleshooting.md
+└── TROUBLESHOOTING.md
     └── Diagnose & fix issues
 ```
 
@@ -168,11 +168,11 @@ docs/
 ## 🔍 Search by Topic
 
 ### Installation & Setup
-- **Check dependencies?** → [Setup Requirements](./setup-requirements.md)
+- **Check dependencies?** → [Setup Requirements](./SETUP-REQUIREMENTS.md)
 - **Verify all tools installed?** → Run: `./skill/scripts/setup-dependencies.sh`
 - **First time?** → [Team Installation Guide](./TEAM-INSTALLATION.md)
-- **Dependencies?** → [Setup Requirements](./setup-requirements.md#required-dependencies)
-- **Troubleshooting install?** → [Setup Requirements](./setup-requirements.md#troubleshooting)
+- **Dependencies?** → [Setup Requirements](./SETUP-REQUIREMENTS.md#required-dependencies)
+- **Troubleshooting install?** → [Setup Requirements](./SETUP-REQUIREMENTS.md#troubleshooting)
 
 ### Basic Usage
 - **Quick start (5 min)?** → [Getting Started](./GETTING-STARTED.md)
@@ -190,9 +190,9 @@ docs/
 - **Parallel processing?** → [Advanced Usage](./ADVANCED.md#parallel-processing)
 
 ### Reliability
-- **Migration failed?** → [Reliability](./reliability.md)
-- **Error recovery?** → [Reliability](./reliability.md#error-recovery)
-- **Checkpoint recovery?** → [Reliability](./reliability.md#recovery-checkpoints)
+- **Migration failed?** → [Reliability](./RELIABILITY.md)
+- **Error recovery?** → [Reliability](./RELIABILITY.md#error-recovery)
+- **Checkpoint recovery?** → [Reliability](./RELIABILITY.md#recovery-checkpoints)
 
 ### Analytics
 - **Where are reports?** → [Analytics](./ANALYTICS.md#accessing-reports)
@@ -200,9 +200,9 @@ docs/
 - **CI/CD integration?** → [Analytics](./ANALYTICS.md#cicd-integration)
 
 ### Troubleshooting
-- **Common errors?** → [Troubleshooting](./troubleshooting.md#error-messages)
-- **Performance issues?** → [Troubleshooting](./troubleshooting.md#performance-issues)
-- **SSH problems?** → [Troubleshooting](./troubleshooting.md#ssh-connection-problems)
+- **Common errors?** → [Troubleshooting](./TROUBLESHOOTING.md#error-messages)
+- **Performance issues?** → [Troubleshooting](./TROUBLESHOOTING.md#performance-issues)
+- **SSH problems?** → [Troubleshooting](./TROUBLESHOOTING.md#ssh-connection-problems)
 
 ### Questions
 - **General Q&A?** → [FAQ](./FAQ.md#general-questions)
@@ -215,7 +215,7 @@ docs/
 ## 📋 Learning Paths
 
 ### Path 1: Getting Started (35 minutes)
-1. [Setup Requirements](./setup-requirements.md) — 5 min (verify dependencies)
+1. [Setup Requirements](./SETUP-REQUIREMENTS.md) — 5 min (verify dependencies)
 2. [Team Installation](./TEAM-INSTALLATION.md) — 10 min
 3. [Getting Started](./GETTING-STARTED.md) — 10 min
 4. [FAQ](./FAQ.md) — 10 min
@@ -227,13 +227,13 @@ docs/
 3. [Best Practices](./BEST-PRACTICES.md) — 20 min
 4. [Configuration](./CONFIGURATION.md) — 15 min
 5. [Advanced Usage](./ADVANCED.md) — 20 min
-6. [Reliability](./reliability.md) — 20 min
+6. [Reliability](./RELIABILITY.md) — 20 min
 7. [Analytics](./ANALYTICS.md) — 15 min
 **Result:** Expert user
 
 ### Path 3: Troubleshooting (15 minutes)
-1. [Troubleshooting](./troubleshooting.md) — Find your error
-2. [Reliability](./reliability.md) — Get recovery steps
+1. [Troubleshooting](./TROUBLESHOOTING.md) — Find your error
+2. [Reliability](./RELIABILITY.md) — Get recovery steps
 3. [FAQ](./FAQ.md) — Check Q&A
 **Result:** Issue resolved
 
@@ -252,12 +252,12 @@ docs/
 1. Start with [Getting Started](./GETTING-STARTED.md)
 2. Then [Best Practices](./BEST-PRACTICES.md)
 3. Check [FAQ](./FAQ.md) for common questions
-4. Refer to [Troubleshooting](./troubleshooting.md) if issues arise
+4. Refer to [Troubleshooting](./TROUBLESHOOTING.md) if issues arise
 
 ### Intermediate (A few migrations under belt)
 1. Review [Configuration](./CONFIGURATION.md) for team setup
 2. Explore [Advanced Usage](./ADVANCED.md) for optimization
-3. Read [Reliability](./reliability.md) for error handling
+3. Read [Reliability](./RELIABILITY.md) for error handling
 4. Study [Analytics](./ANALYTICS.md) for performance tracking
 
 ### Advanced (Building team workflows)
@@ -265,29 +265,29 @@ docs/
 2. Deep dive into [Advanced Usage](./ADVANCED.md)
 3. Design [Configuration](./CONFIGURATION.md) profiles
 4. Set up [Analytics](./ANALYTICS.md) CI/CD integration
-5. Create recovery procedures with [Reliability](./reliability.md)
+5. Create recovery procedures with [Reliability](./RELIABILITY.md)
 
 ---
 
 ## 🤝 For Teams
 
 ### Team Lead Checklist
-- [ ] Verify your own [Setup Requirements](./setup-requirements.md)
+- [ ] Verify your own [Setup Requirements](./SETUP-REQUIREMENTS.md)
 - [ ] Review team's dependency needs (run `./skill/scripts/setup-dependencies.sh`)
 - [ ] Read [Team Installation](./TEAM-INSTALLATION.md)
 - [ ] Review [Best Practices](./BEST-PRACTICES.md)
 - [ ] Create team `.wp-db-migrate.conf` file
 - [ ] Set up [Analytics](./ANALYTICS.md) reporting
 - [ ] Document your team's [Configuration](./CONFIGURATION.md) profiles
-- [ ] Create recovery runbook from [Reliability](./reliability.md)
+- [ ] Create recovery runbook from [Reliability](./RELIABILITY.md)
 
 ### Team Member Setup
-- [ ] Run [Setup Requirements](./setup-requirements.md) verification
+- [ ] Run [Setup Requirements](./SETUP-REQUIREMENTS.md) verification
 - [ ] Install missing dependencies if needed
 - [ ] Follow [Team Installation](./TEAM-INSTALLATION.md)
 - [ ] Read [Getting Started](./GETTING-STARTED.md)
 - [ ] Study [Best Practices](./BEST-PRACTICES.md)
-- [ ] Bookmark [Troubleshooting](./troubleshooting.md)
+- [ ] Bookmark [Troubleshooting](./TROUBLESHOOTING.md)
 - [ ] Check [FAQ](./FAQ.md) for common questions
 
 ---
@@ -306,16 +306,16 @@ docs/
 
 | Guide | Focus | Read Time | Best For |
 |-------|-------|-----------|----------|
-| [Setup Requirements](./setup-requirements.md) | Dependencies | 10 min | Verify machine setup |
+| [Setup Requirements](./SETUP-REQUIREMENTS.md) | Dependencies | 10 min | Verify machine setup |
 | [Team Installation](./TEAM-INSTALLATION.md) | Installation | 20 min | Teams & CI/CD |
 | [Getting Started](./GETTING-STARTED.md) | Basics | 5 min | First migration |
 | [Configuration](./CONFIGURATION.md) | Setup | 15 min | Team profiles |
 | [Best Practices](./BEST-PRACTICES.md) | Strategy | 15 min | Safe migrations |
 | [Advanced](./ADVANCED.md) | Power features | 25 min | Optimization |
-| [Reliability](./reliability.md) | Error handling | 20 min | Resilience |
+| [Reliability](./RELIABILITY.md) | Error handling | 20 min | Resilience |
 | [Analytics](./ANALYTICS.md) | Metrics | 20 min | Performance |
 | [FAQ](./FAQ.md) | Q&A | 10 min | Quick answers |
-| [Troubleshooting](./troubleshooting.md) | Problem-solving | 15 min | Fixing issues |
+| [Troubleshooting](./TROUBLESHOOTING.md) | Problem-solving | 15 min | Fixing issues |
 
 ---
 
@@ -331,7 +331,7 @@ docs/
 → Check [FAQ](./FAQ.md) first (covers most questions)
 
 **Something broken?**
-→ Go to [Troubleshooting](./troubleshooting.md)
+→ Go to [Troubleshooting](./TROUBLESHOOTING.md)
 
 **Want to optimize?**
 → Read [Advanced Usage](./ADVANCED.md) then [Analytics](./ANALYTICS.md)

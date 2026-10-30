@@ -65,7 +65,7 @@ This walks you through:
 
 ## 📖 Essential Reading (in order)
 
-1. **[Setup Requirements](./setup-requirements.md)** (5 min)
+1. **[Setup Requirements](./SETUP-REQUIREMENTS.md)** (5 min)
    - System requirements
    - What tools you need (wp-cli, studio-cli, etc.)
    - Dependency verification
@@ -85,7 +85,7 @@ This walks you through:
    - 30+ common questions answered
    - Quick reference guide
 
-5. **[Troubleshooting](./troubleshooting.md)** (when needed)
+5. **[Troubleshooting](./TROUBLESHOOTING.md)** (when needed)
    - Common errors and solutions
    - Recovery procedures
 
@@ -335,11 +335,11 @@ Full guide: **[Best Practices](./BEST-PRACTICES.md)**
 
 ## 🆘 Troubleshooting Quick Links
 
-- **SSH connection failed?** → [Troubleshooting: SSH](./troubleshooting.md#ssh-connection-issues)
-- **Import failed?** → [Troubleshooting: Import](./troubleshooting.md#database-import-failed)
-- **Slow migration?** → [Troubleshooting: Performance](./troubleshooting.md#migration-is-too-slow)
-- **URL replacement issues?** → [Troubleshooting: URLs](./troubleshooting.md#url-replacement-issues)
-- **Still stuck?** → [Full Troubleshooting Guide](./troubleshooting.md)
+- **SSH connection failed?** → [Troubleshooting: SSH](./TROUBLESHOOTING.md#ssh-connection-issues)
+- **Import failed?** → [Troubleshooting: Import](./TROUBLESHOOTING.md#database-import-failed)
+- **Slow migration?** → [Troubleshooting: Performance](./TROUBLESHOOTING.md#migration-is-too-slow)
+- **URL replacement issues?** → [Troubleshooting: URLs](./TROUBLESHOOTING.md#url-replacement-issues)
+- **Still stuck?** → [Full Troubleshooting Guide](./TROUBLESHOOTING.md)
 
 ---
 
@@ -360,7 +360,7 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 ## 🎓 Getting Help
 
 1. **Check [FAQ](./FAQ.md)** — Answers 30+ common questions
-2. **Read [Troubleshooting](./troubleshooting.md)** — Problem-solving guide
+2. **Read [Troubleshooting](./TROUBLESHOOTING.md)** — Problem-solving guide
 3. **Run setup check** — `./skill/scripts/setup-dependencies.sh --verbose`
 4. **Use WordPress skills** — `/wp-plugin-development`, `/wp-block-development`, etc.
 5. **Ask your team lead** — Your team has setup experience
@@ -371,17 +371,17 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 ## 📚 Full Documentation
 
 - [Documentation Hub](./README-GUIDE.md) — All guides organized
-- [Setup Requirements](./setup-requirements.md) — Dependencies & system setup
+- [Setup Requirements](./SETUP-REQUIREMENTS.md) — Dependencies & system setup
 - [Team Installation](./TEAM-INSTALLATION.md) — Install for your team
 - [Onboarding Checklist](./ONBOARDING-CHECKLIST.md) — Step-by-step setup
 - [Getting Started](./GETTING-STARTED.md) — First migration guide
 - [Best Practices](./BEST-PRACTICES.md) — Safe strategies
 - [Advanced Usage](./ADVANCED.md) — Power features
-- [Reliability Guide](./reliability.md) — Error recovery
+- [Reliability Guide](./RELIABILITY.md) — Error recovery
 - [Analytics Guide](./ANALYTICS.md) — Performance tracking
 - [Configuration Guide](./CONFIGURATION.md) — Setup & profiles
 - [FAQ](./FAQ.md) — Common questions
-- [Troubleshooting](./troubleshooting.md) — Problem solving
+- [Troubleshooting](./TROUBLESHOOTING.md) — Problem solving
 
 ---
 
@@ -425,7 +425,7 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 
 **Ready to migrate?** Start with [Getting Started](./GETTING-STARTED.md)
 
-**Need help?** See [Troubleshooting](./troubleshooting.md)
+**Need help?** See [Troubleshooting](./TROUBLESHOOTING.md)
 
 ---
 

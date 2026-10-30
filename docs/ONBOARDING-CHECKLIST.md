@@ -49,10 +49,10 @@ If the dependency check showed missing tools:
 ./skill/scripts/setup-dependencies.sh --install
 
 # OR install manually (see Setup Requirements guide)
-# Individual tool installation docs: ~/.claude/skills/wp-db-migrate/docs/setup-requirements.md
+# Individual tool installation docs: ~/.claude/skills/wp-db-migrate/docs/SETUP-REQUIREMENTS.md
 ```
 
-**Troubleshooting:** See [Setup Requirements Guide](./setup-requirements.md#troubleshooting)
+**Troubleshooting:** See [Setup Requirements Guide](./SETUP-REQUIREMENTS.md#troubleshooting)
 
 - [ ] Missing dependencies installed (if any)
 - [ ] Re-run dependency check to verify: `./skill/scripts/setup-dependencies.sh`
@@ -203,11 +203,11 @@ Open and read: [Best Practices Guide](./BEST-PRACTICES.md)
 
 Bookmark these links for quick reference:
 
-- [ ] [Setup Requirements](./setup-requirements.md) — Dependencies & troubleshooting
+- [ ] [Setup Requirements](./SETUP-REQUIREMENTS.md) — Dependencies & troubleshooting
 - [ ] [Team Installation](./TEAM-INSTALLATION.md) — How to install for your team
 - [ ] [FAQ](./FAQ.md) — 30+ common questions
-- [ ] [Troubleshooting](./troubleshooting.md) — Problem solving guide
-- [ ] [Reliability Guide](./reliability.md) — Error recovery & resilience
+- [ ] [Troubleshooting](./TROUBLESHOOTING.md) — Problem solving guide
+- [ ] [Reliability Guide](./RELIABILITY.md) — Error recovery & resilience
 
 ---
 
@@ -257,7 +257,7 @@ Choose based on what you need to do:
 → Follow [Getting Started](./GETTING-STARTED.md)
 
 **I need to understand error recovery:**
-→ Read [Reliability Guide](./reliability.md)
+→ Read [Reliability Guide](./RELIABILITY.md)
 
 **I want to optimize performance:**
 → Read [Advanced Usage](./ADVANCED.md)
@@ -266,7 +266,7 @@ Choose based on what you need to do:
 → Check [FAQ](./FAQ.md)
 
 **Something isn't working:**
-→ Check [Troubleshooting](./troubleshooting.md)
+→ Check [Troubleshooting](./TROUBLESHOOTING.md)
 
 ---
 
@@ -275,7 +275,7 @@ Choose based on what you need to do:
 ### "Dependency check failed"
 
 **Solution:**
-1. Read: [Setup Requirements: Troubleshooting](./setup-requirements.md#troubleshooting)
+1. Read: [Setup Requirements: Troubleshooting](./SETUP-REQUIREMENTS.md#troubleshooting)
 2. Run: `./skill/scripts/setup-dependencies.sh --verbose`
 3. Install missing tools: `./skill/scripts/setup-dependencies.sh --install`
 
@@ -285,7 +285,7 @@ Choose based on what you need to do:
 1. Check Node.js version: `node --version` (should be 14+)
 2. Clear npm cache: `npm cache clean --force`
 3. Try again: `npm install`
-4. If still failing, check [setup-requirements.md](./setup-requirements.md)
+4. If still failing, check [SETUP-REQUIREMENTS.md](./SETUP-REQUIREMENTS.md)
 
 ### "Tests are failing"
 
@@ -307,8 +307,8 @@ Choose based on what you need to do:
 **Get help:**
 1. Ask your team lead
 2. Check [FAQ](./FAQ.md) for common questions
-3. Search [Troubleshooting Guide](./troubleshooting.md)
-4. Read [Reliability Guide](./reliability.md) for error recovery
+3. Search [Troubleshooting Guide](./TROUBLESHOOTING.md)
+4. Read [Reliability Guide](./RELIABILITY.md) for error recovery
 
 ---
 
@@ -333,8 +333,8 @@ Before you consider yourself "onboarded", verify all of these:
 **Before asking for help, try:**
 1. Running dependency check: `./skill/scripts/setup-dependencies.sh --verbose`
 2. Checking the [FAQ](./FAQ.md)
-3. Reading [Troubleshooting Guide](./troubleshooting.md)
-4. Searching [Reliability Guide](./reliability.md)
+3. Reading [Troubleshooting Guide](./TROUBLESHOOTING.md)
+4. Searching [Reliability Guide](./RELIABILITY.md)
 
 **If you're still stuck:**
 - Ask your team lead
@@ -354,11 +354,11 @@ Before you consider yourself "onboarded", verify all of these:
 **Documentation Links:**
 - [Team Installation Guide](./TEAM-INSTALLATION.md)
 - [Getting Started](./GETTING-STARTED.md)
-- [Setup Requirements](./setup-requirements.md)
+- [Setup Requirements](./SETUP-REQUIREMENTS.md)
 - [Best Practices](./BEST-PRACTICES.md)
 - [FAQ](./FAQ.md)
-- [Troubleshooting](./troubleshooting.md)
-- [Reliability Guide](./reliability.md)
+- [Troubleshooting](./TROUBLESHOOTING.md)
+- [Reliability Guide](./RELIABILITY.md)
 - [Advanced Usage](./ADVANCED.md)
 - [Analytics Guide](./ANALYTICS.md)
 - [Documentation Hub](./README-GUIDE.md)

@@ -327,7 +327,7 @@ Once installed and working:
 2. **Review [Best Practices](./BEST-PRACTICES.md)** — Safe migration strategies
 3. **Set up config file** — See [Configuration Guide](./CONFIGURATION.md)
 4. **Run your first migration** — Try a staging → local clone
-5. **Check [Reliability Guide](./reliability.md)** — Understand error recovery
+5. **Check [Reliability Guide](./RELIABILITY.md)** — Understand error recovery
 6. **Review [Analytics Guide](./ANALYTICS.md)** — Understand performance reports
 
 ---
@@ -407,9 +407,9 @@ EOF
 
 - **Installation issues?** → See troubleshooting section above
 - **Usage questions?** → See [FAQ](./FAQ.md)
-- **Errors during migration?** → See [Troubleshooting](./troubleshooting.md)
+- **Errors during migration?** → See [Troubleshooting](./TROUBLESHOOTING.md)
 - **Want to optimize?** → See [Best Practices](./BEST-PRACTICES.md)
-- **Need recovery help?** → See [Reliability Guide](./reliability.md)
+- **Need recovery help?** → See [Reliability Guide](./RELIABILITY.md)
 
 ---
 

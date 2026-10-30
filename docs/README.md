@@ -45,7 +45,7 @@ This documentation library covers everything you need to know about using the wp
   - Troubleshooting quick answers
   - SSH export questions
 
-- **[Troubleshooting](./troubleshooting.md)** — Diagnosis and solutions
+- **[Troubleshooting](./TROUBLESHOOTING.md)** — Diagnosis and solutions
   - Common error messages
   - Performance issues
   - SSH connection problems
@@ -53,7 +53,7 @@ This documentation library covers everything you need to know about using the wp
   - Validation errors
   - Recovery procedures
 
-- **[Reliability & Error Recovery](./reliability.md)** — Build confidence in migrations
+- **[Reliability & Error Recovery](./RELIABILITY.md)** — Build confidence in migrations
   - Automatic error detection and classification
   - Recovery checkpoints at each stage
   - Failure type reference and remediation
@@ -76,11 +76,11 @@ This documentation library covers everything you need to know about using the wp
 
 **Want to optimize?** → Check [Advanced Usage](./ADVANCED.md)
 
-**Want to build confidence?** → Learn [Reliability & Error Recovery](./reliability.md)
+**Want to build confidence?** → Learn [Reliability & Error Recovery](./RELIABILITY.md)
 
 **Want to track performance?** → See [Analytics & Reporting](./ANALYTICS.md)
 
-**Something broken?** → Visit [Troubleshooting](./troubleshooting.md)
+**Something broken?** → Visit [Troubleshooting](./TROUBLESHOOTING.md)
 
 **Have a question?** → Try [FAQ](./FAQ.md)
 
@@ -117,7 +117,7 @@ This documentation library covers everything you need to know about using the wp
 
 - **For setup issues** → [Getting Started](./GETTING-STARTED.md)
 - **For command-line options** → Run `./wp-migrate-clone-to-studio.sh --help`
-- **For errors** → [Troubleshooting](./troubleshooting.md)
+- **For errors** → [Troubleshooting](./TROUBLESHOOTING.md)
 - **For advanced features** → [Advanced Usage](./ADVANCED.md)
 
 ## Version Information
@@ -130,5 +130,5 @@ This documentation library covers everything you need to know about using the wp
 
 For issues, questions, or feature requests:
 - Check [FAQ](./FAQ.md) for common questions
-- Review [Troubleshooting](./troubleshooting.md) for known issues
+- Review [Troubleshooting](./TROUBLESHOOTING.md) for known issues
 - See [Best Practices](./BEST-PRACTICES.md) for optimization advice

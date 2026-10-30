@@ -70,9 +70,9 @@ Install at: `~/.claude/skills/wordpress-agent/`
 ## 📖 Documentation
 
 - **[Getting Started](./docs/GETTING-STARTED.md)** — First migration in 5 minutes
-- **[Setup Requirements](./docs/setup-requirements.md)** — Dependencies and system setup
+- **[Setup Requirements](./docs/SETUP-REQUIREMENTS.md)** — Dependencies and system setup
 - **[Best Practices](./docs/BEST-PRACTICES.md)** — Safe migration strategies
-- **[Troubleshooting](./docs/troubleshooting.md)** — Problem solving guide
+- **[Troubleshooting](./docs/TROUBLESHOOTING.md)** — Problem solving guide
 - **[ls-hosting Integration](./docs/LS-HOSTING-INTEGRATION.md)** — End-to-end workflows
 - **[FAQ](./docs/FAQ.md)** — 30+ common questions answered
 

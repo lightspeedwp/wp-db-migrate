@@ -385,5 +385,5 @@ Use with LightSpeed hosting skills:
 **See also:**
 - [Getting Started](./GETTING-STARTED.md) — Basic migration
 - [Best Practices](./BEST-PRACTICES.md) — Safe strategies
-- [Troubleshooting](./troubleshooting.md) — Problem solving
+- [Troubleshooting](./TROUBLESHOOTING.md) — Problem solving
 - [Advanced Usage](./ADVANCED.md) — Power features

@@ -381,7 +381,7 @@ The tool detects the failure, classifies it, and provides recovery guidance:
 3. **Remediation guidance** — Provides specific recovery steps for that failure type
 4. **Partial rollback available** — Can clean up incomplete data if needed
 
-See [Reliability Guide](./reliability.md) for all failure types and recovery procedures.
+See [Reliability Guide](./RELIABILITY.md) for all failure types and recovery procedures.
 
 ### Can I rollback if import fails?
 
@@ -500,9 +500,9 @@ Reports are enabled by default since they're useful for documentation and optimi
 - **Configuration help?** → [Configuration Guide](./CONFIGURATION.md)
 - **Performance issues?** → [Best Practices](./BEST-PRACTICES.md)
 - **Advanced features?** → [Advanced Usage](./ADVANCED.md)
-- **Want reliability?** → [Reliability & Error Recovery](./reliability.md)
+- **Want reliability?** → [Reliability & Error Recovery](./RELIABILITY.md)
 - **Want analytics?** → [Analytics & Reporting](./ANALYTICS.md)
-- **Problem solving?** → [Troubleshooting](./troubleshooting.md)
+- **Problem solving?** → [Troubleshooting](./TROUBLESHOOTING.md)
 - **Run the help command:**
   ```bash
   ./wp-migrate-clone-to-studio.sh --help

@@ -431,7 +431,7 @@ npm run format:check
 
 ## Support
 
-- **Setup issues?** → Check [troubleshooting](./troubleshooting.md) section
+- **Setup issues?** → Check [troubleshooting](./TROUBLESHOOTING.md) section
 - **Dependency help?** → Run `./skill/scripts/setup-dependencies.sh --help`
 - **General questions?** → See [FAQ](./FAQ.md)
 
