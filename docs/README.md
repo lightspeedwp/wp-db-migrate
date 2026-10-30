@@ -53,6 +53,21 @@ This documentation library covers everything you need to know about using the wp
   - Validation errors
   - Recovery procedures
 
+- **[Reliability & Error Recovery](./reliability.md)** — Build confidence in migrations
+  - Automatic error detection and classification
+  - Recovery checkpoints at each stage
+  - Failure type reference and remediation
+  - Partial import rollback options
+  - Best practices for robust migrations
+
+- **[Analytics & Reporting](./analytics.md)** — Track and optimize migrations
+  - Migration performance metrics
+  - Three report formats (Markdown, JSON, CSV)
+  - Understanding key performance indicators
+  - Compression and import throughput analysis
+  - CI/CD pipeline integration
+  - Weekly team reporting templates
+
 ## Quick Navigation
 
 **Just starting?** → Read [Getting Started](./getting-started.md)
@@ -60,6 +75,10 @@ This documentation library covers everything you need to know about using the wp
 **Need to configure?** → See [Configuration & Profiles](./configuration.md)
 
 **Want to optimize?** → Check [Advanced Usage](./advanced.md)
+
+**Want to build confidence?** → Learn [Reliability & Error Recovery](./reliability.md)
+
+**Want to track performance?** → See [Analytics & Reporting](./analytics.md)
 
 **Something broken?** → Visit [Troubleshooting](./troubleshooting.md)
 

@@ -2,6 +2,8 @@
 
 Diagnosis and solutions for common issues.
 
+> **Pro Tip:** Check the [Reliability & Error Recovery](./reliability.md) guide for proactive strategies to prevent common failures before they happen. This guide helps you fix issues after they occur.
+
 ## Error Messages
 
 ### "Studio path not found"
@@ -592,5 +594,7 @@ cat debug.log | head -200  # First 200 lines
 - [Getting Started](./getting-started.md) — Quick start
 - [Configuration Guide](./configuration.md) — Config reference
 - [Best Practices](./best-practices.md) — Safe strategies
+- [Reliability & Error Recovery](./reliability.md) — Handle failures and recover
+- [Analytics & Reporting](./analytics.md) — Track performance metrics
 - [Advanced Usage](./advanced.md) — Power features
 - [FAQ](./faq.md) — Common questions

@@ -370,12 +370,138 @@ Not directly, but you can:
 
 The tool exports the entire database, including multisite tables. Multisite URLs will need replacing separately per site.
 
+## Reliability & Error Recovery
+
+### What happens if migration fails midway?
+
+The tool detects the failure, classifies it, and provides recovery guidance:
+
+1. **Automatic detection** — Identifies what went wrong (export failure, out of memory, disk full, etc.)
+2. **Error report generated** — Documents the issue with system diagnostics
+3. **Remediation guidance** — Provides specific recovery steps for that failure type
+4. **Partial rollback available** — Can clean up incomplete data if needed
+
+See [Reliability Guide](./reliability.md) for all failure types and recovery procedures.
+
+### Can I rollback if import fails?
+
+Yes:
+- **Automatic backup** created before import
+- **Partial import detection** if import fails midway
+- **Recovery checkpoints** stored at each stage
+- **Manual rollback commands** available if needed
+
+### What if the migration times out?
+
+The import may have actually completed despite the timeout:
+
+```bash
+# Check if tables were imported
+cd ~/Studio/my-site
+studio wp db tables --format=count
+
+# If tables exist, verify integrity
+studio wp db check
+```
+
+### Are recovery features always on?
+
+Yes, by default:
+```bash
+# To disable recovery (not recommended):
+./wp-migrate-clone-to-studio.sh \
+  --from https://example.com \
+  --to ~/Studio/site \
+  --disable-recovery
+```
+
+## Analytics & Reporting
+
+### Where are migration reports stored?
+
+Reports are saved to your Studio site:
+```
+~/Studio/my-site/.reports/
+├── migration-report.md     # Human-readable summary
+├── metrics.json           # Machine-readable data
+└── table-statistics.csv   # Spreadsheet format
+```
+
+Or specify a custom directory:
+```bash
+./wp-migrate-clone-to-studio.sh \
+  --from https://example.com \
+  --to ~/Studio/site \
+  --reports-dir ~/migration-reports
+```
+
+### What do the reports tell me?
+
+**Markdown Report:**
+- Total time and stage breakdown
+- Compression effectiveness
+- Import throughput
+- Table statistics
+
+**JSON Report:**
+- Machine-readable format for CI/CD
+- All metrics with units
+- Stage timing and status
+
+**CSV Report:**
+- Table-by-table breakdown
+- Row counts and sizes
+- Suitable for analysis in Excel
+
+See [Analytics Guide](./analytics.md) for detailed explanations.
+
+### How can I use reports in CI/CD?
+
+Parse the JSON report in your CI pipeline:
+
+```yaml
+- name: Parse migration metrics
+  run: |
+    DURATION=$(jq '.migration.duration_seconds' reports/metrics.json)
+    TABLES=$(jq '.metrics.total_tables.value' reports/metrics.json)
+    echo "Migrated $TABLES tables in ${DURATION}s"
+```
+
+### Why is my import speed slow?
+
+Check your import throughput in the report:
+- `>2 MB/s` = Good
+- `1-2 MB/s` = Try increasing jobs: `--jobs 8`
+- `<1 MB/s` = Check disk speed, memory, other processes
+
+Exclude large tables to speed up:
+```bash
+./wp-migrate-clone-to-studio.sh \
+  --from https://example.com \
+  --to ~/Studio/site \
+  --exclude-tables wp_postmeta,wp_actionscheduler_logs
+```
+
+### Can I disable reports if I don't need them?
+
+Yes, to skip report generation:
+```bash
+./wp-migrate-clone-to-studio.sh \
+  --from https://example.com \
+  --to ~/Studio/site \
+  --disable-reports
+```
+
+Reports are enabled by default since they're useful for documentation and optimization.
+
 ## Need More Help?
 
 - **Getting started?** → [Getting Started](./getting-started.md)
 - **Configuration help?** → [Configuration Guide](./configuration.md)
 - **Performance issues?** → [Best Practices](./best-practices.md)
 - **Advanced features?** → [Advanced Usage](./advanced.md)
+- **Want reliability?** → [Reliability & Error Recovery](./reliability.md)
+- **Want analytics?** → [Analytics & Reporting](./analytics.md)
 - **Problem solving?** → [Troubleshooting](./troubleshooting.md)
 - **Run the help command:**
   ```bash
