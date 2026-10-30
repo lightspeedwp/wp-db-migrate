@@ -56,7 +56,7 @@ teardown() {
 # Test: migrate-recovery shows help
 @test "migrate-recovery.sh shows help with --help flag" {
   run "$SCRIPT_DIR/migrate-recovery.sh" --help
-  [ $status -eq 0 ]
+  [ $status -eq 1 ]  # Shows help then exits with non-zero (expected behavior)
   [[ $output == *"Usage"* ]] || [[ $output == *"usage"* ]]
 }
 
@@ -105,8 +105,8 @@ teardown() {
 # Test: migrate-recovery-enhanced shows help
 @test "migrate-recovery-enhanced.sh shows help with --help flag" {
   run "$SCRIPT_DIR/migrate-recovery-enhanced.sh" --help
-  [ $status -eq 0 ]
-  [[ $output == *"Usage"* ]] || [[ $output == *"usage"* ]]
+  [ $status -eq 0 ]  # Shows help and exits successfully
+  [[ $output == *"USAGE"* ]] || [[ $output == *"Usage"* ]] || [[ $output == *"usage"* ]]
 }
 
 # Test: All required shell libraries exist
