@@ -313,23 +313,44 @@ studio open my-project
 
 ### With WordPress Agent Skills
 
-After setup, use WordPress agent skills for WordPress-specific help:
+After setup, use individual WordPress agent skills for WordPress-specific help:
 
+**For Plugin Development:**
 ```bash
-# Get theme info
-/wordpress-agent theme-debug
-
-# Find hooks
-/wordpress-agent hook-finder wp_head
-
-# Get plugin details
-/wordpress-agent plugin-info wp-db-migrate
-
-# Debug installation
-/wordpress-agent health-check
+/wp-plugin-development
+# Guides on plugin architecture, hooks, settings API, security
 ```
 
-Install globally at `~/.claude/skills/wordpress-agent/` for availability across all projects.
+**For Block/Theme Development:**
+```bash
+/wp-block-development
+# Gutenberg blocks: block.json, attributes, deprecations
+
+/wp-block-themes
+# Block themes: theme.json, templates, patterns
+```
+
+**For General WordPress Operations:**
+```bash
+/wp-wpcli-and-ops
+# WP-CLI commands, multisite, automation
+
+/wp-rest-api
+# REST API routing, endpoints, authentication
+```
+
+**Available Skills at `~/.claude/skills/wordpress-agent/`:**
+- `wp-plugin-development` — Plugin architecture and security
+- `wp-block-development` — Gutenberg blocks
+- `wp-block-themes` — Block theme development
+- `wp-rest-api` — REST API patterns
+- `wp-wpcli-and-ops` — WP-CLI and operations
+- `wp-performance` — Profiling and optimization
+- `wp-interactivity-api` — Frontend interactivity with data-wp directives
+- `wp-abilities-api` — Capability-based permissions
+- And more... (see `~/.claude/skills/wordpress-agent/README.md`)
+
+Skills are available globally and automatically loaded when you invoke them in Claude.
 
 ### With VS Code
 

@@ -28,8 +28,8 @@ cd wordpress-agent
 **Step 3: Test availability in Claude**
 - Restart Claude Code
 - Go to Settings → Skills
-- Verify `wordpress-agent` appears in list
-- Test with: `/wordpress-agent --help`
+- Verify WordPress agent skills appear (e.g., `wp-plugin-development`, `wp-block-development`)
+- Test with: `/wp-plugin-development` or `/wp-block-development`
 
 ### For Team Distribution
 Add to `docs/ONBOARDING-CHECKLIST.md`:
@@ -256,9 +256,10 @@ studio open my-project
 # 2. Open VS Code for theme/plugin development
 code ~/.studio/sites/my-project/wp-content/themes/my-theme
 
-# 3. Use WordPress agent skills for helpers
-/wordpress-agent theme-debug
-/wordpress-agent plugin-info my-plugin
+# 3. Use WordPress agent skills for context
+/wp-block-development        # For theme block development
+/wp-plugin-development       # For plugin development
+/wp-wpcli-and-ops           # For WP-CLI commands
 ```
 
 ### Deployment (Back to Staging/Production)
