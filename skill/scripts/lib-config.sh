@@ -9,8 +9,8 @@
 #   config_require "from_url"          # Require value or fail
 #   config_apply_env_overrides         # Merge WP_DB_MIGRATE_* vars
 
-# Configuration storage (declare as global array)
-declare -gA CONFIG=()
+# Configuration storage (associative array, global scope)
+declare -A CONFIG=()
 
 # Color codes
 RED='\033[0;31m'
@@ -36,8 +36,8 @@ config_load() {
         value="${value#\"}"
         value="${value%\"}"
 
-        # Convert to lowercase for consistency
-        key_lower="${key,,}"
+        # Convert to lowercase for consistency (Bash 3.2 compatible)
+        key_lower=$(printf '%s\n' "$key" | tr '[:upper:]' '[:lower:]')
         CONFIG["$key_lower"]="$value"
     done < "$config_file"
 
@@ -48,9 +48,11 @@ config_load() {
 config_get() {
     local key="$1"
     local default="${2:-}"
+    local key_lower
+    local value
 
-    key_lower="${key,,}"
-    local value="${CONFIG[$key_lower]:-$default}"
+    key_lower=$(printf '%s\n' "$key" | tr '[:upper:]' '[:lower:]')
+    value="${CONFIG[$key_lower]:-$default}"
 
     echo "$value"
 }
@@ -58,9 +60,11 @@ config_get() {
 # Require a configuration value (fail if missing)
 config_require() {
     local key="$1"
+    local key_lower
+    local value
 
-    key_lower="${key,,}"
-    local value="${CONFIG[$key_lower]:-}"
+    key_lower=$(printf '%s\n' "$key" | tr '[:upper:]' '[:lower:]')
+    value="${CONFIG[$key_lower]:-}"
 
     if [[ -z "$value" ]]; then
         echo -e "${RED}❌ Missing required config: $key${NC}" >&2

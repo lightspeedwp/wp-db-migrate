@@ -12,9 +12,9 @@ Run the complete recovery workflow in one command:
 
 **Example:**
 ```bash
-./scripts/migrate-recovery.sh /Users/ash/Studio/the-safari-partners \
-  "https://thesafaripartners.lightspeedwp.dev" \
-  "https://thesafaripartners.local"
+./scripts/migrate-recovery.sh ~/.studio/sites/my-project \
+  "https://staging.example.com" \
+  "https://my-project.local"
 ```
 
 This walks you through all steps:
@@ -42,7 +42,7 @@ Shows:
 
 **Example:**
 ```bash
-./scripts/verify-import.sh /Users/ash/Studio/the-safari-partners
+./scripts/verify-import.sh ~/.studio/sites/my-project
 ```
 
 ---
@@ -57,9 +57,9 @@ Replace old site URL with new local URL in the entire database:
 
 **Example:**
 ```bash
-./scripts/replace-urls.sh /Users/ash/Studio/the-safari-partners \
-  "https://thesafaripartners.lightspeedwp.dev" \
-  "https://thesafaripartners.local"
+./scripts/replace-urls.sh ~/.studio/sites/my-project \
+  "https://staging.example.com" \
+  "https://my-project.local"
 ```
 
 ---
@@ -74,7 +74,7 @@ Start the WordPress Studio server:
 
 **Example:**
 ```bash
-./scripts/start-server.sh /Users/ash/Studio/the-safari-partners
+./scripts/start-server.sh ~/.studio/sites/my-project
 ```
 
 ---
@@ -85,16 +85,16 @@ For easy access from anywhere, add these scripts to your PATH:
 
 ```bash
 # Add this to your ~/.zshrc or ~/.bash_profile
-export PATH="$PATH:/Users/ash/Studio/thisonetimeonacid/.claude/skills/wp-db-migrate/scripts"
+export PATH="$PATH:~/.claude/skills/wp-db-migrate/skill/scripts"
 ```
 
 Then you can run from anywhere:
 
 ```bash
-migrate-recovery.sh /Users/ash/Studio/the-safari-partners "https://old.com" "https://new.local"
-verify-import.sh /Users/ash/Studio/my-site
-replace-urls.sh /Users/ash/Studio/my-site "https://old.com" "https://new.local"
-start-server.sh /Users/ash/Studio/my-site
+migrate-recovery.sh ~/.studio/sites/my-project "https://old.com" "https://new.local"
+verify-import.sh ~/.studio/sites/my-project
+replace-urls.sh ~/.studio/sites/my-project "https://old.com" "https://new.local"
+start-server.sh ~/.studio/sites/my-project
 ```
 
 ---
@@ -104,7 +104,7 @@ start-server.sh /Users/ash/Studio/my-site
 ### "Permission denied"
 Make sure scripts are executable:
 ```bash
-chmod +x /Users/ash/Studio/thisonetimeonacid/.claude/skills/wp-db-migrate/scripts/*.sh
+chmod +x ~/.claude/skills/wp-db-migrate/skill/scripts/*.sh
 ```
 
 ### "Studio command not found"

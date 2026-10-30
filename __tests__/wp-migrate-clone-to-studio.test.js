@@ -23,27 +23,30 @@ describe('wp-migrate-clone-to-studio.sh — Phase 2 Orchestration', () => {
     });
 
     test('should require --from argument', () => {
+        expect.assertions(1);
         try {
             execSync(`bash "${scriptPath}" --to /tmp/test 2>&1`, { stdio: 'pipe' });
-            fail('Should have exited with error');
+            throw new Error('Should have exited with error');
         } catch (e) {
             expect(e.stdout.toString()).toContain('Error: --from URL is required');
         }
     });
 
     test('should require --to argument', () => {
+        expect.assertions(1);
         try {
             execSync(`bash "${scriptPath}" --from https://example.com 2>&1`, { stdio: 'pipe' });
-            fail('Should have exited with error');
+            throw new Error('Should have exited with error');
         } catch (e) {
             expect(e.stdout.toString()).toContain('Error: --to PATH is required');
         }
     });
 
     test('should validate Studio path exists', () => {
+        expect.assertions(1);
         try {
             execSync(`bash "${scriptPath}" --from https://example.com --to /nonexistent/path 2>&1`, { stdio: 'pipe' });
-            fail('Should have exited with error');
+            throw new Error('Should have exited with error');
         } catch (e) {
             expect(e.stdout.toString()).toContain('Error: Studio path not found');
         }

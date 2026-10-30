@@ -20,19 +20,19 @@
 
 set -euo pipefail
 
-# Report state
-declare -g REPORTS_ENABLED=false
-declare -g REPORTS_DIR=""
-declare -g MIGRATION_START_TIME=""
-declare -g MIGRATION_END_TIME=""
-declare -ga STAGES=()
-declare -gA STAGE_DURATIONS=()
-declare -gA STAGE_STATUS=()
-declare -ga TABLES=()
-declare -gA TABLE_ROWS=()
-declare -gA TABLE_SIZE=()
-declare -gA METRICS=()
-declare -gA METRIC_UNITS=()
+# Report state (global variables at script scope)
+REPORTS_ENABLED=false
+REPORTS_DIR=""
+MIGRATION_START_TIME=""
+MIGRATION_END_TIME=""
+STAGES=()
+declare -A STAGE_DURATIONS=()
+declare -A STAGE_STATUS=()
+TABLES=()
+declare -A TABLE_ROWS=()
+declare -A TABLE_SIZE=()
+declare -A METRICS=()
+declare -A METRIC_UNITS=()
 
 # Initialize reporting
 reports_init() {

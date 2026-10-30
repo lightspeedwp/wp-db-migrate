@@ -23,14 +23,14 @@
 
 set -euo pipefail
 
-# Recovery state
+# Recovery state (global variables at script scope)
 # shellcheck disable=SC2034
-declare -g RECOVERY_ENABLED=false
-declare -g RECOVERY_PATH=""
-declare -g FAILURE_TYPE=""
-declare -g RECOVERY_LOG=""
-declare -ga CHECKPOINTS=()
-declare -g LAST_CHECKPOINT=""
+RECOVERY_ENABLED=false
+RECOVERY_PATH=""
+FAILURE_TYPE=""
+RECOVERY_LOG=""
+CHECKPOINTS=()
+LAST_CHECKPOINT=""
 
 # Initialize recovery system
 recovery_init() {
