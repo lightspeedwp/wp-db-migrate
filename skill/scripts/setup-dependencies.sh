@@ -201,7 +201,7 @@ if [[ $REQUIRED_MISSING -eq 0 ]]; then
   echo -e "${GREEN}✓ All required dependencies are installed!${NC}"
   echo ""
   echo -e "${YELLOW}Next steps:${NC}"
-  echo "1. Run: cd /Users/ash/.claude/plugins/marketplaces/lightspeedwp/wp-db-migrate"
+  echo "1. Run: cd ~/.claude/skills/wp-db-migrate"
   echo "2. Run: npm install"
   echo "3. Run: ./skill/scripts/preflight-check.sh"
   echo "4. Test with: ./skill/scripts/migrate-recovery.sh --help"
