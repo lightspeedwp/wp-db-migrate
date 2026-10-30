@@ -63,12 +63,12 @@ wp-db-migrate/
 │   ├── manifest.json               # Plugin configuration
 │   └── README.md                   # Plugin docs
 ├── docs/                           # Documentation
-│   ├── getting-started.md
+│   ├── GETTING-STARTED.md
 │   ├── setup-requirements.md
-│   ├── best-practices.md
+│   ├── BEST-PRACTICES.md
 │   ├── troubleshooting.md
-│   ├── faq.md
-│   ├── ls-hosting-integration.md
+│   ├── FAQ.md
+│   ├── LS-HOSTING-INTEGRATION.md
 │   └── ... (14+ guides)
 ├── __tests__/                      # Jest test suite
 │   └── (192+ test cases)
@@ -106,12 +106,12 @@ less ./skill/IMPROVEMENTS.md  # Changelog & roadmap
 
 - **[README.md](./README.md)** — Project overview and features
 - **[AGENTS.md](./AGENTS.md)** — Available agents and skills
-- **[docs/getting-started.md](./docs/getting-started.md)** — First migration walkthrough
+- **[docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)** — First migration walkthrough
 - **[docs/setup-requirements.md](./docs/setup-requirements.md)** — Dependencies and system setup
-- **[docs/best-practices.md](./docs/best-practices.md)** — Safe migration strategies
+- **[docs/BEST-PRACTICES.md](./docs/BEST-PRACTICES.md)** — Safe migration strategies
 - **[docs/troubleshooting.md](./docs/troubleshooting.md)** — Problem solving
-- **[docs/faq.md](./docs/faq.md)** — 30+ common questions
-- **[docs/ls-hosting-integration.md](./docs/ls-hosting-integration.md)** — Complete workflows
+- **[docs/FAQ.md](./docs/FAQ.md)** — 30+ common questions
+- **[docs/LS-HOSTING-INTEGRATION.md](./docs/LS-HOSTING-INTEGRATION.md)** — Complete workflows
 
 ## 🔧 Claude Code Settings
 
@@ -204,7 +204,7 @@ git status
 1. Clone and setup: See [docs/setup-requirements.md](./docs/setup-requirements.md)
 2. Enable skill: Settings → Skills → wp-db-migrate
 3. Run preflight check: `./skill/scripts/preflight-check.sh`
-4. Start with getting started guide: [docs/getting-started.md](./docs/getting-started.md)
+4. Start with getting started guide: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 
 ### For Developers
 1. Review project structure and test suite
@@ -288,7 +288,7 @@ Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
 
 ### For Large Databases
 - Use `--exclude-tables` to skip non-essential tables
-- See [docs/large-databases.md](./docs/large-databases.md) for strategies
+- See [docs/LARGE-DATABASES.md](./docs/LARGE-DATABASES.md) for strategies
 - Test on smaller subset first
 
 ### For Fast Testing
@@ -299,10 +299,10 @@ Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
 ## 📞 Support Resources
 
 - **Skill Documentation**: `skill/SKILL.md`
-- **FAQ**: `docs/faq.md` (30+ answers)
+- **FAQ**: `docs/FAQ.md` (30+ answers)
 - **Troubleshooting**: `docs/troubleshooting.md`
-- **Getting Started**: `docs/getting-started.md`
-- **Best Practices**: `docs/best-practices.md`
+- **Getting Started**: `docs/GETTING-STARTED.md`
+- **Best Practices**: `docs/BEST-PRACTICES.md`
 
 ---
 

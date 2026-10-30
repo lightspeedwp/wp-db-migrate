@@ -466,6 +466,6 @@ Create a summary for your team:
 ## See Also
 
 - [Reliability & Error Recovery](./reliability.md) — Handle failures gracefully
-- [Best Practices](./best-practices.md) — Optimization strategies
+- [Best Practices](./BEST-PRACTICES.md) — Optimization strategies
 - [Troubleshooting](./troubleshooting.md) — Common issues
-- [CLI Reference](./configuration.md) — All command-line options
+- [CLI Reference](./CONFIGURATION.md) — All command-line options

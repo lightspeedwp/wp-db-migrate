@@ -75,7 +75,7 @@ Based on your hosting tool ecosystem, these skills complement wp-db-migrate:
 
 ### Create: ls-hosting Integration Guide
 
-**File to create:** `docs/ls-hosting-integration.md`
+**File to create:** `docs/LS-HOSTING-INTEGRATION.md`
 
 **Content should cover:**
 
@@ -142,7 +142,7 @@ See: LOCAL-MEDIA-SETUP.md
 
 ### Action: Create this file
 ```bash
-# You'll create: docs/ls-hosting-integration.md
+# You'll create: docs/LS-HOSTING-INTEGRATION.md
 # Based on the template above
 ```
 
@@ -279,16 +279,16 @@ code ~/.studio/sites/my-project/wp-content/themes/my-theme
 
 ### Files Already Created ✅
 - [x] docs/TEAM-ANNOUNCEMENT.md
-- [x] docs/large-databases.md
+- [x] docs/LARGE-DATABASES.md
 - [x] docs/LOCAL-MEDIA-SETUP.md
 - [x] docs/ONBOARDING-CHECKLIST.md
 - [x] docs/setup-requirements.md
-- [x] docs/faq.md
-- [x] docs/best-practices.md
+- [x] docs/FAQ.md
+- [x] docs/BEST-PRACTICES.md
 - [x] docs/troubleshooting.md
 
 ### Files to Create (In Order of Priority)
-- [ ] docs/ls-hosting-integration.md ← CREATE NEXT
+- [ ] docs/LS-HOSTING-INTEGRATION.md ← CREATE NEXT
 - [ ] docs/PLUGIN-USAGE.md
 - [ ] docs/wordpress-skills-setup.md (global installation guide)
 - [ ] docs/VS-CODE-SETUP.md (theme/plugin development)
@@ -305,7 +305,7 @@ code ~/.studio/sites/my-project/wp-content/themes/my-theme
 
 ### Priority 1: Immediate (This Week)
 1. ✅ Standardize all paths to use `~` and `~/.claude/skills/wp-db-migrate/`
-2. Create `docs/ls-hosting-integration.md`
+2. Create `docs/LS-HOSTING-INTEGRATION.md`
 3. Install WordPress agent skills globally: `~/.claude/skills/wordpress-agent`
 4. Update `docs/ONBOARDING-CHECKLIST.md` with WordPress skills step
 5. Commit all changes
@@ -362,7 +362,7 @@ How to measure successful rollout:
 
 **For Ashley:**
 
-1. Create `docs/ls-hosting-integration.md` (use template above)
+1. Create `docs/LS-HOSTING-INTEGRATION.md` (use template above)
 2. Install WordPress agent skills: 
    ```bash
    cd ~/.claude/skills/

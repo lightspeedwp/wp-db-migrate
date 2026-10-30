@@ -336,7 +336,7 @@ cd ~/.claude/skills/wp-db-migrate
 **Have team member review:**
 - [ ] ✓ [Setup Requirements](./setup-requirements.md) — Accurate for their machine
 - [ ] ✓ [Onboarding Checklist](./ONBOARDING-CHECKLIST.md) — Easy to follow
-- [ ] ✓ [Getting Started](./getting-started.md) — Covers what they just did
+- [ ] ✓ [Getting Started](./GETTING-STARTED.md) — Covers what they just did
 
 **Ask:**
 - Was anything unclear?
@@ -345,8 +345,8 @@ cd ~/.claude/skills/wp-db-migrate
 
 ### 6.2 Check Troubleshooting Guide
 - [ ] ✓ [Troubleshooting](./troubleshooting.md) — Covers errors they encountered
-- [ ] ✓ [FAQ](./faq.md) — Answers their questions
-- [ ] ✓ [Best Practices](./best-practices.md) — Clear and actionable
+- [ ] ✓ [FAQ](./FAQ.md) — Answers their questions
+- [ ] ✓ [Best Practices](./BEST-PRACTICES.md) — Clear and actionable
 
 ### 6.3 Check Help References
 - [ ] ✓ `--help` flag works: `./skill/scripts/migrate-recovery.sh --help`

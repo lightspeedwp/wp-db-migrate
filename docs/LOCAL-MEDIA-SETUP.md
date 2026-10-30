@@ -268,14 +268,14 @@ mkdir -p ~/.studio/sites/my-project/wp-content/uploads/test
 ## Next Steps After Media Setup
 
 1. ✅ Media paths configured
-2. → Extract plugins/themes ([ls-hosting Integration Guide](./ls-hosting-integration.md))
+2. → Extract plugins/themes ([ls-hosting Integration Guide](./LS-HOSTING-INTEGRATION.md))
 3. → Install WordPress agent skills ([WordPress Skills Setup](./wordpress-skills-setup.md))
 4. → Configure VS Code for theme/plugin development
 5. → Ready for development!
 
 ## See Also
 
-- [Large Database Handling](./large-databases.md) — Reduce database size
-- [Getting Started](./getting-started.md) — Migration basics
-- [Best Practices](./best-practices.md) — Safe strategies
-- [ls-hosting Integration](./ls-hosting-integration.md) — Extract files from production
+- [Large Database Handling](./LARGE-DATABASES.md) — Reduce database size
+- [Getting Started](./GETTING-STARTED.md) — Migration basics
+- [Best Practices](./BEST-PRACTICES.md) — Safe strategies
+- [ls-hosting Integration](./LS-HOSTING-INTEGRATION.md) — Extract files from production

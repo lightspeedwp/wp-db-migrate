@@ -8,20 +8,20 @@ This documentation library covers everything you need to know about using the wp
 
 ### 📚 Core Guides
 
-- **[Getting Started](./getting-started.md)** — Quick start guide for your first migration
+- **[Getting Started](./GETTING-STARTED.md)** — Quick start guide for your first migration
   - Basic workflow overview
   - Required setup and prerequisites
   - Your first migration in 5 minutes
   - Understanding the 5-stage workflow
 
-- **[Configuration & Profiles](./configuration.md)** — Master config file usage
+- **[Configuration & Profiles](./CONFIGURATION.md)** — Master config file usage
   - Creating `.wp-db-migrate.conf` files
   - Available configuration options
   - Config file precedence and overrides
   - Saving and reusing configurations
   - Environment-specific configs
 
-- **[Best Practices](./best-practices.md)** — Proven strategies for safe migrations
+- **[Best Practices](./BEST-PRACTICES.md)** — Proven strategies for safe migrations
   - Pre-migration checklist
   - Backup and recovery strategies
   - Performance optimization
@@ -29,7 +29,7 @@ This documentation library covers everything you need to know about using the wp
   - URL replacement safety
   - Post-import validation
 
-- **[Advanced Usage](./advanced.md)** — Power features and optimization
+- **[Advanced Usage](./ADVANCED.md)** — Power features and optimization
   - Remote SSH database export
   - Parallel import processing
   - Compression tuning
@@ -38,7 +38,7 @@ This documentation library covers everything you need to know about using the wp
   - Studio API validation
   - Custom table exclusions
 
-- **[FAQ](./faq.md)** — Answers to common questions
+- **[FAQ](./FAQ.md)** — Answers to common questions
   - General questions
   - Configuration questions
   - Performance questions
@@ -60,7 +60,7 @@ This documentation library covers everything you need to know about using the wp
   - Partial import rollback options
   - Best practices for robust migrations
 
-- **[Analytics & Reporting](./analytics.md)** — Track and optimize migrations
+- **[Analytics & Reporting](./ANALYTICS.md)** — Track and optimize migrations
   - Migration performance metrics
   - Three report formats (Markdown, JSON, CSV)
   - Understanding key performance indicators
@@ -70,19 +70,19 @@ This documentation library covers everything you need to know about using the wp
 
 ## Quick Navigation
 
-**Just starting?** → Read [Getting Started](./getting-started.md)
+**Just starting?** → Read [Getting Started](./GETTING-STARTED.md)
 
-**Need to configure?** → See [Configuration & Profiles](./configuration.md)
+**Need to configure?** → See [Configuration & Profiles](./CONFIGURATION.md)
 
-**Want to optimize?** → Check [Advanced Usage](./advanced.md)
+**Want to optimize?** → Check [Advanced Usage](./ADVANCED.md)
 
 **Want to build confidence?** → Learn [Reliability & Error Recovery](./reliability.md)
 
-**Want to track performance?** → See [Analytics & Reporting](./analytics.md)
+**Want to track performance?** → See [Analytics & Reporting](./ANALYTICS.md)
 
 **Something broken?** → Visit [Troubleshooting](./troubleshooting.md)
 
-**Have a question?** → Try [FAQ](./faq.md)
+**Have a question?** → Try [FAQ](./FAQ.md)
 
 ## Key Concepts
 
@@ -115,10 +115,10 @@ This documentation library covers everything you need to know about using the wp
 
 ## Getting Help
 
-- **For setup issues** → [Getting Started](./getting-started.md)
+- **For setup issues** → [Getting Started](./GETTING-STARTED.md)
 - **For command-line options** → Run `./wp-migrate-clone-to-studio.sh --help`
 - **For errors** → [Troubleshooting](./troubleshooting.md)
-- **For advanced features** → [Advanced Usage](./advanced.md)
+- **For advanced features** → [Advanced Usage](./ADVANCED.md)
 
 ## Version Information
 
@@ -129,6 +129,6 @@ This documentation library covers everything you need to know about using the wp
 ## Support
 
 For issues, questions, or feature requests:
-- Check [FAQ](./faq.md) for common questions
+- Check [FAQ](./FAQ.md) for common questions
 - Review [Troubleshooting](./troubleshooting.md) for known issues
-- See [Best Practices](./best-practices.md) for optimization advice
+- See [Best Practices](./BEST-PRACTICES.md) for optimization advice

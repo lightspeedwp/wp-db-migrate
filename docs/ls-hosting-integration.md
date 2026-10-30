@@ -486,10 +486,10 @@ wp cache flush
 
 ## See Also
 
-- [Getting Started](./getting-started.md) — First migration walkthrough
-- [Large Database Handling](./large-databases.md) — Size reduction strategies
+- [Getting Started](./GETTING-STARTED.md) — First migration walkthrough
+- [Large Database Handling](./LARGE-DATABASES.md) — Size reduction strategies
 - [Local Media Setup](./LOCAL-MEDIA-SETUP.md) — Media configuration details
-- [Best Practices](./best-practices.md) — Safe migration strategies
+- [Best Practices](./BEST-PRACTICES.md) — Safe migration strategies
 - [Troubleshooting](./troubleshooting.md) — Problem solving guide
 
 ---

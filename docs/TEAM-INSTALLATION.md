@@ -236,7 +236,7 @@ Before using the tool, make sure you have:
 - [ ] Run preflight check: `./skill/scripts/preflight-check.sh`
 - [ ] Test with: `./wp-migrate-clone-to-studio.sh --help`
 - [ ] Do a dry-run test: `./wp-migrate-clone-to-studio.sh --dry-run --from URL --to ~/Studio/test`
-- [ ] Read [Getting Started](./getting-started.md) guide
+- [ ] Read [Getting Started](./GETTING-STARTED.md) guide
 
 ---
 
@@ -323,12 +323,12 @@ ssh -i ~/.ssh/id_rsa user@staging.example.com 'echo Connected'
 
 Once installed and working:
 
-1. **Read [Getting Started](./getting-started.md)** — 5-minute quick start
-2. **Review [Best Practices](./best-practices.md)** — Safe migration strategies
-3. **Set up config file** — See [Configuration Guide](./configuration.md)
+1. **Read [Getting Started](./GETTING-STARTED.md)** — 5-minute quick start
+2. **Review [Best Practices](./BEST-PRACTICES.md)** — Safe migration strategies
+3. **Set up config file** — See [Configuration Guide](./CONFIGURATION.md)
 4. **Run your first migration** — Try a staging → local clone
 5. **Check [Reliability Guide](./reliability.md)** — Understand error recovery
-6. **Review [Analytics Guide](./analytics.md)** — Understand performance reports
+6. **Review [Analytics Guide](./ANALYTICS.md)** — Understand performance reports
 
 ---
 
@@ -345,9 +345,9 @@ Install in Claude Code by:
 1. Enable the skill in Settings → Skills → wp-db-migrate
 2. Test with: ./wp-migrate-clone-to-studio.sh --help
 
-Then follow the Getting Started guide: [link to docs/getting-started.md]
+Then follow the Getting Started guide: [link to docs/GETTING-STARTED.md]
 
-For questions, see the FAQ: [link to docs/faq.md]
+For questions, see the FAQ: [link to docs/FAQ.md]
 ```
 
 ### Setup Meeting
@@ -406,9 +406,9 @@ EOF
 ## Getting Help
 
 - **Installation issues?** → See troubleshooting section above
-- **Usage questions?** → See [FAQ](./faq.md)
+- **Usage questions?** → See [FAQ](./FAQ.md)
 - **Errors during migration?** → See [Troubleshooting](./troubleshooting.md)
-- **Want to optimize?** → See [Best Practices](./best-practices.md)
+- **Want to optimize?** → See [Best Practices](./BEST-PRACTICES.md)
 - **Need recovery help?** → See [Reliability Guide](./reliability.md)
 
 ---

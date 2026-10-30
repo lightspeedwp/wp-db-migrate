@@ -242,8 +242,8 @@ wp user update admin --user_email="admin@local.test" --user_pass="PASSWORD"
 
 ## Documentation Links
 
-- [Getting Started](./getting-started.md) — Quick tutorial
-- [Configuration Guide](./configuration.md) — Config file reference
-- [Advanced Usage](./advanced.md) — Power features
+- [Getting Started](./GETTING-STARTED.md) — Quick tutorial
+- [Configuration Guide](./CONFIGURATION.md) — Config file reference
+- [Advanced Usage](./ADVANCED.md) — Power features
 - [Troubleshooting](./troubleshooting.md) — Problem solving
-- [FAQ](./faq.md) — Common questions
+- [FAQ](./FAQ.md) — Common questions

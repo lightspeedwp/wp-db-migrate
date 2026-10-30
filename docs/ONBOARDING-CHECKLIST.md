@@ -176,7 +176,7 @@ Read the essential documentation to understand how wp-db-migrate works.
 
 ### Step 5.1: Read Getting Started
 
-Open and read: [Getting Started Guide](./getting-started.md)
+Open and read: [Getting Started Guide](./GETTING-STARTED.md)
 
 **Key concepts to understand:**
 - The 5-stage migration workflow
@@ -188,7 +188,7 @@ Open and read: [Getting Started Guide](./getting-started.md)
 
 ### Step 5.2: Review Best Practices
 
-Open and read: [Best Practices Guide](./best-practices.md)
+Open and read: [Best Practices Guide](./BEST-PRACTICES.md)
 
 **Key concepts:**
 - Safe migration strategies
@@ -205,7 +205,7 @@ Bookmark these links for quick reference:
 
 - [ ] [Setup Requirements](./setup-requirements.md) — Dependencies & troubleshooting
 - [ ] [Team Installation](./TEAM-INSTALLATION.md) — How to install for your team
-- [ ] [FAQ](./faq.md) — 30+ common questions
+- [ ] [FAQ](./FAQ.md) — 30+ common questions
 - [ ] [Troubleshooting](./troubleshooting.md) — Problem solving guide
 - [ ] [Reliability Guide](./reliability.md) — Error recovery & resilience
 
@@ -254,16 +254,16 @@ You're now ready to run migrations! 🎉
 Choose based on what you need to do:
 
 **I want to run my first migration:**
-→ Follow [Getting Started](./getting-started.md)
+→ Follow [Getting Started](./GETTING-STARTED.md)
 
 **I need to understand error recovery:**
 → Read [Reliability Guide](./reliability.md)
 
 **I want to optimize performance:**
-→ Read [Advanced Usage](./advanced.md)
+→ Read [Advanced Usage](./ADVANCED.md)
 
 **I have a specific question:**
-→ Check [FAQ](./faq.md)
+→ Check [FAQ](./FAQ.md)
 
 **Something isn't working:**
 → Check [Troubleshooting](./troubleshooting.md)
@@ -306,7 +306,7 @@ Choose based on what you need to do:
 
 **Get help:**
 1. Ask your team lead
-2. Check [FAQ](./faq.md) for common questions
+2. Check [FAQ](./FAQ.md) for common questions
 3. Search [Troubleshooting Guide](./troubleshooting.md)
 4. Read [Reliability Guide](./reliability.md) for error recovery
 
@@ -332,7 +332,7 @@ Before you consider yourself "onboarded", verify all of these:
 
 **Before asking for help, try:**
 1. Running dependency check: `./skill/scripts/setup-dependencies.sh --verbose`
-2. Checking the [FAQ](./faq.md)
+2. Checking the [FAQ](./FAQ.md)
 3. Reading [Troubleshooting Guide](./troubleshooting.md)
 4. Searching [Reliability Guide](./reliability.md)
 
@@ -353,14 +353,14 @@ Before you consider yourself "onboarded", verify all of these:
 
 **Documentation Links:**
 - [Team Installation Guide](./TEAM-INSTALLATION.md)
-- [Getting Started](./getting-started.md)
+- [Getting Started](./GETTING-STARTED.md)
 - [Setup Requirements](./setup-requirements.md)
-- [Best Practices](./best-practices.md)
-- [FAQ](./faq.md)
+- [Best Practices](./BEST-PRACTICES.md)
+- [FAQ](./FAQ.md)
 - [Troubleshooting](./troubleshooting.md)
 - [Reliability Guide](./reliability.md)
-- [Advanced Usage](./advanced.md)
-- [Analytics Guide](./analytics.md)
+- [Advanced Usage](./ADVANCED.md)
+- [Analytics Guide](./ANALYTICS.md)
 - [Documentation Hub](./README-GUIDE.md)
 
 **Last Updated:** October 2026  

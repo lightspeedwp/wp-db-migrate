@@ -433,15 +433,15 @@ npm run format:check
 
 - **Setup issues?** → Check [troubleshooting](./troubleshooting.md) section
 - **Dependency help?** → Run `./skill/scripts/setup-dependencies.sh --help`
-- **General questions?** → See [FAQ](./faq.md)
+- **General questions?** → See [FAQ](./FAQ.md)
 
 ## Next Steps
 
 Once dependencies are verified:
 
 1. ✅ [Read Team Installation Guide](./TEAM-INSTALLATION.md) — Set up the skill/plugin
-2. ✅ [Review Getting Started](./getting-started.md) — Run your first migration
-3. ✅ [Check Best Practices](./best-practices.md) — Safe migration strategies
+2. ✅ [Review Getting Started](./GETTING-STARTED.md) — Run your first migration
+3. ✅ [Check Best Practices](./BEST-PRACTICES.md) — Safe migration strategies
 
 ---
 

@@ -395,5 +395,5 @@ Provide:
 ## See Also
 
 - [Troubleshooting Guide](./troubleshooting.md) — Common error messages
-- [Best Practices](./best-practices.md) — Prevention strategies
-- [Analytics & Monitoring](./analytics.md) — Track migration health
+- [Best Practices](./BEST-PRACTICES.md) — Prevention strategies
+- [Analytics & Monitoring](./ANALYTICS.md) — Track migration health

@@ -32,7 +32,7 @@ Used in conjunction with wp-db-migrate for complete workflows:
 - **ls-hosting-deploy-full-site** — Deploy changes back to staging/production
 - **ls-hosting-sync-content** — Sync content between environments
 
-See [ls-hosting Integration Guide](./docs/ls-hosting-integration.md) for complete workflows.
+See [ls-hosting Integration Guide](./docs/LS-HOSTING-INTEGRATION.md) for complete workflows.
 
 ### WordPress Agent Skills
 Global skills for WordPress-specific development:
@@ -69,12 +69,12 @@ Install at: `~/.claude/skills/wordpress-agent/`
 
 ## 📖 Documentation
 
-- **[Getting Started](./docs/getting-started.md)** — First migration in 5 minutes
+- **[Getting Started](./docs/GETTING-STARTED.md)** — First migration in 5 minutes
 - **[Setup Requirements](./docs/setup-requirements.md)** — Dependencies and system setup
-- **[Best Practices](./docs/best-practices.md)** — Safe migration strategies
+- **[Best Practices](./docs/BEST-PRACTICES.md)** — Safe migration strategies
 - **[Troubleshooting](./docs/troubleshooting.md)** — Problem solving guide
-- **[ls-hosting Integration](./docs/ls-hosting-integration.md)** — End-to-end workflows
-- **[FAQ](./docs/faq.md)** — 30+ common questions answered
+- **[ls-hosting Integration](./docs/LS-HOSTING-INTEGRATION.md)** — End-to-end workflows
+- **[FAQ](./docs/FAQ.md)** — 30+ common questions answered
 
 ## 🔧 Configuration
 
@@ -95,7 +95,7 @@ No additional setup needed — works out of the box once dependencies are verifi
 
 2. Check the FAQ:
    ```bash
-   See docs/faq.md for 30+ answers
+   See docs/FAQ.md for 30+ answers
    ```
 
 3. Enable verbose output:
@@ -105,4 +105,4 @@ No additional setup needed — works out of the box once dependencies are verifi
 
 ---
 
-**Ready to migrate?** Start with [Getting Started](./docs/getting-started.md) or run the preflight check.
+**Ready to migrate?** Start with [Getting Started](./docs/GETTING-STARTED.md) or run the preflight check.

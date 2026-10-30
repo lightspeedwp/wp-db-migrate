@@ -36,7 +36,7 @@
   "documentation": {
     "main": "README.md",
     "setup": "docs/setup-requirements.md",
-    "guide": "docs/getting-started.md",
+    "guide": "docs/GETTING-STARTED.md",
     "troubleshooting": "docs/troubleshooting.md",
     "api": "skill/SKILL.md"
   }

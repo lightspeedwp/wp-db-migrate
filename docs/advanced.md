@@ -417,10 +417,10 @@ echo "Migration successful at $(date)" >> /var/log/migrations.log
 
 ## See Also
 
-- [Getting Started](./getting-started.md) — Basic usage
-- [Configuration Guide](./configuration.md) — Config file reference
-- [Best Practices](./best-practices.md) — Safety strategies
+- [Getting Started](./GETTING-STARTED.md) — Basic usage
+- [Configuration Guide](./CONFIGURATION.md) — Config file reference
+- [Best Practices](./BEST-PRACTICES.md) — Safety strategies
 - [Reliability & Error Recovery](./reliability.md) — Handle failures gracefully
-- [Analytics & Reporting](./analytics.md) — Track performance and optimize
-- [FAQ](./faq.md) — Common questions
+- [Analytics & Reporting](./ANALYTICS.md) — Track performance and optimize
+- [FAQ](./FAQ.md) — Common questions
 - [Troubleshooting](./troubleshooting.md) — Problem solving

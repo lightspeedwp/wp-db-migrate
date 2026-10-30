@@ -70,18 +70,18 @@ This walks you through:
    - What tools you need (wp-cli, studio-cli, etc.)
    - Dependency verification
 
-2. **[Getting Started](./getting-started.md)** (5 min)
+2. **[Getting Started](./GETTING-STARTED.md)** (5 min)
    - Your first migration in 5 minutes
    - 5-stage workflow overview
    - Command examples
 
-3. **[Best Practices](./best-practices.md)** (15 min)
+3. **[Best Practices](./BEST-PRACTICES.md)** (15 min)
    - Safe migration strategies
    - Backup procedures
    - When to use dry-run mode
    - Production database safety
 
-4. **[FAQ](./faq.md)** (10 min)
+4. **[FAQ](./FAQ.md)** (10 min)
    - 30+ common questions answered
    - Quick reference guide
 
@@ -208,7 +208,7 @@ cd ~/.claude/skills/wp-db-migrate
   --exclude-tables wp_postmeta
 ```
 
-See: **[Large Database Handling Guide](./large-databases.md)** for detailed strategies
+See: **[Large Database Handling Guide](./LARGE-DATABASES.md)** for detailed strategies
 
 ---
 
@@ -247,7 +247,7 @@ cd ~/.claude/skills/wp-db-migrate
 /ls-hosting-sync-content            # Sync to production
 ```
 
-See: **[ls-hosting Integration Guide](./ls-hosting-integration.md)** for complete workflow details
+See: **[ls-hosting Integration Guide](./LS-HOSTING-INTEGRATION.md)** for complete workflow details
 
 ---
 
@@ -312,9 +312,9 @@ A: Yes. Backup is created before import.
 A: Yes. `wp_actionscheduler_logs` is safe to exclude and speeds up.
 
 **Q: How do I reduce a 5GB database to manageable size?**  
-A: See: [Large Database Handling Guide](./large-databases.md)
+A: See: [Large Database Handling Guide](./LARGE-DATABASES.md)
 
-See: **[Full FAQ](./faq.md)** for 30+ questions
+See: **[Full FAQ](./FAQ.md)** for 30+ questions
 
 ---
 
@@ -329,7 +329,7 @@ See: **[Full FAQ](./faq.md)** for 30+ questions
 ✅ **Do** use compression for large databases  
 ✅ **Do** verify your SSH setup before remote export  
 
-Full guide: **[Best Practices](./best-practices.md)**
+Full guide: **[Best Practices](./BEST-PRACTICES.md)**
 
 ---
 
@@ -359,12 +359,12 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 
 ## 🎓 Getting Help
 
-1. **Check [FAQ](./faq.md)** — Answers 30+ common questions
+1. **Check [FAQ](./FAQ.md)** — Answers 30+ common questions
 2. **Read [Troubleshooting](./troubleshooting.md)** — Problem-solving guide
 3. **Run setup check** — `./skill/scripts/setup-dependencies.sh --verbose`
 4. **Use WordPress skills** — `/wp-plugin-development`, `/wp-block-development`, etc.
 5. **Ask your team lead** — Your team has setup experience
-6. **Check [ls-hosting Integration](./ls-hosting-integration.md)** — Complete workflow guide
+6. **Check [ls-hosting Integration](./LS-HOSTING-INTEGRATION.md)** — Complete workflow guide
 
 ---
 
@@ -374,13 +374,13 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 - [Setup Requirements](./setup-requirements.md) — Dependencies & system setup
 - [Team Installation](./TEAM-INSTALLATION.md) — Install for your team
 - [Onboarding Checklist](./ONBOARDING-CHECKLIST.md) — Step-by-step setup
-- [Getting Started](./getting-started.md) — First migration guide
-- [Best Practices](./best-practices.md) — Safe strategies
-- [Advanced Usage](./advanced.md) — Power features
+- [Getting Started](./GETTING-STARTED.md) — First migration guide
+- [Best Practices](./BEST-PRACTICES.md) — Safe strategies
+- [Advanced Usage](./ADVANCED.md) — Power features
 - [Reliability Guide](./reliability.md) — Error recovery
-- [Analytics Guide](./analytics.md) — Performance tracking
-- [Configuration Guide](./configuration.md) — Setup & profiles
-- [FAQ](./faq.md) — Common questions
+- [Analytics Guide](./ANALYTICS.md) — Performance tracking
+- [Configuration Guide](./CONFIGURATION.md) — Setup & profiles
+- [FAQ](./FAQ.md) — Common questions
 - [Troubleshooting](./troubleshooting.md) — Problem solving
 
 ---
@@ -423,7 +423,7 @@ These skills help Claude give you **WordPress-expert guidance** directly in your
 
 **Questions?** Ask your team lead or check the [Documentation Hub](./README-GUIDE.md)
 
-**Ready to migrate?** Start with [Getting Started](./getting-started.md)
+**Ready to migrate?** Start with [Getting Started](./GETTING-STARTED.md)
 
 **Need help?** See [Troubleshooting](./troubleshooting.md)
 

@@ -383,7 +383,7 @@ Use with LightSpeed hosting skills:
 ---
 
 **See also:**
-- [Getting Started](./getting-started.md) — Basic migration
-- [Best Practices](./best-practices.md) — Safe strategies
+- [Getting Started](./GETTING-STARTED.md) — Basic migration
+- [Best Practices](./BEST-PRACTICES.md) — Safe strategies
 - [Troubleshooting](./troubleshooting.md) — Problem solving
-- [Advanced Usage](./advanced.md) — Power features
+- [Advanced Usage](./ADVANCED.md) — Power features
