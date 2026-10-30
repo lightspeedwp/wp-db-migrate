@@ -108,21 +108,14 @@ This runs the full test suite (should take 1–2 minutes).
 **Expected output:**
 ```
 Test Suites: 15 passed, 15 total
-Tests:       192 passed, 192 total
+Tests:       193 passed, 193 total
 ```
 
 - [ ] All test suites passed
-- [ ] 192 tests passed
+- [ ] 193 tests passed
 - [ ] No test failures
 
-### Step 3.2: Run Tests with Coverage (optional)
-
-```bash
-npm test -- --coverage
-```
-
-- [ ] Coverage report generated (optional verification)
-- [ ] Coverage > 85% for all files
+> **Note:** The tests exercise the shell scripts by running them as child processes, so Jest can't report line coverage for them. There's no coverage step.
 
 ---
 
@@ -139,9 +132,9 @@ Test that the migration scripts run correctly.
 This runs detailed environment checks.
 
 **Expected output:**
-- Database drivers detected
-- WordPress Studio availability confirmed
-- Storage space confirmed
+- Required commands found (WordPress Studio CLI, WP-CLI, Bash, grep, sed)
+- Studio config directory found
+- "All checks passed! You're ready to migrate."
 
 - [ ] Preflight check passed
 - [ ] All requirements confirmed
@@ -228,20 +221,16 @@ Talk to your team lead about:
 
 If your team uses the Claude Skill or Plugin:
 
-```bash
-# For Skill installation:
-# Open Claude Code → Settings → Skills
-# Find "wp-db-migrate" and toggle it on
-```
+**For Skill installation:** nothing to toggle. Claude Code loads the skill from `~/.claude/skills/wp-db-migrate/SKILL.md` (cloned in Step 1.1). Start a new Claude Code session so it is picked up.
 
-**Or for Plugin:**
+**Or for Plugin:** run these in Claude Code instead of cloning:
 ```
-# In Claude → Settings → Plugins
-# Add from GitHub: https://github.com/lightspeedwp/wp-db-migrate
+/plugin marketplace add lightspeedwp/wp-db-migrate
+/plugin install wp-db-migrate@lightspeedwp
 ```
 
 - [ ] Skill/Plugin enabled in Claude (if applicable)
-- [ ] You can see `/wp-migrate-clone-to-studio` command available
+- [ ] Typing `/wp-db-migrate` in Claude Code shows the skill
 
 ---
 
@@ -292,7 +281,7 @@ Choose based on what you need to do:
 **Solution:**
 1. Ensure all dependencies installed: `./skill/scripts/setup-dependencies.sh`
 2. Verify Node.js/NPM versions are correct
-3. Check [TESTING.md](../TESTING.md) for detailed test info
+3. Check [TESTING.md](./TESTING.md) for detailed test info
 4. Ask your team lead if there are environment-specific setup steps
 
 ### "Scripts won't run"
@@ -318,7 +307,7 @@ Before you consider yourself "onboarded", verify all of these:
 
 - [ ] ✅ Phase 1: Dependencies verified
 - [ ] ✅ Phase 2: NPM dependencies installed
-- [ ] ✅ Phase 3: Tests pass (192 tests)
+- [ ] ✅ Phase 3: Tests pass (193 tests)
 - [ ] ✅ Phase 4: Scripts work (`preflight-check.sh`, `--help`)
 - [ ] ✅ Phase 5: Documentation read (Getting Started + Best Practices)
 - [ ] ✅ Phase 6: Connected with team

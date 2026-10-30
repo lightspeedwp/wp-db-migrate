@@ -121,18 +121,19 @@ echo "$HOME/.claude/plugins/marketplaces/lightspeedwp/wp-db-migrate"
 Once installed, use anywhere:
 
 ```
-In any Claude chat:
-/wp-migrate-clone-to-studio --from https://example.com --to ~/Studio/site
+In Claude Code:
+/wp-db-migrate clone https://example.com to ~/Studio/site
 
-Or for help:
-/wp-migrate-clone-to-studio --help
+The skill runs ./skill/scripts/wp-migrate-clone-to-studio.sh for you.
+For the script's options: ./skill/scripts/wp-migrate-clone-to-studio.sh --help
 ```
 
 ### Updating to Latest Version
 
 ```bash
 # Check for updates
-# In Claude → Settings → Plugins → wp-db-migrate → Check for Updates
+# Skill install: cd ~/.claude/skills/wp-db-migrate && git pull
+# Plugin install: /plugin marketplace update lightspeedwp
 
 # Or manually reinstall
 # Remove the old version and reinstall following Step 1-2 above
@@ -342,8 +343,8 @@ Copy this message to your team Slack/email:
 The WordPress Database Migration tool (wp-db-migrate) is now available!
 
 Install in Claude Code by:
-1. Enable the skill in Settings → Skills → wp-db-migrate
-2. Test with: ./wp-migrate-clone-to-studio.sh --help
+1. Clone it to ~/.claude/skills/wp-db-migrate and start a new Claude Code session
+2. Test with: /wp-db-migrate (or ./skill/scripts/wp-migrate-clone-to-studio.sh --help)
 
 Then follow the Getting Started guide: [link to docs/GETTING-STARTED.md]
 

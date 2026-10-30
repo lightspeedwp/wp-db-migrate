@@ -45,6 +45,18 @@ describe('migrate-recovery-enhanced.sh', () => {
     expect(result.code).not.toBe(0);
   });
 
+  test('should fail when site path is not a WordPress site', () => {
+    const result = executeScript('migrate-recovery-enhanced.sh', [
+      '--dry-run',
+      tempDir,
+      'https://old.com',
+      'https://new.com'
+    ]);
+
+    expect(result.code).not.toBe(0);
+    expect(result.stdout + result.stderr).toContain('Not a WordPress site');
+  });
+
   test('should support --dry-run flag', () => {
     const sitePath = createMockStudioSite(tempDir);
     const result = executeScript('migrate-recovery-enhanced.sh', [

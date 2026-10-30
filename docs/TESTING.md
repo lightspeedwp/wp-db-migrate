@@ -259,8 +259,8 @@ Typical test execution times:
 
 ## Documentation
 
-- [SKILL.md](./skill/SKILL.md) — Main skill documentation
-- [IMPROVEMENTS.md](./skill/IMPROVEMENTS.md) — Changelog
+- [SKILL.md](../skill/SKILL.md) — Main skill documentation
+- [IMPROVEMENTS.md](../skill/IMPROVEMENTS.md) — Changelog
 - [README.md](./README.md) — Repository overview
 - [TESTING.md](./TESTING.md) — This file
 

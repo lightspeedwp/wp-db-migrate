@@ -74,12 +74,13 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
    cp -r skill /path/to/your/org/.github/skills/wp-db-migrate
    ```
 
-3. Enable in Claude Code Settings → Skills → wp-db-migrate
+3. Start a new Claude Code session; the skill loads automatically. Invoke it with `/wp-db-migrate`.
 
 ### As a Claude Plugin (Global)
-1. In Claude Settings → Plugins, add from GitHub:
+1. In Claude Code, add the marketplace and install the plugin:
    ```
-   https://github.com/lightspeedwp/wp-db-migrate
+   /plugin marketplace add lightspeedwp/wp-db-migrate
+   /plugin install wp-db-migrate@lightspeedwp
    ```
 
 2. Use `/wp-db-migrate` command in any chat

@@ -144,6 +144,11 @@ main() {
         exit 1
     fi
 
+    if [ ! -f "$SITE_PATH/wp-config.php" ]; then
+        log "❌ Error: Not a WordPress site (no wp-config.php): $SITE_PATH" "$RED"
+        exit 1
+    fi
+
     # Setup logging
     if [ -n "$LOG_FILE" ]; then
         echo "=== Migration Log $(date '+%Y-%m-%d %H:%M:%S') ===" > "$LOG_FILE"

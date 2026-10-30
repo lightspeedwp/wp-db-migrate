@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "prepare": "lefthook install",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:watch": "jest --watch",
-    "test:verbose": "jest --verbose --coverage",
+    "test:verbose": "jest --verbose",
     "migrate:budget": "node skill/api/migrate-with-budget.js",
     "preflight": "./skill/scripts/preflight-check.sh",
     "setup": "./setup-cloud.sh",
@@ -24,17 +24,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverageFrom": [
-      "__tests__/**/*.test.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
     "testMatch": [
       "**/__tests__/**/*.test.js"
     ],
