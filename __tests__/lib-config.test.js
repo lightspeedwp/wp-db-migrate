@@ -14,9 +14,10 @@ describe('lib-config.sh — Configuration Parser', () => {
 
         // Create a sample config file
         configFile = path.join(testDir, '.wp-db-migrate.conf');
+        const homeDir = process.env.HOME || '/home/user';
         const sampleConfig = `# WordPress Database Migration Configuration
 FROM_URL=https://staging.example.com
-TO_PATH=/Users/ash/Studio/my-site
+TO_PATH=${homeDir}/.studio/sites/my-project
 SSH_HOST=staging.example.com
 SSH_USER=deploy
 WP_PATH=/var/www/html
