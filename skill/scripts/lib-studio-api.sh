@@ -4,9 +4,9 @@
 #
 # Usage:
 #   source lib-studio-api.sh
-#   studio_validate_site "/Users/ash/Studio/my-site"
-#   studio_get_site_info "/Users/ash/Studio/my-site"
-#   studio_get_database_tables "/Users/ash/Studio/my-site"
+#   studio_validate_site "~/.studio/sites/my-project"
+#   studio_get_site_info "~/.studio/sites/my-project"
+#   studio_get_database_tables "~/.studio/sites/my-project"
 
 # shellcheck disable=SC2034
 # Studio API state

@@ -8,7 +8,7 @@
 #
 # Options:
 #   --from URL              Source site URL (e.g., https://staging.example.com)
-#   --to PATH               Studio site path (e.g., /Users/ash/Studio/my-site)
+#   --to PATH               Studio site path (e.g., ~/.studio/sites/my-project)
 #   --exclude-tables LIST   Comma-separated tables to skip (optional)
 #   --compress              Enable compression (default: true)
 #   --parallel              Enable parallel import (default: true)
@@ -105,7 +105,7 @@ USAGE:
 
 REQUIRED:
   --from URL            Source site URL (e.g., https://staging.example.com)
-  --to PATH             Studio site path (e.g., /Users/ash/Studio/my-site)
+  --to PATH             Studio site path (e.g., ~/.studio/sites/my-project)
 
 OPTIONS:
   --config FILE           Load configuration from file (e.g., .wp-db-migrate.conf)
@@ -126,15 +126,15 @@ OPTIONS:
   --help                 Show this help message
 
 EXAMPLES:
-  # Standard clone
+  # Standard clone from staging
   ./wp-migrate-clone-to-studio.sh \
-    --from https://staging.dev \
-    --to ~/Studio/my-site
+    --from https://staging.example.com \
+    --to ~/.studio/sites/my-project
 
   # Remote export via SSH
   ./wp-migrate-clone-to-studio.sh \
     --from https://staging.example.com \
-    --to ~/Studio/my-site \
+    --to ~/.studio/sites/my-project \
     --ssh-host staging.example.com \
     --ssh-user deploy \
     --wp-path /var/www/html
