@@ -38,31 +38,12 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
 
 ## ✨ Key Features
 
-### Safety First
-- ✅ Pre-flight dependency checks
-- ✅ Backup before import with auto-rollback
-- ✅ Dry-run mode to preview without changes
-- ✅ Explicit confirmation gates at each step
-- ✅ Post-import validation (row counts, integrity, URLs)
+- **Safety First** — Pre-flight checks, backup before import, auto-rollback on failure, explicit confirmation gates
+- **Smart Analysis** — Auto-detects tables to exclude, shows size breakdown, validates before proceeding
+- **Professional Tooling** — Advanced flags (--dry-run, --verbose, --force), logging, CI/CD ready
+- **Flexible Workflows** — Works with any database size, any MySQL/MariaDB source, any target Studio site
 
-### Professional Tooling
-- 🚀 Advanced recovery script with flags
-- 📊 Verbose logging with file output
-- ⚙️ CI/CD automation ready (--force mode)
-- 🎯 Comprehensive troubleshooting guide
-- 📚 FAQ answering 95% of common questions
-
-### Smart Database Analysis
-- 🧠 Analyzes export and suggests table exclusions
-- 📊 Shows size breakdown (which tables to exclude)
-- 🔍 Auto-detects current site URL
-- ✅ Validates before proceeding
-
-### Flexible Workflows
-- Sync staging to local development
-- Set up new Studio sites with real data
-- Any MySQL→SQLite migration
-- Support for databases of any size
+**→ Full feature list:** See [plugin/README.md](./plugin/README.md)
 
 ## 📖 Documentation
 
@@ -152,33 +133,13 @@ wp-migrate-clone-to-studio.sh /path/to/site "old-url" "new-url"
   "https://ci-test.local"
 ```
 
-## 🎯 Workflow Phases
+## 🎯 Workflow Overview
 
-```
-1. Analyze Export
-   ├─ Detect tables, sizes, URLs
-   └─ Suggest exclusions
+wp-db-migrate runs through **5 phases**: Export Analysis → Sanitization → Backup & Import → URL Replacement → Validation
 
-2. Sanitize Database
-   ├─ Remove MySQL-only syntax
-   └─ Exclude selected tables
+Each phase includes safety checks, dry-run validation, and explicit confirmation gates.
 
-3. Backup & Import
-   ├─ Create backup
-   ├─ Run studio import
-   └─ Rollback on failure
-
-4. URL Replacement
-   ├─ Show dry-run with counts
-   ├─ Get approval
-   └─ Apply replacements
-
-5. Validation
-   ├─ Site loads (HTTP 200)
-   ├─ Row counts match
-   ├─ Database integrity
-   └─ URLs correct
-```
+**→ Detailed workflow:** See [docs/README.md#key-concepts](./docs/README.md#key-concepts)
 
 ## 📊 Performance
 
@@ -201,43 +162,28 @@ Large tables like `wp_postmeta` and `wp_actionscheduler_logs` slow imports most.
 
 ## ❓ FAQ
 
-**Q: Is it safe to run while my site is live?**
-A: No. Always export during quiet times and test on fresh sites first.
+Common questions answered:
+- Is it safe to run on live sites?
+- What if the import times out?
+- Can I rollback after importing?
+- Should I exclude logging tables?
 
-**Q: What if the import times out?**
-A: Database usually imports successfully anyway. Run `verify-import.sh` to check.
+**→ Full FAQ:** See [docs/FAQ.md](./docs/FAQ.md) for 30+ answers
 
-**Q: Can I rollback after importing?**
-A: Yes! A backup is created before import. See troubleshooting guide.
+## 🚀 Advanced Usage
 
-**Q: Should I exclude logging tables?**
-A: Yes, usually. Tables like `wp_actionscheduler_logs` are safe to exclude and speed up import.
-
-See `skill/SKILL.md` for 11 complete FAQ answers.
-
-## 🚀 Advanced Features
-
-### Command-Line Flags
+Command-line flags for power users:
 ```bash
 --dry-run              # Preview without changes
 --verbose              # Detailed output
 --log-file FILE        # Save output to file
---force                # Skip prompts (CI/CD)
---no-backup            # Skip backup (dangerous)
---help                 # Show help
+--force                # Skip prompts (CI/CD automation)
+--help                 # Show all options
 ```
 
-### Configuration
-Planned for future:
-- `.wp-db-migrate.yml` config files
-- Profiles for common scenarios
-- Environment variable overrides
+**→ Full advanced options:** See [docs/ADVANCED.md](./docs/ADVANCED.md)
 
-### Automation
-CI/CD ready:
-- Force mode (--force) skips all prompts
-- JSON output option (planned)
-- Exit codes for scripting
+**→ CI/CD setup:** See [docs/BEST-PRACTICES.md](./docs/BEST-PRACTICES.md)
 
 ## 📋 Version History
 
