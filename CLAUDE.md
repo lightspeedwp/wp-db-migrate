@@ -104,10 +104,27 @@ npm test -- lib-config    # Run specific test suite
 ## 🛠️ Common Tasks
 
 ### Run Tests
+
+**Jest Tests (Unit & Integration)**
 ```bash
-npm test                    # Run all Jest tests  
+npm test                    # Run all Jest tests with coverage
 npm run test:watch        # Watch mode for development
 npm run test:verbose      # Verbose output with coverage
+```
+
+**BATS Tests (End-to-End Integration)**
+```bash
+# Install BATS first (if needed)
+brew install bats-core    # macOS
+# or
+sudo apt-get install bats  # Linux
+
+# Run BATS integration tests
+npm run test:bats         # Run integration tests
+npm run test:bats:verbose # Verbose output
+
+# Run all tests (Jest + BATS)
+npm run test:all          # Both Jest and BATS
 ```
 
 ### Check Code Quality
@@ -130,6 +147,8 @@ less ./skill/IMPROVEMENTS.md  # Changelog & roadmap
 
 - **[README.md](./README.md)** — Project overview and features
 - **[AGENTS.md](./AGENTS.md)** — Available agents and skills
+- **[CLAUDE.md](./CLAUDE.md)** — Claude Code configuration (this file)
+- **[docs/TESTING.md](./docs/TESTING.md)** — Complete testing strategy (Jest + BATS)
 - **[docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)** — First migration walkthrough
 - **[docs/SETUP-REQUIREMENTS.md](./docs/SETUP-REQUIREMENTS.md)** — Dependencies and system setup
 - **[docs/BEST-PRACTICES.md](./docs/BEST-PRACTICES.md)** — Safe migration strategies

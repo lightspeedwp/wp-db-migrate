@@ -53,7 +53,15 @@
     "integration": {
       "framework": "BATS",
       "location": "tests/",
-      "description": "End-to-end shell script integration testing"
+      "description": "End-to-end shell script integration testing",
+      "commands": {
+        "testBats": "npm run test:bats -- runs integration tests",
+        "testBatsVerbose": "npm run test:bats:verbose -- verbose output",
+        "testAll": "npm run test:all -- runs Jest + BATS"
+      },
+      "requirements": {
+        "install": "brew install bats-core (macOS) or sudo apt-get install bats (Linux)"
+      }
     }
   },
   "skills": [
@@ -63,6 +71,7 @@
     "main": "README.md",
     "setup": "docs/SETUP-REQUIREMENTS.md",
     "guide": "docs/GETTING-STARTED.md",
+    "testing": "docs/TESTING.md",
     "best-practices": "docs/BEST-PRACTICES.md",
     "troubleshooting": "docs/TROUBLESHOOTING.md",
     "faq": "docs/FAQ.md",
@@ -74,6 +83,7 @@
     "reliability": "docs/RELIABILITY.md",
     "api": "skill/SKILL.md",
     "agents": "AGENTS.md",
-    "claude": "CLAUDE.md"
+    "claude": "CLAUDE.md",
+    "bats": "tests/README.md"
   }
 }

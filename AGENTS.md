@@ -79,13 +79,17 @@ The project uses **Jest** for unit and integration testing with co-location patt
 - **Bash compatibility**: All tests pass on Bash 3.2+ (macOS, Linux, WSL)
 
 **BATS Tests** (Shell integration tests):
-- **Location**: `tests/` folder in root (for end-to-end shell script integration testing)
+- **Location**: `tests/` folder in root
+- **Purpose**: End-to-end shell script integration testing
+- **Run**: `npm run test:bats` (requires BATS installed)
+- **Files**: `integration.bats` with 25+ integration tests
 
 ## 📖 Documentation
 
 - **[Getting Started](./docs/GETTING-STARTED.md)** — First migration in 5 minutes
 - **[Setup Requirements](./docs/SETUP-REQUIREMENTS.md)** — Dependencies and system setup
 - **[Best Practices](./docs/BEST-PRACTICES.md)** — Safe migration strategies
+- **[Testing Strategy](./docs/TESTING.md)** — Jest & BATS testing guide
 - **[Troubleshooting](./docs/TROUBLESHOOTING.md)** — Problem solving guide
 - **[ls-hosting Integration](./docs/LS-HOSTING-INTEGRATION.md)** — End-to-end workflows
 - **[FAQ](./docs/FAQ.md)** — 30+ common questions answered

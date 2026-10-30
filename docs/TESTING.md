@@ -1,271 +1,254 @@
-# Testing Guide — WP DB Migrate
+# Testing Strategy
 
-Comprehensive Jest test suite with 100% code coverage for all migration scripts.
+wp-db-migrate uses two complementary testing approaches: Jest for unit/integration testing and BATS for end-to-end shell script testing.
 
-## Test Overview
+## Overview
 
-| Script | Tests | Status |
-|--------|-------|--------|
-| `preflight-check.sh` | 10 | ✅ Passing |
-| `verify-import.sh` | 10 | ✅ Passing |
-| `replace-urls.sh` | 12 | ✅ Passing |
-| `start-server.sh` | 10 | ✅ Passing |
-| `migrate-recovery.sh` | 11 | ✅ Passing |
-| `migrate-recovery-enhanced.sh` | 17 | ✅ Passing |
+| Aspect | Jest | BATS |
+|--------|------|------|
+| **Framework** | JavaScript test framework | Bash Automated Testing System |
+| **Location** | `skill/scripts/__tests__/` | `tests/` |
+| **Test Type** | Unit & integration | End-to-end integration |
+| **Scope** | Individual scripts & functions | Complete workflows |
+| **Run Command** | `npm test` | `npm run test:bats` |
+| **Tests** | 192+ test cases | 25+ workflow tests |
+| **Speed** | ~75 seconds | Variable (depends on system) |
 
-**Total: 70 Tests — 100% Coverage**
+## Jest Unit & Integration Tests
 
-## Running Tests
+### Purpose
 
-### Install Dependencies
-```bash
-npm install
+Jest tests verify individual shell scripts and their functions in isolation, ensuring:
+- Script syntax is valid
+- Functions work correctly with various inputs
+- Error handling works as expected
+- Output is formatted correctly
+
+### Location
+
+```
+skill/scripts/
+├── lib-config.sh
+├── lib-reports.sh
+├── migrate-recovery.sh
+└── __tests__/
+    ├── lib-config.test.js
+    ├── lib-reports.test.js
+    ├── migrate-recovery.test.js
+    └── utils.js
 ```
 
-### Run All Tests
+### Running Jest Tests
+
 ```bash
+# Run all tests with coverage
 npm test
-```
 
-### Run Tests in Watch Mode
-```bash
+# Run tests in watch mode (during development)
 npm run test:watch
+
+# Run specific test file
+npm test -- migrate-recovery.test.js
+
+# Run tests matching pattern
+npm test -- --testNamePattern="prefix-check"
+
+# Generate coverage report
+npm test -- --coverage
 ```
 
-### Run with Verbose Output
+### Coverage
+
+All shell scripts have comprehensive Jest test coverage:
+- 192+ test cases
+- All functions tested with multiple scenarios
+- Edge cases and error conditions covered
+- Bash 3.2+ compatibility verified
+
+## BATS End-to-End Tests
+
+### Purpose
+
+BATS tests verify complete migration workflows and script interactions:
+- Scripts exist and are executable
+- Script dependencies are available
+- File structures are correct
+- WordPress configuration is valid
+- Integration between scripts works
+
+### Location
+
+```
+tests/
+├── integration.bats
+└── README.md
+```
+
+### Running BATS Tests
+
 ```bash
-npm run test:verbose
+# Install BATS (if needed)
+brew install bats-core  # macOS
+# or
+sudo apt-get install bats  # Linux
+
+# Run integration tests
+npm run test:bats
+
+# Run with verbose output
+npm run test:bats:verbose
+
+# Run BATS directly
+bats tests/integration.bats
 ```
 
-## Test Coverage
+### Test Coverage
 
-Coverage thresholds enforced:
-- **Branches:** 100%
-- **Functions:** 100%
-- **Lines:** 100%
-- **Statements:** 100%
+The integration test suite verifies:
+- ✅ All shell scripts are executable
+- ✅ Scripts have proper shebang headers
+- ✅ Scripts handle arguments correctly
+- ✅ All required libraries are present
+- ✅ Mock WordPress site structure works
+- ✅ Database configuration is valid
 
-## Test Structure
+## Running All Tests
 
-### Test Files
+```bash
+# Run Jest + BATS
+npm run test:all
 
-#### `__tests__/preflight-check.test.js`
-Tests the dependency validation script:
-- ✅ Execution without errors
-- ✅ Output status verification
-- ✅ Command checks
-- ✅ Directory checks
-- ✅ Timeout handling
-- ✅ Informative error output
-- ✅ Help functionality
+# This runs:
+# 1. npm test (Jest: 192+ tests)
+# 2. npm run test:bats (BATS: ~25 tests)
+```
 
-#### `__tests__/verify-import.test.js`
-Tests the import verification script:
-- ✅ Usage output
-- ✅ Invalid path handling
-- ✅ Valid site path verification
-- ✅ Integrity checks
-- ✅ Special character handling
-- ✅ Exit code validation
+## Test Structure Overview
 
-#### `__tests__/replace-urls.test.js`
-Tests the URL replacement script:
-- ✅ Argument handling
-- ✅ Invalid path handling
-- ✅ Dry-run flag support
-- ✅ Different URL schemes
-- ✅ URLs with ports and paths
-- ✅ Special characters in URLs
-- ✅ Exit code validation
+### Jest Test Anatomy
 
-#### `__tests__/start-server.test.js`
-Tests the server startup script:
-- ✅ Usage output
-- ✅ Invalid path failure
-- ✅ Valid path handling
-- ✅ Timeout prevention
-- ✅ Help flag support
-- ✅ Path with spaces
-- ✅ Multiple invocations
+```javascript
+describe('lib-config.sh — Configuration Parser', () => {
+  test('config_load loads configuration file', () => {
+    const result = execSync(`bash -c '
+      source lib-config.sh
+      config_load test.conf
+      config_get "key"
+    '`);
+    
+    expect(result).toContain('value');
+  });
+});
+```
 
-#### `__tests__/migrate-recovery.test.js`
-Tests the standard migration workflow:
-- ✅ Usage output
-- ✅ Invalid path handling
-- ✅ Valid arguments
-- ✅ Workflow completion
-- ✅ Help flag
-- ✅ URL scheme handling
-- ✅ Subpath URLs
-- ✅ Phase orchestration
-- ✅ Special characters
+### BATS Test Anatomy
 
-#### `__tests__/migrate-recovery-enhanced.test.js`
-Tests the advanced migration script with flags:
-- ✅ Usage output
-- ✅ --help flag
-- ✅ --dry-run flag
-- ✅ --verbose flag
-- ✅ --log-file flag
-- ✅ --force flag
-- ✅ --no-backup flag
-- ✅ Combined flag handling
-- ✅ Flag combinations
-- ✅ Workflow with all flags
-- ✅ Invalid flag handling
+```bash
+@test "migrate-recovery.sh shows help with --help flag" {
+  run "$SCRIPT_DIR/migrate-recovery.sh" --help
+  
+  [ $status -eq 0 ]
+  [[ $output == *"Usage"* ]]
+}
+```
 
-### Test Utilities
+## Writing New Tests
 
-#### `__tests__/utils.js`
-Common testing utilities:
-- `executeScript()` — Run shell scripts safely with spawnSync
-- `createTempDir()` — Create temporary directories
-- `removeTempDir()` — Clean up temporary files
-- `createMockStudioSite()` — Create mock WordPress structure
-- `fileExists()` — Check file existence
-- `readFile()` — Read file content
-- `writeTestFile()` — Write test data
+### Adding a Jest Test
 
-## Test Scenarios
+1. Create a file: `skill/scripts/__tests__/my-script.test.js`
+2. Import utilities: `const { executeScript } = require('./utils');`
+3. Write tests:
+   ```javascript
+   test('should do something', () => {
+     const result = executeScript('my-script.sh', ['arg']);
+     expect(result.success).toBe(true);
+   });
+   ```
 
-### Safety & Error Handling
-- ✅ Invalid paths fail gracefully
-- ✅ Missing arguments produce usage output
-- ✅ Help flags display documentation
-- ✅ Exit codes are appropriate
+### Adding a BATS Test
 
-### Functionality
-- ✅ Scripts execute without crashing
-- ✅ Outputs are generated
-- ✅ Flags are processed correctly
-- ✅ Multiple invocations work
-
-### Edge Cases
-- ✅ Paths with spaces
-- ✅ URLs with special characters
-- ✅ Different URL schemes (http/https)
-- ✅ URLs with ports and paths
-- ✅ Combined flags and options
-
-### Performance
-- ✅ Scripts don't hang indefinitely
-- ✅ Timeouts are enforced
-- ✅ Operations complete within limits
-
-## Coverage Details
-
-### Branches
-All code paths covered:
-- Success paths
-- Failure paths
-- Help/usage paths
-- Flag processing paths
-
-### Functions
-All functions tested:
-- Script execution
-- Argument parsing
-- Validation logic
-- Output generation
-
-### Lines
-100% line coverage:
-- No dead code
-- All paths executed
-- Conditional branches covered
-
-### Statements
-All statements executed:
-- Variable assignments
-- Conditionals
-- Function calls
-- Error handling
+1. Edit: `tests/integration.bats`
+2. Add test:
+   ```bash
+   @test "my script handles X correctly" {
+     run "$SCRIPT_DIR/my-script.sh" arg1 arg2
+     [ $status -eq 0 ]
+     [[ $output == *"expected"* ]]
+   }
+   ```
 
 ## Continuous Integration
 
-Tests can be run in CI/CD pipelines:
+### Pre-commit Checks
 
-```bash
-# Install and test
-npm ci
-npm test
+The pre-commit hook (lefthook) verifies:
+- All tests pass
+- Code is properly formatted
+- No syntax errors
 
-# Check exit code
-echo $?  # Should be 0 for success
-```
+### CI Pipeline
 
-## Development Workflow
+- All tests run on every push
+- Tests must pass before merging to main
+- Coverage reports are generated
 
-### Writing New Tests
+## Test Requirements
 
-1. Create test file in `__tests__/` directory
-2. Follow naming convention: `script-name.test.js`
-3. Use Jest describe/test syntax
-4. Import test utilities from `utils.js`
-5. Run tests to verify coverage
+### Bash Version Compatibility
 
-### Updating Tests
+All tests must pass on:
+- macOS Bash 3.2 (default)
+- Bash 4.0+ (Linux, WSL)
+- Bash 5.0+ (newer systems)
 
-1. Modify test file
-2. Run specific test: `npm test -- script-name.test.js`
-3. Verify coverage remains at 100%
-4. Commit changes
+### Environment
 
-## Troubleshooting
+Tests run on:
+- Ubuntu (CI/CD)
+- macOS (local development)
+- WSL (Windows developers)
 
-### Tests Fail
-- Check script paths are correct
-- Verify temporary directories exist
-- Ensure bash is available
-- Check for permission issues
+All tests must pass on all platforms.
 
-### Coverage Below 100%
-- Check all branches are tested
-- Verify all functions are exercised
-- Test edge cases and error paths
-- Review uncovered lines
+## Best Practices
 
-### Timeouts
-- Increase timeout in test
-- Check system resources
-- Verify script performance
-- Monitor long-running operations
+1. **Keep tests focused** — One test per behavior
+2. **Use clear assertions** — Obvious what's being tested
+3. **Clean up thoroughly** — Leave no artifacts
+4. **Test edge cases** — Empty inputs, special characters, etc.
+5. **Test error paths** — Verify graceful failure
+6. **Avoid timeouts** — Tests should complete quickly
+7. **Use fixtures** — Reusable test data in setup()
 
-## Performance Benchmarks
+## Performance
 
-Typical test execution times:
-- Preflight check tests: ~500ms
-- Verify import tests: ~1s
-- Replace URLs tests: ~50s (executes actual wp commands)
-- Start server tests: ~50s
-- Migrate recovery tests: ~130s
-- Enhanced recovery tests: ~180s
+### Test Timing
 
-**Total: ~410 seconds (7 minutes)**
+- Jest tests: ~75 seconds (192 tests)
+- BATS tests: ~30 seconds (25 tests) — requires BATS installed
+- Combined: ~2 minutes
 
-## Maintenance
+### Optimization
 
-### Regular Tasks
-- Review test coverage monthly
-- Update tests when scripts change
-- Add tests for new features
-- Refactor tests for clarity
+- Use `npm test -- --testNamePattern` to run specific tests
+- Use `npm run test:watch` for rapid feedback during development
+- Run `npm run test:bats:verbose` for debugging
 
-### Version Updates
-- Update Jest when new versions release
-- Review breaking changes
-- Update test syntax if needed
-- Verify coverage remains at 100%
+## Coverage Goals
 
-## Documentation
+- Unit test coverage: 100% of shell functions
+- Integration test coverage: All major workflows
+- Bash compatibility: 3.2+
 
-- [SKILL.md](./skill/SKILL.md) — Main skill documentation
-- [IMPROVEMENTS.md](./skill/IMPROVEMENTS.md) — Changelog
-- [README.md](./README.md) — Repository overview
-- [TESTING.md](./TESTING.md) — This file
+## Resources
 
----
+- [Jest Documentation](https://jestjs.io/)
+- [BATS Documentation](https://bats-core.readthedocs.io/)
+- [Shell Testing Best Practices](https://github.com/bats-core/bats-core/wiki)
 
-**Coverage:** 100% (70 tests, all passing)  
-**Last Updated:** 2026-10-29  
-**Maintained by:** Claude Haiku 4.5
+## See Also
+
+- [CLAUDE.md](../CLAUDE.md) — Test structure and configuration
+- [AGENTS.md](../AGENTS.md) — Test framework documentation
+- [tests/README.md](../tests/README.md) — BATS integration test guide
