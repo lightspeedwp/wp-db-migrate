@@ -26,9 +26,35 @@
   ],
   "aliases": {
     "test": "npm test",
+    "test:watch": "npm run test:watch",
+    "test:verbose": "npm run test:verbose",
     "lint": "npm run lint",
     "check": "./skill/scripts/preflight-check.sh",
     "help": "less ./skill/SKILL.md"
+  },
+  "testing": {
+    "framework": "Jest",
+    "testMatch": "**/skill/scripts/__tests__/**/*.test.js",
+    "testEnvironment": "node",
+    "testTimeout": 120000,
+    "coverage": true,
+    "bashCompatibility": "3.2+",
+    "commands": {
+      "test": "npm test -- with coverage",
+      "testWatch": "npm run test:watch -- continuous testing",
+      "testVerbose": "npm run test:verbose -- detailed output",
+      "testSingle": "npm test -- <filename>.test.js"
+    },
+    "coLocation": {
+      "description": "Jest tests are co-located with source scripts following Jest best practices",
+      "location": "skill/scripts/__tests__/",
+      "pattern": "Tests placed alongside shell scripts in __tests__ folder"
+    },
+    "integration": {
+      "framework": "BATS",
+      "location": "tests/",
+      "description": "End-to-end shell script integration testing"
+    }
   },
   "skills": [
     "wp-db-migrate"

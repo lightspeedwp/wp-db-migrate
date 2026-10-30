@@ -67,6 +67,20 @@ Install at: `~/.claude/skills/wordpress-agent/`
      "https://new-url.local"
    ```
 
+## 🧪 Test Structure
+
+The project uses **Jest** for unit and integration testing with co-location pattern (tests alongside source):
+
+**Jest Tests** (192+ test cases):
+- **Location**: `skill/scripts/__tests__/` — co-located with shell scripts
+- **Configuration**: `jest.config.js` in root with `testMatch: ['**/skill/scripts/__tests__/**/*.test.js']`
+- **Run tests**: `npm test` (with coverage) or `npm run test:watch` (watch mode)
+- **Coverage**: Comprehensive coverage of all shell scripts and utilities
+- **Bash compatibility**: All tests pass on Bash 3.2+ (macOS, Linux, WSL)
+
+**BATS Tests** (Shell integration tests):
+- **Location**: `tests/` folder in root (for end-to-end shell script integration testing)
+
 ## 📖 Documentation
 
 - **[Getting Started](./docs/GETTING-STARTED.md)** — First migration in 5 minutes

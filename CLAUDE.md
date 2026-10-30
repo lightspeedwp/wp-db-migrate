@@ -51,39 +51,63 @@ wp-db-migrate/
 ├── skill/                           # Claude Skill
 │   ├── SKILL.md                    # Skill documentation
 │   ├── IMPROVEMENTS.md             # Changelog & roadmap
-│   ├── scripts/                    # CLI tools
+│   ├── scripts/                    # CLI tools (shell scripts)
 │   │   ├── migrate-recovery.sh     # Main migration script
 │   │   ├── migrate-recovery-enhanced.sh  # Advanced options
 │   │   ├── preflight-check.sh      # Dependency verification
 │   │   ├── verify-import.sh        # Validation
 │   │   ├── replace-urls.sh         # URL replacement
-│   │   └── start-server.sh         # Server startup
-│   └── evals/                      # Test cases
+│   │   ├── start-server.sh         # Server startup
+│   │   └── __tests__/              # Jest tests (co-located with scripts)
+│   │       ├── *.test.js           # 192+ Jest test cases
+│   │       └── utils.js            # Test utilities
+│   └── evals/                      # Skill evaluation cases
+├── tests/                          # BATS shell integration tests
+│   └── integration.bats            # Shell script integration tests
 ├── plugin/                          # Claude Plugin
 │   ├── manifest.json               # Plugin configuration
 │   └── README.md                   # Plugin docs
-├── docs/                           # Documentation
-│   ├── GETTING-STARTED.md
-│   ├── SETUP-REQUIREMENTS.md
-│   ├── BEST-PRACTICES.md
-│   ├── TROUBLESHOOTING.md
-│   ├── FAQ.md
-│   ├── LS-HOSTING-INTEGRATION.md
-│   └── ... (14+ guides)
-├── __tests__/                      # Jest test suite
-│   └── (192+ test cases)
+├── docs/                           # Documentation (24 guides)
+│   ├── GETTING-STARTED.md, BEST-PRACTICES.md
+│   ├── TROUBLESHOOTING.md, FAQ.md, ADVANCED.md
+│   └── ... (19 more guides)
+├── jest.config.js                  # Jest configuration
 ├── README.md                       # Main project README
-├── AGENTS.md                       # This file (agents & skills)
-└── CLAUDE.md                       # This file (Claude Code config)
+├── AGENTS.md                       # Agents & skills documentation
+├── CLAUDE.md                       # Claude Code configuration
+└── package.json                    # NPM configuration
 ```
+
+## 🧪 Test Structure
+
+This project uses two testing approaches:
+
+### Jest Tests (JavaScript/Shell Scripts)
+- **Location**: `skill/scripts/__tests__/` (co-located with source scripts)
+- **Files**: `*.test.js` test files + `utils.js` (test utilities)
+- **Count**: 192+ test cases covering all shell scripts
+- **Config**: `jest.config.js` in root (configured via Jest best practices)
+- **Coverage**: 100% of shell script functionality tested
+
+```bash
+npm test                    # Run all Jest tests
+npm test -- --watch       # Watch mode
+npm test -- --coverage    # Coverage report
+npm test -- lib-config    # Run specific test suite
+```
+
+### BATS Tests (Shell Integration Tests)
+- **Location**: `tests/` folder in root
+- **Files**: `*.bats` files for integration testing
+- **Purpose**: Integration and end-to-end shell script testing
 
 ## 🛠️ Common Tasks
 
 ### Run Tests
 ```bash
-npm test                    # Run all tests
-npm test -- --watch       # Watch mode
-npm test -- --coverage    # Coverage report
+npm test                    # Run all Jest tests  
+npm run test:watch        # Watch mode for development
+npm run test:verbose      # Verbose output with coverage
 ```
 
 ### Check Code Quality
