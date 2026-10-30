@@ -13,9 +13,6 @@
     "test:all": "npm test && npm run test:bats",
     "migrate:budget": "node skill/api/migrate-with-budget.js",
     "preflight": "./skill/scripts/preflight-check.sh",
-    "setup": "./setup-cloud.sh",
-    "setup:prod": "./setup-cloud.sh --production --ci",
-    "setup:verbose": "./setup-cloud.sh --verbose",
     "lint": "eslint . --fix 2>/dev/null || true && shellcheck skill/scripts/*.sh 2>/dev/null || true"
   },
   "dependencies": {
