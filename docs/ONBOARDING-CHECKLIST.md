@@ -13,13 +13,16 @@ Your machine needs the right tools installed before you can use wp-db-migrate.
 
 ### Step 1.1: Clone the Repository
 
+All developers must clone wp-db-migrate to the same location for consistency:
+
 ```bash
-# Clone to your preferred location
-git clone https://github.com/lightspeedwp/wp-db-migrate.git
+# Clone to ~/.claude/skills/
+cd ~/.claude/skills/
+git clone https://github.com/lightspeedwp/wp-db-migrate.git wp-db-migrate
 cd wp-db-migrate
 ```
 
-- [ ] Repository cloned successfully
+- [ ] Repository cloned to `~/.claude/skills/wp-db-migrate/`
 - [ ] You're in the `wp-db-migrate` directory
 
 ### Step 1.2: Check Dependencies
@@ -46,7 +49,7 @@ If the dependency check showed missing tools:
 ./skill/scripts/setup-dependencies.sh --install
 
 # OR install manually (see Setup Requirements guide)
-# Individual tool installation docs: https://github.com/lightspeedwp/wp-db-migrate/docs/setup-requirements.md
+# Individual tool installation docs: ~/.claude/skills/wp-db-migrate/docs/setup-requirements.md
 ```
 
 **Troubleshooting:** See [Setup Requirements Guide](./setup-requirements.md#troubleshooting)

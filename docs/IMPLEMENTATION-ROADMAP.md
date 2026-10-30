@@ -12,12 +12,13 @@ Strategic guidance for remaining integration work to complete the wp-db-migrate 
 
 **Step 1: Clone WordPress Agent Skills**
 ```bash
+# Clone to ~/.claude/skills/
 cd ~/.claude/skills/
 git clone https://github.com/wordPress/agent-skills.git wordpress-agent
-
-# Or use submodule if you prefer
-git submodule add https://github.com/wordPress/agent-skills.git ~/.claude/skills/wordpress-agent
+cd wordpress-agent
 ```
+
+**Note:** Both `wp-db-migrate` and `wordpress-agent` should live in `~/.claude/skills/`
 
 **Step 2: Update documentation with installation path**
 - File: `docs/setup-requirements.md`
@@ -213,9 +214,8 @@ After all integration work, the complete local dev workflow is:
 
 ### Day 1: Initial Setup (30 minutes)
 ```bash
-# 1. Clone wp-db-migrate repo
-git clone https://github.com/lightspeedwp/wp-db-migrate.git
-cd wp-db-migrate
+# 1. wp-db-migrate is already at ~/.claude/skills/wp-db-migrate/
+cd ~/.claude/skills/wp-db-migrate
 
 # 2. Verify setup
 ./skill/scripts/setup-dependencies.sh --install
@@ -228,7 +228,7 @@ studio create my-project
 
 # 5. Migrate to local
 ./skill/scripts/migrate-recovery.sh \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://staging.example.com" \
   "https://my-project.local" \
   --exclude-tables wp_actionscheduler_logs,wp_cache
@@ -237,11 +237,11 @@ studio create my-project
 # Use: ls-hosting-fetch-tools
 
 # 7. Copy to WordPress Studio
-cp -r downloaded-plugins/* ~/Studio/my-project/wp-content/plugins/
-cp -r downloaded-themes/* ~/Studio/my-project/wp-content/themes/
+cp -r downloaded-plugins/* ~/.studio/sites/my-project/wp-content/plugins/
+cp -r downloaded-themes/* ~/.studio/sites/my-project/wp-content/themes/
 
 # 8. Configure media paths
-# Edit: ~/Studio/my-project/wp-config.php
+# Edit: ~/.studio/sites/my-project/wp-config.php
 # Add: define( 'UPLOADS', 'https://staging.example.com/wp-content/uploads' );
 
 # 9. Open in Studio
@@ -254,7 +254,7 @@ studio open my-project
 studio open my-project
 
 # 2. Open VS Code for theme/plugin development
-code ~/Studio/my-project/wp-content/themes/my-theme
+code ~/.studio/sites/my-project/wp-content/themes/my-theme
 
 # 3. Use WordPress agent skills for helpers
 /wordpress-agent theme-debug
@@ -303,10 +303,11 @@ code ~/Studio/my-project/wp-content/themes/my-theme
 ## 6. Implementation Priority (For Ashley)
 
 ### Priority 1: Immediate (This Week)
-1. Create `docs/ls-hosting-integration.md`
-2. Install WordPress agent skills globally: `~/.claude/skills/wordpress-agent`
-3. Update `docs/ONBOARDING-CHECKLIST.md` with WordPress skills step
-4. Commit all changes
+1. ✅ Standardize all paths to use `~` and `~/.claude/skills/wp-db-migrate/`
+2. Create `docs/ls-hosting-integration.md`
+3. Install WordPress agent skills globally: `~/.claude/skills/wordpress-agent`
+4. Update `docs/ONBOARDING-CHECKLIST.md` with WordPress skills step
+5. Commit all changes
 
 ### Priority 2: Short-term (Next Week)
 1. Create `docs/PLUGIN-USAGE.md`

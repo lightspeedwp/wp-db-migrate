@@ -20,26 +20,14 @@ We've released **wp-db-migrate** — a professional-grade WordPress database mig
 
 ## 🎯 Quick Start (5 minutes)
 
-### Step 1: Install the Plugin
+### Step 1: Clone to Claude Skills Folder
 
-**Option A: Claude Plugin (Recommended)**
-1. Open Claude
-2. Go to Settings → Plugins
-3. Search for **wp-db-migrate** in the LightSpeed plugin list
-4. Click Install
-5. Test with: `/wp-migrate-clone-to-studio --help`
-
-**Option B: As a Claude Skill (for your project)**
-- Enable in Claude Code → Settings → Skills → wp-db-migrate
-
-**Option C: CLI Only (CI/CD automation)**
-- Already available in your project's `skill/scripts/`
-
-### Step 2: Verify Your Setup
+All developers must have the git repo available at `~/.claude/skills/wp-db-migrate/`:
 
 ```bash
-# Clone the repo
-git clone https://github.com/lightspeedwp/wp-db-migrate.git
+# Clone the repo to your Claude skills folder
+cd ~/.claude/skills/
+git clone https://github.com/lightspeedwp/wp-db-migrate.git wp-db-migrate
 cd wp-db-migrate
 
 # Verify all dependencies
@@ -49,9 +37,20 @@ cd wp-db-migrate
 ./skill/scripts/setup-dependencies.sh --install
 ```
 
+### Step 2: Install the Plugin (Optional)
+
+You can also install as a Claude Plugin for easier access:
+1. Open Claude
+2. Go to Settings → Plugins
+3. Search for **wp-db-migrate** in the LightSpeed plugin list
+4. Click Install
+5. Test with: `/wp-migrate-clone-to-studio --help`
+
+**Note:** The git repo at `~/.claude/skills/wp-db-migrate/` is required regardless of plugin installation. CLI commands reference it.
+
 ### Step 3: Follow Onboarding Checklist
 
-Open: `docs/ONBOARDING-CHECKLIST.md`
+Open: `~/.claude/skills/wp-db-migrate/docs/ONBOARDING-CHECKLIST.md`
 
 This walks you through:
 - ✅ Dependency verification
@@ -145,13 +144,13 @@ ssh -i ~/.ssh/your-key user@staging.example.com
 studio create my-project
 
 # 2. Run migration (interactive)
+cd ~/.claude/skills/wp-db-migrate
 ./skill/scripts/migrate-recovery.sh \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://staging.example.com" \
   "https://my-project.local"
 
 # 3. Site is ready with staging data
-cd ~/Studio/my-project
 studio open my-project
 ```
 
@@ -159,8 +158,9 @@ studio open my-project
 
 ```bash
 # Uses SSH to export directly from production/staging
+cd ~/.claude/skills/wp-db-migrate
 ./skill/scripts/migrate-recovery.sh \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://example.com" \
   "https://my-project.local" \
   --ssh-host staging.example.com \
@@ -174,12 +174,14 @@ For large databases (>500MB), you can:
 
 **Option A: Scan and propose reductions**
 ```bash
+cd ~/.claude/skills/wp-db-migrate
+
 # Ask wp-db-migrate to analyze and suggest reductions
 ./skill/scripts/preflight-check.sh
 
 # Then specify exclusions:
 ./skill/scripts/migrate-recovery.sh \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://staging.example.com" \
   "https://my-project.local" \
   --exclude-tables wp_postmeta,wp_actionscheduler_logs,wp_cache
@@ -198,8 +200,9 @@ cp .wp-db-migrate.conf.sample .wp-db-migrate.conf
 
 **Option C: Dry-run first to see what will be removed**
 ```bash
+cd ~/.claude/skills/wp-db-migrate
 ./skill/scripts/migrate-recovery-enhanced.sh --dry-run \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://staging.example.com" \
   "https://my-project.local" \
   --exclude-tables wp_postmeta

@@ -5,17 +5,21 @@ Complete guide for setting up wp-db-migrate on your development machine.
 ## Quick Start (macOS)
 
 ```bash
-# 1. Verify dependencies
-cd /path/to/wp-db-migrate
-./skill/scripts/setup-dependencies.sh
+# 1. Clone wp-db-migrate to ~/.claude/skills/
+cd ~/.claude/skills/
+git clone https://github.com/lightspeedwp/wp-db-migrate.git wp-db-migrate
+cd wp-db-migrate
 
-# 2. Install missing dependencies (optional)
+# 2. Verify dependencies
+./skill/scripts/setup-dependencies.sh --verbose
+
+# 3. Install missing dependencies (optional)
 ./skill/scripts/setup-dependencies.sh --install
 
-# 3. Run preflight check
+# 4. Run preflight check
 ./skill/scripts/preflight-check.sh
 
-# 4. Test your setup
+# 5. Test your setup
 ./skill/scripts/migrate-recovery.sh --help
 ```
 
@@ -54,7 +58,7 @@ curl -fsSL https://wordpress.studio/install.sh | bash
 **Verify installation:**
 ```bash
 studio --version
-# or check for application in /Applications/WordPress Studio.app
+# or check for application in ~/Applications/WordPress Studio.app
 ```
 
 ### 3. WordPress CLI (wp-cli)
@@ -69,7 +73,7 @@ brew install wp-cli
 wp --version
 
 # Test with WordPress Studio site
-cd ~/Studio/your-site
+cd ~/.studio/sites/your-site
 wp db tables
 ```
 

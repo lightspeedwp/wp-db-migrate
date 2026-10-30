@@ -28,7 +28,7 @@ define( 'UPLOADS', 'https://staging.example.com/wp-content/uploads' );
 define( 'WP_CONTENT_URL', 'https://staging.example.com/wp-content' );
 ```
 
-**File location:** `~/Studio/your-site/wp-config.php`
+**File location:** `~/.studio/sites/your-site/wp-config.php`
 
 **Add before:** `define( 'WP_DEBUG', ... );`
 
@@ -107,15 +107,15 @@ wp plugin install media-library-assistant --activate
 
 1. **Add to wp-config.php** (5 min)
    ```bash
-   # Edit ~/Studio/your-site/wp-config.php
+   # Edit ~/.studio/sites/your-site/wp-config.php
    # Add media path constants
    
-   nano ~/Studio/your-site/wp-config.php
+   nano ~/.studio/sites/your-site/wp-config.php
    ```
 
 2. **Verify Configuration** (2 min)
    ```bash
-   cd ~/Studio/your-site
+   cd ~/.studio/sites/your-site
    wp option get siteurl
    wp media list | head -3
    ```
@@ -158,9 +158,11 @@ define( 'UPLOADS', $uploads_url );
 ### Workflow: Clone Production Locally
 
 ```bash
+cd ~/.claude/skills/wp-db-migrate
+
 # 1. Migrate database (with reduced size)
 ./skill/scripts/migrate-recovery.sh \
-  ~/Studio/my-project \
+  ~/.studio/sites/my-project \
   "https://production.example.com" \
   "https://my-project.local" \
   --exclude-tables wp_actionscheduler_logs,wp_cache
@@ -171,7 +173,7 @@ define( 'UPLOADS', $uploads_url );
 # 3. Copy wp-content/plugins and wp-content/themes to local site
 
 # 4. Configure media path
-# Edit: ~/Studio/my-project/wp-config.php
+# Edit: ~/.studio/sites/my-project/wp-config.php
 # Add:  define( 'UPLOADS', 'https://production.example.com/wp-content/uploads' );
 
 # 5. Reload in WordPress Studio
@@ -245,9 +247,9 @@ define( 'UPLOADS', 'https://cdn.production.example.com/wp-content/uploads' );
 // Local uploads directory (allow uploads)
 // Copy media from production for testing
 
-mkdir -p ~/Studio/my-project/wp-content/uploads
+mkdir -p ~/.studio/sites/my-project/wp-content/uploads
 scp -r user@production.com:/path/to/uploads/* \
-  ~/Studio/my-project/wp-content/uploads/
+  ~/.studio/sites/my-project/wp-content/uploads/
 ```
 
 ### Case 2: Theme Development (Read-Only Media)
@@ -259,7 +261,7 @@ define( 'UPLOADS', 'https://production.example.com/wp-content/uploads' );
 ### Case 3: Plugin Development (Selective Media)
 ```php
 // Sync test images only
-mkdir -p ~/Studio/my-project/wp-content/uploads/test
+mkdir -p ~/.studio/sites/my-project/wp-content/uploads/test
 # Copy test fixtures
 ```
 
