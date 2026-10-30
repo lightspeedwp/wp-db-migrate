@@ -212,30 +212,42 @@ See: **[Large Database Handling Guide](./large-databases.md)** for detailed stra
 
 ---
 
-## 🔗 Integration with LightSpeed Hosting Tools
+## 🔗 Integration with LightSpeed Hosting Tools & WordPress Skills
 
-wp-db-migrate works with **ls-hosting-*** skills for complete workflow:
+### Complete Workflow: Production → Local → Staging
 
-### Extract from Staging/Live
+wp-db-migrate works with **ls-hosting-*** skills for complete end-to-end workflows:
+
+**Step 1: Extract from Production (use ls-hosting)**
 ```bash
-# Use ls-hosting-sync-live-to-staging to pull from production
-# Or ls-hosting-fetch-tools to get database backup
-# Then migrate locally with wp-db-migrate
+/ls-hosting-sync-live-to-staging    # Get database backup
+/ls-hosting-fetch-tools             # Get plugins/themes
 ```
 
-### Sync Plugins & Themes
+**Step 2: Migrate Locally (use wp-db-migrate)**
 ```bash
-# Extract wp-content/plugins and wp-content/themes with ls-hosting
-# Then setup locally in WordPress Studio site
+cd ~/.claude/skills/wp-db-migrate
+./skill/scripts/migrate-recovery.sh \
+  ~/.studio/sites/my-project \
+  "https://production.example.com" \
+  "https://my-project.local"
 ```
 
-### Media Path Setup
+**Step 3: Configure & Develop (use WordPress agent skills)**
 ```bash
-# After import, configure media path
-# See: Media Path Configuration Guide (below)
+# For WordPress-specific development help
+/wp-plugin-development      # Plugin architecture
+/wp-block-development       # Gutenberg blocks
+/wp-wpcli-and-ops          # WP-CLI operations
 ```
 
-See: **[ls-hosting Integration Guide](./ls-hosting-integration.md)** for details
+**Step 4: Deploy Changes (use ls-hosting)**
+```bash
+/ls-hosting-deploy-full-site        # Deploy to staging
+/ls-hosting-sync-content            # Sync to production
+```
+
+See: **[ls-hosting Integration Guide](./ls-hosting-integration.md)** for complete workflow details
 
 ---
 
@@ -331,13 +343,28 @@ Full guide: **[Best Practices](./best-practices.md)**
 
 ---
 
+## 🧠 WordPress Agent Skills Available
+
+Your team now has **WordPress agent skills** installed globally at `~/.claude/skills/wordpress-agent/`. Use these when working on WordPress code:
+
+- **`/wp-plugin-development`** — Plugin architecture, hooks, security, settings API
+- **`/wp-block-development`** — Gutenberg blocks, block.json, deprecations
+- **`/wp-block-themes`** — Block themes, theme.json, templates, patterns
+- **`/wp-rest-api`** — REST API routes, endpoints, authentication
+- **`/wp-wpcli-and-ops`** — WP-CLI commands, multisite, automation
+- **`/wp-performance`** — Performance profiling, caching, optimization
+- **And 10+ more skills** — See `~/.claude/skills/wordpress-agent/README.md`
+
+These skills help Claude give you **WordPress-expert guidance** directly in your IDE or Claude, following current best practices.
+
 ## 🎓 Getting Help
 
 1. **Check [FAQ](./faq.md)** — Answers 30+ common questions
 2. **Read [Troubleshooting](./troubleshooting.md)** — Problem-solving guide
 3. **Run setup check** — `./skill/scripts/setup-dependencies.sh --verbose`
-4. **Ask your team lead** — Your team has setup experience
-5. **Check [Reliability Guide](./reliability.md)** — Error recovery strategies
+4. **Use WordPress skills** — `/wp-plugin-development`, `/wp-block-development`, etc.
+5. **Ask your team lead** — Your team has setup experience
+6. **Check [ls-hosting Integration](./ls-hosting-integration.md)** — Complete workflow guide
 
 ---
 
@@ -360,19 +387,26 @@ Full guide: **[Best Practices](./best-practices.md)**
 
 ## ✅ Your First 30 Minutes
 
-1. **Install plugin** (5 min)
-   - Settings → Plugins → Add wp-db-migrate
+1. **Clone to skills folder** (2 min)
+   ```bash
+   cd ~/.claude/skills/
+   git clone https://github.com/lightspeedwp/wp-db-migrate.git wp-db-migrate
+   ```
 
 2. **Verify setup** (5 min)
-   - Run: `./skill/scripts/setup-dependencies.sh`
+   - Run: `cd ~/.claude/skills/wp-db-migrate && ./skill/scripts/setup-dependencies.sh --verbose`
 
-3. **Read essentials** (15 min)
-   - Setup Requirements + Getting Started + Best Practices
+3. **Install plugin (optional)** (3 min)
+   - Settings → Plugins → Add wp-db-migrate (for easier access in Claude)
 
-4. **Follow checklist** (5 min)
-   - Start: `docs/ONBOARDING-CHECKLIST.md`
+4. **Read essentials** (15 min)
+   - Setup Requirements → Getting Started → Best Practices
+
+5. **Follow checklist** (5 min)
+   - Run: `~/.claude/skills/wp-db-migrate/docs/ONBOARDING-CHECKLIST.md`
 
 **Then:** You're ready for your first migration!
+**Bonus:** Try `/wp-plugin-development` in Claude for WordPress help!
 
 ---
 
