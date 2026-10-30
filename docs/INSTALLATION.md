@@ -355,7 +355,7 @@ If you encounter issues:
    ```
 
 2. **Review documentation:**
-   - [SKILL.md](./skill/SKILL.md) — Main documentation
+   - [SKILL.md](../skill/SKILL.md) — Main documentation
    - [TESTING.md](./TESTING.md) — Test information
    - [JEST-SETUP.md](./JEST-SETUP.md) — Testing setup
 

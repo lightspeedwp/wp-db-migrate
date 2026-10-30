@@ -15,11 +15,9 @@ The main agent for this project, located at `~/.claude/skills/wp-db-migrate/`
 
 **How to use:**
 ```bash
-# Enable in Claude Code
-Settings → Skills → Enable wp-db-migrate
-
-# Or invoke via command line
-/wp-db-migrate --help
+# Loads automatically from ~/.claude/skills/wp-db-migrate/SKILL.md
+# Invoke it in Claude Code
+/wp-db-migrate
 ```
 
 ## 📚 Related Skills (LightSpeed Ecosystem)
@@ -55,7 +53,7 @@ Install at: `~/.claude/skills/wordpress-agent/`
    ```
 
 2. **Use with Claude**
-   - In Claude Code: Settings → Skills → wp-db-migrate
+   - In Claude Code: loads automatically from `~/.claude/skills/wp-db-migrate/`
    - In VS Code: Command palette → Claude: Enable Skills
    - Type `/wp-db-migrate` to invoke commands
 

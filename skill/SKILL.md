@@ -521,7 +521,7 @@ Skill will:
 Before migrating, run the validation script to ensure all dependencies are installed:
 
 ```bash
-./scripts/preflight-check.sh
+./skill/scripts/preflight-check.sh
 ```
 
 This verifies:
@@ -706,7 +706,7 @@ migrate-recovery-enhanced.sh --dry-run --verbose /path/to/site "old" "new"
 - [WordPress Studio CLI docs](https://developer.wordpress.com/docs/developer-tools/studio/cli/) — Full CLI reference
 - **Better Find and Replace** (WordPress plugin) — Post-import URL fixes if needed
 - **WP-CLI `wp db*` commands** — Alternative for manual database operations
-- **Pre-flight check script** — `./scripts/preflight-check.sh` verifies dependencies
+- **Pre-flight check script** — `./skill/scripts/preflight-check.sh` verifies dependencies
 
 ---
 

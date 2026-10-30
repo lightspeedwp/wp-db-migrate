@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository includes a comprehensive Jest test suite for all shell scripts with 100% code coverage requirements.
+This repository includes a comprehensive Jest test suite for all shell scripts.
 
 ## What's Included
 
@@ -32,7 +32,7 @@ This installs Jest 29.7.0 as a dev dependency.
 
 ## Running Tests
 
-### All Tests with Coverage
+### All Tests
 ```bash
 npm test
 ```
@@ -42,20 +42,14 @@ npm test
 npm run test:watch
 ```
 
-### Verbose Output with Coverage
+### Verbose Output
 ```bash
 npm run test:verbose
 ```
 
-## Coverage Requirements
+## Coverage
 
-The Jest configuration enforces 100% coverage across:
-- **Branches:** All conditional paths tested
-- **Functions:** All functions executed
-- **Lines:** All lines executed
-- **Statements:** All statements executed
-
-Coverage report generates in `coverage/` directory after running tests.
+Jest can't measure line coverage for the shell scripts, because the tests run them as child processes. There is no coverage threshold; a run passes when every test passes.
 
 ## Test Categories
 
@@ -136,26 +130,17 @@ const sitePath = createMockStudioSite(tempDir);
 - `readFile(path)` — Read file content
 - `writeTestFile(path, content)` — Write test data
 
-## Coverage Validation
-
-After running tests, coverage report shows:
-- Overall coverage percentage
-- Uncovered branches/lines
-- Coverage by file
-
-All files must show 100% across all metrics.
-
 ## CI/CD Integration
 
 For continuous integration:
 
 ```bash
 npm ci              # Clean install (for CI)
-npm test            # Run tests and generate coverage
+npm test            # Run all tests
 echo $?             # Check exit code (0 = success)
 ```
 
-Exit code 0 indicates all tests passed and coverage is 100%.
+Exit code 0 indicates all tests passed.
 
 ## Debugging Tests
 
@@ -200,11 +185,6 @@ Increase timeout in jest.config.js (default 5000ms):
 testTimeout: 30000  // 30 seconds
 ```
 
-### Coverage Below 100%
-- Check `coverage/` report for uncovered lines
-- Add tests for missing branches
-- Review script logic for dead code
-
 ### Script Execution Errors
 - Verify bash is installed
 - Check script permissions
@@ -218,14 +198,13 @@ testTimeout: 30000  // 30 seconds
 1. Create `__tests__/script-name.test.js`
 2. Import `executeScript` from utils
 3. Write test cases
-4. Run `npm test` to verify coverage
+4. Run `npm test` to verify the new tests pass
 
 ### Updating Existing Tests
 
 1. Modify test file
-2. Run `npm test` to check coverage
-3. Coverage must remain 100%
-4. Commit changes
+2. Run `npm test` to check all tests pass
+3. Commit changes
 
 ## Performance Notes
 
@@ -243,11 +222,6 @@ This is longer due to actual script execution and wp-cli operations.
 
 ## Files Generated
 
-### After Test Run
-- `coverage/` — HTML coverage report
-- `coverage/lcov-report/` — Detailed coverage by file
-- `coverage/lcov.info` — LCOV format coverage
-
 ### After npm install
 - `node_modules/` — Dependencies (git-ignored)
 - `package-lock.json` — Locked versions
@@ -256,11 +230,10 @@ This is longer due to actual script execution and wp-cli operations.
 
 1. ✅ Run `npm install` to install Jest
 2. ✅ Run `npm test` to execute all tests
-3. ✅ Review `coverage/` report
-4. ✅ Commit changes to repository
+3. ✅ Commit changes to repository
 
 ---
 
 **Status:** Setup Complete ✅  
-**Coverage:** 100% (70 tests)  
+**Tests:** 192 across 15 suites  
 **Version:** 1.0.0

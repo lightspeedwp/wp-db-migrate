@@ -27,9 +27,8 @@ This document provides configuration and best practices for working with wp-db-m
 ```
 
 ### 2. Enable the Skill
-- Open Claude Code → Settings → Skills
-- Find **wp-db-migrate** and toggle Enable
-- Or enable via command line: `Settings → Skills → wp-db-migrate`
+- Nothing to toggle: Claude Code loads `~/.claude/skills/wp-db-migrate/SKILL.md` (a symlink to `skill/SKILL.md`) automatically
+- Start a new Claude Code session, then invoke it with `/wp-db-migrate`
 
 ### 3. Try Your First Migration
 ```bash
@@ -83,7 +82,6 @@ wp-db-migrate/
 ```bash
 npm test                    # Run all tests
 npm test -- --watch       # Watch mode
-npm test -- --coverage    # Coverage report
 ```
 
 ### Check Code Quality
@@ -174,9 +172,6 @@ npm test
 
 # Run specific test
 npm test -- migrate-recovery.test.js
-
-# Check coverage
-npm test -- --coverage
 ```
 
 ### 3. Documentation Updates
@@ -202,7 +197,7 @@ git status
 
 ### For Team Members
 1. Clone and setup: See [docs/SETUP-REQUIREMENTS.md](./docs/SETUP-REQUIREMENTS.md)
-2. Enable skill: Settings → Skills → wp-db-migrate
+2. Start a new Claude Code session and check `/wp-db-migrate` is available
 3. Run preflight check: `./skill/scripts/preflight-check.sh`
 4. Start with getting started guide: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 
@@ -220,11 +215,10 @@ git status
 # Verify skill is in correct location
 ls ~/.claude/skills/wp-db-migrate/
 
-# Verify structure
-ls skill/SKILL.md plugin/manifest.json
+# Verify structure (SKILL.md must exist at the repo root)
+ls -l SKILL.md skill/SKILL.md
 
-# Restart Claude Code
-# Settings → Skills → Refresh
+# Restart Claude Code so skills are reloaded
 ```
 
 ### Tests Failing
@@ -236,7 +230,7 @@ npm test -- --verbose
 npm test -- verify-import.test.js
 
 # See test output
-npm test -- --no-coverage
+npm run test:verbose
 ```
 
 ### Dependency Issues

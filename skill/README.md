@@ -36,11 +36,11 @@ The core migration skill for Claude Code and plugin environments.
 ## Using This Skill
 
 ### In Claude Code
-1. Enable skill in Settings → Skills
-2. Use in Claude Code terminal: `/wp-migrate-clone-to-studio --help`
+1. Clone the repo to `~/.claude/skills/wp-db-migrate/` (the root `SKILL.md` links to this folder's `SKILL.md`)
+2. Start a new Claude Code session and invoke `/wp-db-migrate`
 
 ### In Claude Plugin
-Use anywhere with `/wp-migrate-clone-to-studio` command
+Use anywhere with the `/wp-db-migrate` command
 
 ### As CLI Scripts
 Add `skill/scripts/` to PATH and run from any terminal
@@ -80,4 +80,4 @@ To improve this skill:
 
 ---
 
-**Learn more:** Read [SKILL.md](./SKILL.md) for complete documentation or [../../docs/README-GUIDE.md](../../docs/README-GUIDE.md) for team onboarding guides.
+**Learn more:** Read [SKILL.md](./SKILL.md) for complete documentation or [../../docs/README-GUIDE.md](../docs/README-GUIDE.md) for team onboarding guides.

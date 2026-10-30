@@ -6,17 +6,17 @@ This is the Claude plugin package for **wp-db-migrate**. For complete documentat
 
 ### Installation
 
-Add this plugin to Claude:
+Add this plugin to Claude Code (the plugin is defined in `.claude-plugin/plugin.json` at the repo root):
 
-```bash
-# In Claude Settings → Plugins
-# Search for: wp-db-migrate
-# Click Install
+```
+/plugin marketplace add lightspeedwp/wp-db-migrate
+/plugin install wp-db-migrate@lightspeedwp
 ```
 
-Or install locally:
-```bash
-cp -r . ~/.claude/plugins/wp-db-migrate
+Or install from a local clone:
+```
+/plugin marketplace add /path/to/wp-db-migrate
+/plugin install wp-db-migrate@lightspeedwp
 ```
 
 ### Usage
