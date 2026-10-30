@@ -10,12 +10,8 @@
   },
   "permissions": {
     "allow": [
-      "bash",
-      "npm",
       "npm test",
-      "wp",
-      "studio",
-      "git",
+      "npm run lint",
       "grep",
       "find"
     ]
