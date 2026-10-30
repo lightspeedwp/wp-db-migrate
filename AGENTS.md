@@ -1,0 +1,108 @@
+# Agents & Skills
+
+This project includes built-in support for Claude agents and skills to assist with WordPress database migration workflows.
+
+## 🤖 Available Agents
+
+### wp-db-migrate Skill
+The main agent for this project, located at `~/.claude/skills/wp-db-migrate/`
+
+**What it does:**
+- Migrates WordPress databases from MySQL/MariaDB to SQLite
+- Handles database sanitization and URL replacement
+- Provides comprehensive validation and error recovery
+- Supports dry-run mode for safe previewing
+
+**How to use:**
+```bash
+# Enable in Claude Code
+Settings → Skills → Enable wp-db-migrate
+
+# Or invoke via command line
+/wp-db-migrate --help
+```
+
+## 📚 Related Skills (LightSpeed Ecosystem)
+
+### ls-hosting-* Skills
+Used in conjunction with wp-db-migrate for complete workflows:
+
+- **ls-hosting-sync-live-to-staging** — Export database from production/staging
+- **ls-hosting-fetch-tools** — Download plugins and themes
+- **ls-hosting-deploy-full-site** — Deploy changes back to staging/production
+- **ls-hosting-sync-content** — Sync content between environments
+
+See [ls-hosting Integration Guide](./docs/ls-hosting-integration.md) for complete workflows.
+
+### WordPress Agent Skills
+Global skills for WordPress-specific development:
+
+- `/wp-plugin-development` — Plugin architecture and best practices
+- `/wp-block-development` — Gutenberg block development
+- `/wp-block-themes` — Block theme configuration
+- `/wp-rest-api` — REST API patterns
+- `/wp-wpcli-and-ops` — WP-CLI operations
+- And more (see `~/.claude/skills/wordpress-agent/README.md`)
+
+Install at: `~/.claude/skills/wordpress-agent/`
+
+## 🚀 Quick Start
+
+1. **Enable wp-db-migrate skill**
+   ```bash
+   cd ~/.claude/skills/wp-db-migrate
+   ./skill/scripts/setup-dependencies.sh --install
+   ```
+
+2. **Use with Claude**
+   - In Claude Code: Settings → Skills → wp-db-migrate
+   - In VS Code: Command palette → Claude: Enable Skills
+   - Type `/wp-db-migrate` to invoke commands
+
+3. **Or use CLI scripts directly**
+   ```bash
+   ~/.claude/skills/wp-db-migrate/skill/scripts/migrate-recovery.sh \
+     ~/.studio/sites/my-project \
+     "https://old-url.com" \
+     "https://new-url.local"
+   ```
+
+## 📖 Documentation
+
+- **[Getting Started](./docs/getting-started.md)** — First migration in 5 minutes
+- **[Setup Requirements](./docs/setup-requirements.md)** — Dependencies and system setup
+- **[Best Practices](./docs/best-practices.md)** — Safe migration strategies
+- **[Troubleshooting](./docs/troubleshooting.md)** — Problem solving guide
+- **[ls-hosting Integration](./docs/ls-hosting-integration.md)** — End-to-end workflows
+- **[FAQ](./docs/faq.md)** — 30+ common questions answered
+
+## 🔧 Configuration
+
+The skill is configured in:
+- `skill/SKILL.md` — Skill documentation
+- `plugin/manifest.json` — Plugin configuration
+- `skill/scripts/` — CLI tools
+- `.claude/` (future) — Agent configuration
+
+No additional setup needed — works out of the box once dependencies are verified.
+
+## 🆘 Support
+
+1. Run the pre-flight check:
+   ```bash
+   ~/.claude/skills/wp-db-migrate/skill/scripts/preflight-check.sh
+   ```
+
+2. Check the FAQ:
+   ```bash
+   See docs/faq.md for 30+ answers
+   ```
+
+3. Enable verbose output:
+   ```bash
+   ~/.claude/skills/wp-db-migrate/skill/scripts/migrate-recovery-enhanced.sh --verbose
+   ```
+
+---
+
+**Ready to migrate?** Start with [Getting Started](./docs/getting-started.md) or run the preflight check.

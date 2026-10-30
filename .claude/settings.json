@@ -1,0 +1,47 @@
+{
+  "projectName": "wp-db-migrate",
+  "description": "Professional WordPress database migration skill for MySQL→SQLite migrations to WordPress Studio",
+  "version": "1.1.0",
+  "settings": {
+    "model": "claude-opus-5-5",
+    "effort": "medium",
+    "outputStyle": "concise",
+    "fastMode": false
+  },
+  "permissions": {
+    "allow": [
+      "bash",
+      "npm",
+      "npm test",
+      "wp",
+      "studio",
+      "git",
+      "grep",
+      "find"
+    ]
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".git/",
+    "dist/",
+    "coverage/",
+    ".DS_Store",
+    "*.swp"
+  ],
+  "aliases": {
+    "test": "npm test",
+    "lint": "npm run lint",
+    "check": "./skill/scripts/preflight-check.sh",
+    "help": "less ./skill/SKILL.md"
+  },
+  "skills": [
+    "wp-db-migrate"
+  ],
+  "documentation": {
+    "main": "README.md",
+    "setup": "docs/setup-requirements.md",
+    "guide": "docs/getting-started.md",
+    "troubleshooting": "docs/troubleshooting.md",
+    "api": "skill/SKILL.md"
+  }
+}
