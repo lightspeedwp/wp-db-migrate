@@ -18,14 +18,17 @@ The core migration skill for Claude Code and plugin environments.
 ## Quick Start
 
 ```bash
-# Verify dependencies
+# 1. Check dependencies (required before first use)
+./scripts/setup-dependencies.sh
+
+# 2. Verify dependencies are installed (detailed check)
 ./scripts/preflight-check.sh
 
-# Preview migration (no changes)
+# 3. Preview migration (no changes)
 ./scripts/migrate-recovery-enhanced.sh --dry-run \
   /path/to/studio/site https://old-url.com https://new-url.local
 
-# Run migration
+# 4. Run migration
 ./scripts/migrate-recovery.sh \
   /path/to/studio/site https://old-url.com https://new-url.local
 ```

@@ -6,9 +6,10 @@ Welcome to the wp-db-migrate documentation. This guide helps you find what you n
 
 **Start here if you're new:**
 
-1. **[Team Installation Guide](./TEAM-INSTALLATION.md)** — Install in Claude for your team (5 min)
-2. **[Getting Started](./getting-started.md)** — Your first migration in 5 minutes
-3. **[Quick FAQ](./faq.md)** — Answers to 30+ common questions
+1. **[Setup Requirements](./setup-requirements.md)** — Verify your machine is ready (2 min)
+2. **[Team Installation Guide](./TEAM-INSTALLATION.md)** — Install in Claude for your team (5 min)
+3. **[Getting Started](./getting-started.md)** — Your first migration in 5 minutes
+4. **[Quick FAQ](./faq.md)** — Answers to 30+ common questions
 
 ## 📖 Documentation Hub
 
@@ -96,7 +97,10 @@ docs/
 ├── README-GUIDE.md (← you are here)
 │   └── Navigation & overview
 │
-├── TEAM-INSTALLATION.md ⭐ START HERE
+├── setup-requirements.md ⭐ START HERE
+│   └── Verify dependencies & team setup
+│
+├── TEAM-INSTALLATION.md
 │   └── How to install for your team
 │
 ├── getting-started.md
@@ -132,10 +136,13 @@ docs/
 
 ```
 ├─ New to this tool?
-│  └─ Read: TEAM-INSTALLATION.md → Getting Started
+│  └─ Read: Setup Requirements → TEAM-INSTALLATION.md → Getting Started
+│
+├─ Just got a new Mac?
+│  └─ Read: Setup Requirements (verify dependencies)
 │
 ├─ Installing for your team?
-│  └─ Read: TEAM-INSTALLATION.md
+│  └─ Read: Setup Requirements → TEAM-INSTALLATION.md
 │
 ├─ Running your first migration?
 │  └─ Read: Getting Started → Best Practices
@@ -161,9 +168,11 @@ docs/
 ## 🔍 Search by Topic
 
 ### Installation & Setup
+- **Check dependencies?** → [Setup Requirements](./setup-requirements.md)
+- **Verify all tools installed?** → Run: `./skill/scripts/setup-dependencies.sh`
 - **First time?** → [Team Installation Guide](./TEAM-INSTALLATION.md)
-- **Dependencies?** → [Team Installation](./TEAM-INSTALLATION.md#dependencies-check)
-- **Troubleshooting install?** → [Team Installation](./TEAM-INSTALLATION.md#troubleshooting-installation)
+- **Dependencies?** → [Setup Requirements](./setup-requirements.md#required-dependencies)
+- **Troubleshooting install?** → [Setup Requirements](./setup-requirements.md#troubleshooting)
 
 ### Basic Usage
 - **Quick start (5 min)?** → [Getting Started](./getting-started.md)
@@ -205,10 +214,11 @@ docs/
 
 ## 📋 Learning Paths
 
-### Path 1: Getting Started (30 minutes)
-1. [Team Installation](./TEAM-INSTALLATION.md) — 10 min
-2. [Getting Started](./getting-started.md) — 10 min
-3. [FAQ](./faq.md) — 10 min
+### Path 1: Getting Started (35 minutes)
+1. [Setup Requirements](./setup-requirements.md) — 5 min (verify dependencies)
+2. [Team Installation](./TEAM-INSTALLATION.md) — 10 min
+3. [Getting Started](./getting-started.md) — 10 min
+4. [FAQ](./faq.md) — 10 min
 **Result:** Ready for first migration
 
 ### Path 2: Deep Dive (2 hours)
@@ -262,6 +272,8 @@ docs/
 ## 🤝 For Teams
 
 ### Team Lead Checklist
+- [ ] Verify your own [Setup Requirements](./setup-requirements.md)
+- [ ] Review team's dependency needs (run `./skill/scripts/setup-dependencies.sh`)
 - [ ] Read [Team Installation](./TEAM-INSTALLATION.md)
 - [ ] Review [Best Practices](./best-practices.md)
 - [ ] Create team `.wp-db-migrate.conf` file
@@ -270,6 +282,8 @@ docs/
 - [ ] Create recovery runbook from [Reliability](./reliability.md)
 
 ### Team Member Setup
+- [ ] Run [Setup Requirements](./setup-requirements.md) verification
+- [ ] Install missing dependencies if needed
 - [ ] Follow [Team Installation](./TEAM-INSTALLATION.md)
 - [ ] Read [Getting Started](./getting-started.md)
 - [ ] Study [Best Practices](./best-practices.md)
@@ -292,7 +306,8 @@ docs/
 
 | Guide | Focus | Read Time | Best For |
 |-------|-------|-----------|----------|
-| [Installation](./TEAM-INSTALLATION.md) | Setup | 20 min | Teams & CI/CD |
+| [Setup Requirements](./setup-requirements.md) | Dependencies | 10 min | Verify machine setup |
+| [Team Installation](./TEAM-INSTALLATION.md) | Installation | 20 min | Teams & CI/CD |
 | [Getting Started](./getting-started.md) | Basics | 5 min | First migration |
 | [Configuration](./configuration.md) | Setup | 15 min | Team profiles |
 | [Best Practices](./best-practices.md) | Strategy | 15 min | Safe migrations |
