@@ -21,6 +21,38 @@ Configuration and workflows for GitHub-specific features.
 
 ## Files
 
+### mergify.yml
+Automated PR merge rules based on status checks and conditions.
+
+**What it does:**
+- Auto-merges approved PRs when all checks pass (main branch)
+- Auto-merges PRs with single approval on develop branch
+- Auto-merges documentation-only PRs
+- Auto-merges test-only PRs without review
+- Requests review if PR has conflicts
+- Auto-updates branch when out of date (with `auto-merge` label)
+- Dismisses reviews when new commits are pushed
+- Closes stale draft PRs after 30 days
+
+**Configuration:**
+- **Method:** Squash merge (keeps history clean)
+- **Delete branch:** Automatically deletes head branch after merge
+- **Commit message:** Uses PR title + body
+
+**Rules:**
+1. **Documentation updates** — Auto-merge if dependabot or documentation changes
+2. **Test updates** — Auto-merge if only tests change
+3. **Approved PRs (main)** — Auto-merge with 1 approval + all checks passing
+4. **Approve PRs (develop)** — Auto-merge with 1 approval on develop branch
+5. **Conflict detection** — Requests review if conflicts exist
+6. **Stale drafts** — Closes after 30 days of inactivity
+
+**Enabling auto-merge for a PR:**
+- PR must be on `main` or `develop` branch
+- All checks must pass (Tests, Lint & Format)
+- At least 1 approval required (except docs-only changes)
+- Add `auto-merge` label to auto-update branch if out of date
+
 ### labeler.yml
 Automatically applies labels to PRs based on changed files.
 
@@ -121,6 +153,135 @@ LightSpeed WP has organization-wide defaults in [lightspeedwp/.github](https://g
 - `labels.yml` — Label definitions
 
 This repo's `.github/labeler.yml` adds project-specific auto-labeling on top of org-wide labels.
+
+## Mergify Setup & Usage
+
+Mergify automates PR merging based on configurable rules.
+
+### Getting Started with Mergify
+
+1. **Install Mergify App:**
+   - Visit https://github.com/apps/mergify
+   - Click "Install"
+   - Select the LightSpeed WP organization
+   - Grant repo access
+
+2. **Configuration:**
+   - Mergify reads `.github/mergify.yml`
+   - Rules are evaluated for each PR
+   - Merge happens automatically when conditions match
+
+### Merge Rules Explained
+
+**Rule 1: Documentation Updates**
+```yaml
+files~=^docs/
+```
+Auto-merges PRs that only modify files in the `docs/` folder, even without review.
+
+**Rule 2: Test Updates**
+```yaml
+files~=^(__tests__|tests)/
+```
+Auto-merges PRs that only update tests, as long as all checks pass.
+
+**Rule 3: Approved PRs (main branch)**
+```yaml
+"#approved-reviews-by>=1"
+base=main
+```
+Auto-merges when PR has at least 1 approval and all checks pass.
+
+**Rule 4: Approved PRs (develop branch)**
+```yaml
+"#approved-reviews-by>=1"
+base=develop
+```
+Auto-merges on develop with 1 approval (faster development iteration).
+
+### Labels for Mergify Control
+
+**Labels you can apply:**
+- `auto-merge` — Will auto-update branch when out of date
+- `blocked` — Prevents auto-merge even if all conditions met
+- `wip` — Marks as work-in-progress, prevents merge
+
+**Example:**
+```bash
+# Allow auto-update for out-of-date branch
+gh pr edit PR_NUMBER --add-label auto-merge
+```
+
+### Merge Methods
+
+Mergify uses **squash merge** by default:
+- Combines all commits into one
+- Keeps git history clean
+- Uses PR title + body as commit message
+
+**Benefits:**
+- Linear history on main branch
+- Easy to revert entire PR if needed
+- Clear attribution to original PR
+
+### Customizing Merge Rules
+
+Edit `.github/mergify.yml` to change behavior:
+
+**To require 2 approvals:**
+```yaml
+"#approved-reviews-by>=2"
+```
+
+**To require specific reviewer:**
+```yaml
+"reviewed-by=@lightspeedwp/maintainers"
+```
+
+**To skip certain PRs:**
+```yaml
+"-label=manual-merge"
+```
+
+**To add new conditions:**
+```yaml
+- name: Custom rule
+  conditions:
+    - check-success=Tests
+    - "-draft"
+  actions:
+    merge:
+      method: squash
+```
+
+### Monitoring Mergify
+
+**Check Mergify status:**
+- Click "Details" next to Mergify check on PR
+- See what conditions are met/unmet
+- Review merge decisions
+
+**Mergify Dashboard:**
+- https://dashboard.mergify.io
+- Requires GitHub app permissions
+- Shows recent merges and decisions
+
+### Troubleshooting Mergify
+
+**PR not merging:**
+1. Check that all required checks pass (Tests, Lint & Format)
+2. Verify branch is not `draft`
+3. Check PR is on approved branch (main or develop)
+4. Ensure no `blocked` label
+5. Click Mergify check to see detailed reason
+
+**Wrong merge method:**
+- Edit `.github/mergify.yml` and change `method:`
+- Options: `squash`, `merge`, `rebase`
+
+**Want to merge manually:**
+- Add `manual-merge` label to skip auto-merge
+- Or add `blocked` label temporarily
 
 ## Troubleshooting
 

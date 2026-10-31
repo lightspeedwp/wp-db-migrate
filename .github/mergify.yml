@@ -1,0 +1,97 @@
+pull_request_rules:
+  - name: Automatic merge for documentation updates
+    conditions:
+      - author: dependabot[bot]
+      - files~=^docs/
+      - check-success=Tests
+      - check-success=Lint & Format
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        delete_head_branch: true
+
+  - name: Automatic merge for passing tests (no review required for minor changes)
+    conditions:
+      - check-success=Tests
+      - check-success=Lint & Format
+      - files~=^(__tests__|tests)/
+      - -draft
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        delete_head_branch: true
+
+  - name: Auto-merge approved PRs with all checks passing
+    conditions:
+      - check-success=Tests
+      - check-success=Lint & Format
+      - "#approved-reviews-by>=1"
+      - "-draft"
+      - "-locked"
+      - "-label=blocked"
+      - "-label=wip"
+      - base=main
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        delete_head_branch: true
+
+  - name: Automatic merge for develop branch PRs (with review)
+    conditions:
+      - check-success=Tests
+      - check-success=Lint & Format
+      - "#approved-reviews-by>=1"
+      - "-draft"
+      - base=develop
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        delete_head_branch: true
+
+  - name: Request review if PR has conflicts
+    conditions:
+      - conflict
+    actions:
+      request_review:
+        teams:
+          - "@lightspeedwp/maintainers"
+
+  - name: Dismiss reviews if commits were pushed
+    conditions:
+      - base=main
+    actions:
+      dismiss_reviews:
+        approved: true
+        changes_requested: false
+
+  - name: Auto-update branch when out of date
+    conditions:
+      - base=main
+      - check-success=Tests
+      - label=auto-merge
+    actions:
+      update:
+        method: rebase
+
+  - name: Close stale draft PRs
+    conditions:
+      - draft
+      - -updated-at>30 days
+    actions:
+      close:
+        comment: "Closing stale draft PR. Please reopen if you'd like to continue."
+
+status_checks:
+  - Tests
+  - Lint & Format
+
+# Queue rules for managing merge queue
+queue_rules:
+  - name: default
+    conditions:
+      - check-success=Tests
+      - check-success=Lint & Format
