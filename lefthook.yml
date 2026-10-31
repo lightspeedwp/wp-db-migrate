@@ -1,0 +1,27 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: prettier
+      glob: "*.{js,json,yml,yaml,md}"
+      run: npx prettier --write {staged_files}
+
+    - name: jest tests
+      run: npm test -- --coverage
+
+    - name: eslint
+      glob: "*.js"
+      run: npx eslint {staged_files}
+
+    - name: shellcheck
+      glob: "*.sh"
+      run: shellcheck skill/scripts/*.sh || true
+
+pre-push:
+  jobs:
+    - name: validate branch name
+      run: |
+        BRANCH=$(git rev-parse --abbrev-ref HEAD)
+        if [[ ! $BRANCH =~ ^wp-db- ]]; then
+          echo "❌ Branch must start with 'wp-db-'"
+          exit 1
+        fi
