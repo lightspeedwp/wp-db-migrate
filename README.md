@@ -2,6 +2,15 @@
 
 A professional-grade skill for migrating WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Handles sanitization, safe imports, URL replacement, and comprehensive validation.
 
+## What Problem Does This Solve?
+
+You need to bring production or staging database backups into local WordPress Studio sites for development and testing. This skill automates the entire workflow:
+- Analyzes your database export for size and compatibility
+- Sanitizes it for SQLite (removes MySQL-only syntax)
+- Safely imports with backup and rollback capability
+- Replaces URLs automatically with verification
+- Validates the result with row counts and integrity checks
+
 ## 🚀 Quick Start
 
 ```bash
@@ -36,6 +45,62 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
 - **README.md** — Plugin documentation
 - Complete integration ready to install in Claude
 
+## 📁 Project Structure
+
+```
+wp-db-migrate/
+├── README.md               # Main project overview (this file)
+├── CLAUDE.md              # Claude Code instructions
+├── AGENTS.md              # Agent definitions
+├── CHANGELOG.md           # Version history
+├── LICENSE                # MIT License
+│
+├── docs/                  # 📚 Documentation (see docs/README.md)
+│   ├── INSTALLATION.md    # Setup and installation
+│   ├── TESTING.md         # Testing guide (Jest + BATS)
+│   ├── JEST-SETUP.md      # Jest configuration
+│   ├── TEST-SUMMARY.md    # Test results summary
+│   ├── OPTIMIZATION.md    # Performance tuning
+│   └── STUDIO-CLI-GUIDE.md # Studio CLI reference
+│
+├── skill/                 # 🧠 Claude Skill
+│   ├── SKILL.md          # Complete skill documentation
+│   ├── IMPROVEMENTS.md    # Changelog and roadmap
+│   ├── prompts/          # Agent instruction files
+│   ├── scripts/          # CLI migration scripts
+│   ├── api/              # API and automation tools
+│   ├── evals/            # Skill evaluation test cases
+│   └── README.md         # (auto-generated from SKILL.md)
+│
+├── skill/scripts/         # 🛠️ CLI Tools
+│   ├── README.md         # Scripts quick reference
+│   ├── migrate-recovery.sh
+│   ├── migrate-recovery-enhanced.sh
+│   ├── preflight-check.sh
+│   ├── verify-import.sh
+│   ├── replace-urls.sh
+│   └── ... (other migration utilities)
+│
+├── plugin/               # 🔌 Claude Plugin
+│   ├── manifest.json
+│   └── README.md
+│
+├── tests/                # 🧪 Integration Tests
+│   ├── README.md         # Testing guide
+│   └── integration.bats  # BATS shell script tests
+│
+├── __tests__/            # Jest Unit Tests
+│   └── *.test.js         # Unit test files
+│
+├── references/           # 📖 External Resources
+│   └── README.md         # Links and references
+│
+├── assets/               # 🖼️ Media & Templates
+│   └── README.md         # Asset guidelines
+│
+└── package.json         # Node.js dependencies
+```
+
 ## ✨ Key Features
 
 ### Safety First
@@ -66,17 +131,22 @@ A professional-grade skill for migrating WordPress databases from MySQL/MariaDB 
 
 ## 📖 Documentation
 
-### For Users
-1. **Getting Started**: See `skill/SKILL.md` → "When to Use This Skill"
-2. **Need Help?**: Check `skill/SKILL.md` → "FAQ" (answers 11 common questions)
-3. **Troubleshooting**: See decision flowchart in `skill/SKILL.md`
-4. **Advanced Usage**: See "Advanced Script Options" section
+Start with the [docs/README.md](docs/README.md) for a complete documentation index.
 
-### For Developers
-1. **Architecture**: See `skill/SKILL.md` → "How the Skill Works" (5 phases)
-2. **Improvements**: See `skill/IMPROVEMENTS.md` for changelog and roadmap
-3. **Plugin Setup**: See `plugin/README.md`
-4. **Test Cases**: See `skill/evals/` for evaluation scenarios
+### Quick Links
+
+**For Users:**
+1. **Getting Started**: [Installation Guide](docs/INSTALLATION.md)
+2. **Quick Reference**: [Scripts Guide](skill/scripts/README.md)
+3. **Troubleshooting**: [Studio CLI Guide](docs/STUDIO-CLI-GUIDE.md)
+4. **Full Skill Docs**: [skill/SKILL.md](skill/SKILL.md) (complete reference with FAQ)
+
+**For Developers:**
+1. **Architecture**: [skill/SKILL.md](skill/SKILL.md) → "How the Skill Works"
+2. **Testing**: [Testing Guide](docs/TESTING.md) with Jest and BATS
+3. **Improvements**: [skill/IMPROVEMENTS.md](skill/IMPROVEMENTS.md) (changelog)
+4. **Plugin**: [plugin/README.md](plugin/README.md)
+5. **Performance**: [Optimization Guide](docs/OPTIMIZATION.md)
 
 ## 🛠️ Installation
 

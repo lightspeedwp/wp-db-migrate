@@ -450,9 +450,145 @@ migrate-recovery-enhanced.sh --dry-run --verbose /path/to/site "old" "new"
 
 ---
 
+## WordPress Studio CLI Integration
+
+The skill now includes comprehensive WordPress Studio CLI support through three new tools:
+
+### 1. **lib-studio.sh** — Reusable Functions Library
+
+A bash library providing 30+ functions for common Studio operations. Source it in your scripts:
+
+```bash
+#!/bin/bash
+source ./skill/scripts/lib-studio.sh
+
+# Use the functions
+studio_create_site "my-site" "~/Studio/my-site" "my-site.local"
+studio_backup_database "~/Studio/my-site"
+studio_replace_urls "~/Studio/my-site" "old-url.com" "new-url.com"
+```
+
+**Available function categories:**
+- **Validation**: `check_studio_available`, `validate_site_path`, `site_exists`
+- **Site Management**: `studio_list_sites`, `studio_get_site_info`, `studio_create_site`, `studio_delete_site`
+- **Server**: `studio_start_server`, `studio_stop_server`, `studio_server_status`
+- **Database**: `studio_backup_database`, `studio_export_database`, `studio_import_database`, `studio_replace_urls`, `studio_get_table_counts`
+- **Plugins/Themes**: `studio_list_plugins`, `studio_activate_plugin`, `studio_list_themes`, `studio_activate_theme`
+- **Configuration**: `studio_get_config`, `studio_set_wp_version`, `studio_set_php_version`
+- **Export/Import**: `studio_export_site`, `studio_import_site`
+- **Logging**: Color-coded output functions (`log_info`, `log_success`, `log_warning`, `log_error`, `log_debug`)
+
+### 2. **studio-site-manager.sh** — Interactive Site Manager
+
+A menu-driven interface for managing Studio sites without remembering commands:
+
+```bash
+# Launch manager for a specific site
+./skill/scripts/studio-site-manager.sh ~/Studio/my-site
+
+# Or for current directory
+./skill/scripts/studio-site-manager.sh
+```
+
+**Features:**
+- View site details, configuration, server status
+- Start/stop servers
+- Backup, export, import databases
+- Replace URLs with dry-run preview
+- Manage plugins and themes
+- Configure PHP and WordPress versions
+- Create and delete sites
+
+### 3. **studio-db-operations.sh** — Database Operations
+
+Specialized script for database-focused tasks with migration integration:
+
+```bash
+# Create backup before migration
+./studio-db-operations.sh backup ~/Studio/my-site
+
+# Export database for external processing
+./studio-db-operations.sh export ~/Studio/my-site export.sql
+
+# Preview URL replacements (safe, read-only)
+./studio-db-operations.sh dry-run-replace ~/Studio/my-site old.com new.local
+
+# Apply URL replacements with confirmation
+./studio-db-operations.sh replace-urls ~/Studio/my-site old.com new.local
+
+# Verify migration success
+./studio-db-operations.sh post-migrate-verify ~/Studio/my-site \
+  export.sql old.com new.local
+
+# Compare row counts before/after
+./studio-db-operations.sh compare-counts ~/Studio/my-site export.sql
+```
+
+**Key Operations:**
+- `backup` — Create recoverable backup
+- `restore` — Restore from backup
+- `export` — Export database for processing
+- `pre-migration` — Pre-migration checks and statistics
+- `verify` — Post-migration verification
+- `table-counts` — Show row counts
+- `replace-urls` / `dry-run-replace` — URL management
+- `pre-migrate-check` — Complete pre-migration checklist
+- `post-migrate-verify` — Complete post-migration checklist
+- `compare-counts` — Compare original vs current
+
+### Complete Workflow Example
+
+Sync staging to local development:
+
+```bash
+# 1. List available sites
+./skill/scripts/studio-site-manager.sh
+# Choose option 3 (List all sites)
+
+# 2. Create new site
+./skill/scripts/studio-site-manager.sh
+# Choose option 19 (Create new site)
+# Enter: staging-dev, ~/Studio/staging-dev, staging-dev.local
+
+# 3. Pre-migration checks
+./studio-db-operations.sh pre-migrate-check ~/Studio/staging-dev
+# Creates backup, shows statistics
+
+# 4. Import and migrate
+./skill/scripts/create-and-migrate.sh \
+  staging-dev \
+  ~/Downloads/staging-backup.sql.gz \
+  "https://staging.example.com" \
+  "https://staging-dev.local"
+
+# 5. Post-migration verification
+./studio-db-operations.sh post-migrate-verify ~/Studio/staging-dev \
+  ~/Downloads/staging-backup.sql \
+  "https://staging.example.com" \
+  "https://staging-dev.local"
+
+# 6. Test in browser
+studio start --path ~/Studio/staging-dev
+# Visit: https://staging-dev.local
+```
+
+### Documentation
+
+See **[STUDIO-CLI-GUIDE.md](../STUDIO-CLI-GUIDE.md)** for:
+- Installation and setup instructions
+- CLI fundamentals and command reference
+- Detailed function documentation
+- Common workflows with examples
+- Troubleshooting guide
+- Environment variables and best practices
+
+---
+
 ## Related Skills & References
 
-- [WordPress Studio CLI docs](https://developer.wordpress.com/docs/developer-tools/studio/cli/) — Full CLI reference
+- **[STUDIO-CLI-GUIDE.md](../STUDIO-CLI-GUIDE.md)** — Complete WordPress Studio CLI integration guide
+- [WordPress Studio CLI docs](https://developer.wordpress.com/docs/developer-tools/studio/cli/) — Official CLI reference
+- [WordPress Studio Installation](https://developer.wordpress.com/docs/developer-tools/studio/cli/install/) — Setup guide
 - **Better Find and Replace** (WordPress plugin) — Post-import URL fixes if needed
 - **WP-CLI `wp db*` commands** — Alternative for manual database operations
 - **Pre-flight check script** — `./scripts/preflight-check.sh` verifies dependencies
@@ -460,4 +596,4 @@ migrate-recovery-enhanced.sh --dry-run --verbose /path/to/site "old" "new"
 ---
 
 *Last updated: 2026-10-29*
-*Version: 1.1.0 (with advanced scripts and decision trees)*
+*Version: 2.0.0 (with Studio CLI integration, site manager, and database operations)*
