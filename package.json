@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "markdownlint-cli": "^0.50.0",
     "prettier": "^3.9.10"
   },
   "jest": {

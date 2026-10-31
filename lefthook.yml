@@ -2,18 +2,22 @@ pre-commit:
   parallel: true
   jobs:
     - name: prettier
-      glob: "*.{js,json,yml,yaml,md}"
+      glob: '*.{js,json,yml,yaml,md}'
       run: npx prettier --write {staged_files}
+
+    - name: markdownlint
+      glob: '*.md'
+      run: npx markdownlint {staged_files}
 
     - name: jest tests
       run: npm test -- --coverage
 
     - name: eslint
-      glob: "*.js"
+      glob: '*.js'
       run: npx eslint {staged_files}
 
     - name: shellcheck
-      glob: "*.sh"
+      glob: '*.sh'
       run: shellcheck skill/scripts/*.sh || true
 
 pre-push:
