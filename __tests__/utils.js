@@ -16,21 +16,21 @@ function executeScript(scriptPath, args = []) {
 
     const result = spawnSync('bash', [fullPath, ...args], {
       encoding: 'utf-8',
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
 
     return {
       success: result.status === 0,
       stdout: result.stdout || '',
       stderr: result.stderr || '',
-      code: result.status || (result.error ? 1 : 0)
+      code: result.status || (result.error ? 1 : 0),
     };
   } catch (error) {
     return {
       success: false,
       stdout: '',
       stderr: error.message,
-      code: 1
+      code: 1,
     };
   }
 }
@@ -109,5 +109,5 @@ module.exports = {
   createMockStudioSite,
   fileExists,
   readFile,
-  writeTestFile
+  writeTestFile,
 };

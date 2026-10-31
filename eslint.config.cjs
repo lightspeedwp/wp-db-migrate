@@ -7,8 +7,11 @@ module.exports = [
       'build/',
       '.git/',
       '__tests__/coverage/',
-      'jest.config.js'
-    ]
+      'jest.config.js',
+      '.yamllint.config.cjs',
+      '*.yml',
+      '*.yaml',
+    ],
   },
   {
     files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
@@ -17,20 +20,20 @@ module.exports = [
       sourceType: 'module',
       globals: {
         console: 'readonly',
-        process: 'readonly'
-      }
+        process: 'readonly',
+      },
     },
     rules: {
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       'no-console': 'off',
       'prefer-const': 'warn',
-      'eqeqeq': ['error', 'always'],
-      'curly': ['error', 'all'],
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'indent': ['error', 2],
-      'comma-dangle': ['error', 'es5'],
-      'trailing-comma': 'off'
-    }
-  }
+      eqeqeq: ['error', 'always'],
+      curly: ['error', 'all'],
+      semi: ['error', 'always'],
+      quotes: ['error', 'single', { avoidEscape: true }],
+      indent: ['error', 2],
+      'comma-dangle': ['error', 'always-multiline'],
+      'trailing-comma': 'off',
+    },
+  },
 ];

@@ -14,6 +14,6 @@ module.exports = {
     'require-engines-node': 'warn',
     'require-scripts': 'off',
     'no-caret-without-caret-and-dot-zero': 'error',
-    'no-archive-dependencies': 'error'
-  }
+    'no-archive-dependencies': 'error',
+  },
 };

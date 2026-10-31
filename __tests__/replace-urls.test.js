@@ -17,7 +17,7 @@ describe('replace-urls.sh', () => {
   });
 
   test('should output usage without arguments', () => {
-    const result = executeScript('replace-urls.sh', []);
+    const _result = executeScript('replace-urls.sh', []);
     const output = result.stdout + result.stderr;
 
     // Should provide usage information
@@ -25,10 +25,10 @@ describe('replace-urls.sh', () => {
   });
 
   test('should fail with invalid site path', () => {
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       '/nonexistent/site',
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should fail gracefully
@@ -37,10 +37,10 @@ describe('replace-urls.sh', () => {
 
   test('should handle valid arguments', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should execute without crashing
@@ -50,10 +50,10 @@ describe('replace-urls.sh', () => {
   test('should not hang on execution', () => {
     const sitePath = createMockStudioSite(tempDir);
     const startTime = Date.now();
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
     const duration = Date.now() - startTime;
 
@@ -63,11 +63,11 @@ describe('replace-urls.sh', () => {
 
   test('should support dry-run flag', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       '--dry-run',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should handle dry-run flag
@@ -75,7 +75,7 @@ describe('replace-urls.sh', () => {
   });
 
   test('should show help when requested', () => {
-    const result = executeScript('replace-urls.sh', ['--help']);
+    const _result = executeScript('replace-urls.sh', ['--help']);
     const output = result.stdout + result.stderr;
 
     if (result.code === 0 || output.includes('Usage') || output.includes('USAGE')) {
@@ -85,10 +85,10 @@ describe('replace-urls.sh', () => {
 
   test('should handle URLs with different protocols', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'http://old.local',
-      'https://new.local'
+      'https://new.local',
     ]);
 
     expect(result).toBeDefined();
@@ -96,10 +96,10 @@ describe('replace-urls.sh', () => {
 
   test('should handle URLs with ports', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.com:8080',
-      'https://new.com:8443'
+      'https://new.com:8443',
     ]);
 
     expect(result).toBeDefined();
@@ -107,10 +107,10 @@ describe('replace-urls.sh', () => {
 
   test('should handle URLs with paths', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://example.com/wordpress',
-      'https://new.local'
+      'https://new.local',
     ]);
 
     expect(result).toBeDefined();
@@ -118,10 +118,10 @@ describe('replace-urls.sh', () => {
 
   test('should provide output on execution', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     const output = result.stdout + result.stderr;
@@ -132,10 +132,10 @@ describe('replace-urls.sh', () => {
 
   test('should return appropriate exit code', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     expect(typeof result.code).toBe('number');
@@ -143,10 +143,10 @@ describe('replace-urls.sh', () => {
 
   test('should handle special characters in URLs', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const result = executeScript('replace-urls.sh', [
+    const _result = executeScript('replace-urls.sh', [
       sitePath,
       'https://old.example.com/path?query=value',
-      'https://new.local'
+      'https://new.local',
     ]);
 
     expect(result).toBeDefined();

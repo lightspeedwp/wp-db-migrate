@@ -3,7 +3,7 @@
  * Validates all dependencies before migration
  */
 
-const { executeScript, fileExists } = require('./utils');
+const { executeScript } = require('./utils');
 
 describe('preflight-check.sh', () => {
   test('should run without errors', () => {

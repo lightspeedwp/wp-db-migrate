@@ -19,24 +19,13 @@
  *   - Complex (>500MB):   128K tokens (production, large datasets)
  */
 
-const fs = require("fs");
-const path = require("path");
-const { exec } = require("child_process");
-const { promisify } = require("util");
-
-const execPromise = promisify(exec);
+const fs = require('fs');
 
 // Whitelist of approved API hosts (prevent SSRF)
-const APPROVED_HOSTS = new Set([
-  "api.anthropic.com"
-]);
+const APPROVED_HOSTS = new Set(['api.anthropic.com']);
 
 // Loopback addresses allowed for local testing only
-const LOOPBACK_HOSTS = new Set([
-  "localhost",
-  "127.0.0.1",
-  "[::1]"
-]);
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 
 // Validate and sanitize API base URL with exact hostname matching
 function validateApiUrl(urlString) {
@@ -44,7 +33,7 @@ function validateApiUrl(urlString) {
     const url = new URL(urlString);
 
     // Normalize hostname (remove trailing dot, lowercase)
-    const host = url.hostname.toLowerCase().replace(/\.$/, "");
+    const host = url.hostname.toLowerCase().replace(/\.$/, '');
 
     // Check if it's a loopback address
     const isLoopback = LOOPBACK_HOSTS.has(host);
@@ -55,52 +44,52 @@ function validateApiUrl(urlString) {
     }
 
     // Require HTTPS except for loopback
-    if (url.protocol !== "https:" && !isLoopback) {
-      throw new Error("Only HTTPS URLs allowed (except localhost)");
+    if (url.protocol !== 'https:' && !isLoopback) {
+      throw new Error('Only HTTPS URLs allowed (except localhost)');
     }
 
     // Prevent credentials in URL
     if (url.username || url.password) {
-      throw new Error("Credentials in URL not allowed");
+      throw new Error('Credentials in URL not allowed');
     }
 
     return url.origin;
   } catch (error) {
-    log(colors.red, "❌", `Invalid API URL: ${error.message}`);
-    log(colors.yellow, "⚠️ ", "Using default Anthropic API endpoint");
-    return "https://api.anthropic.com";
+    log(colors.red, '❌', `Invalid API URL: ${error.message}`);
+    log(colors.yellow, '⚠️ ', 'Using default Anthropic API endpoint');
+    return 'https://api.anthropic.com';
   }
 }
 
 // Configuration from environment
 const config = {
   apiKey: process.env.ANTHROPIC_API_KEY,
-  apiBase: validateApiUrl(process.env.ANTHROPIC_API_URL || "https://api.anthropic.com"),
-  model: process.env.CLAUDE_MODEL || "claude-opus-4-1",
-  betaHeader: "task-budgets-2026-03-13",
+  apiBase: validateApiUrl(process.env.ANTHROPIC_API_URL || 'https://api.anthropic.com'),
+  model: process.env.CLAUDE_MODEL || 'claude-opus-4-1',
+  betaHeader: 'task-budgets-2026-03-13',
 
   // Token budgets by complexity
   budgets: {
-    simple: 32000,    // <100 MB
-    medium: 64000,    // 100-500 MB
-    complex: 128000   // >500 MB
+    simple: 32000, // <100 MB
+    medium: 64000, // 100-500 MB
+    complex: 128000, // >500 MB
   },
 
   // Effort levels
   efforts: {
-    simple: "medium",
-    medium: "medium",
-    complex: "high"
-  }
+    simple: 'medium',
+    medium: 'medium',
+    complex: 'high',
+  },
 };
 
 // Color output
 const colors = {
-  reset: "\x1b[0m",
-  green: "\x1b[32m",
-  blue: "\x1b[34m",
-  yellow: "\x1b[33m",
-  red: "\x1b[31m"
+  reset: '\x1b[0m',
+  green: '\x1b[32m',
+  blue: '\x1b[34m',
+  yellow: '\x1b[33m',
+  red: '\x1b[31m',
 };
 
 function log(color, prefix, message) {
@@ -112,24 +101,24 @@ function getComplexity(filePath) {
     const stats = fs.statSync(filePath);
     const mb = stats.size / (1024 * 1024);
 
-    if (mb < 100) return "simple";
-    if (mb < 500) return "medium";
-    return "complex";
+    if (mb < 100) {return 'simple';}
+    if (mb < 500) {return 'medium';}
+    return 'complex';
   } catch (error) {
-    log(colors.yellow, "⚠️ ", `Could not determine file size: ${error.message}`);
-    return "medium"; // Default to medium if can't read
+    log(colors.yellow, '⚠️ ', `Could not determine file size: ${error.message}`);
+    return 'medium'; // Default to medium if can't read
   }
 }
 
 function formatBytes(bytes) {
   const mb = bytes / (1024 * 1024);
-  if (mb > 1000) return `${(mb / 1024).toFixed(1)} GB`;
+  if (mb > 1000) {return `${(mb / 1024).toFixed(1)} GB`;}
   return `${mb.toFixed(1)} MB`;
 }
 
 async function callClaudeAPI(prompt, complexity, dryRun = false) {
   if (!config.apiKey) {
-    throw new Error("ANTHROPIC_API_KEY environment variable not set");
+    throw new Error('ANTHROPIC_API_KEY environment variable not set');
   }
 
   const budget = config.budgets[complexity];
@@ -143,9 +132,9 @@ async function callClaudeAPI(prompt, complexity, dryRun = false) {
     output_config: {
       effort,
       task_budget: {
-        type: "tokens",
-        total: budget
-      }
+        type: 'tokens',
+        total: budget,
+      },
     },
 
     system: `You are a WordPress database migration expert. Help migrate the database efficiently within the token budget.
@@ -163,17 +152,17 @@ Output concisely. No unnecessary explanations.`,
 
     messages: [
       {
-        role: "user",
-        content: prompt
-      }
-    ]
+        role: 'user',
+        content: prompt,
+      },
+    ],
   };
 
   if (dryRun) {
-    log(colors.yellow, "🔍", "DRY-RUN: Would send to Claude API");
-    log(colors.blue, "📊", `Complexity: ${complexity}`);
-    log(colors.blue, "💾", `Budget: ${budget} tokens`);
-    log(colors.blue, "⚙️ ", `Effort: ${effort}`);
+    log(colors.yellow, '🔍', 'DRY-RUN: Would send to Claude API');
+    log(colors.blue, '📊', `Complexity: ${complexity}`);
+    log(colors.blue, '💾', `Budget: ${budget} tokens`);
+    log(colors.blue, '⚙️ ', `Effort: ${effort}`);
     return {
       success: true,
       dryRun: true,
@@ -182,25 +171,25 @@ Output concisely. No unnecessary explanations.`,
       usage: {
         inputTokens: 0,
         outputTokens: 0,
-        totalTokens: 0
+        totalTokens: 0,
       },
-      response: "[DRY-RUN] API call skipped"
+      response: '[DRY-RUN] API call skipped',
     };
   }
 
   try {
-    log(colors.blue, "📡", "Calling Claude API with task budget...");
+    log(colors.blue, '📡', 'Calling Claude API with task budget...');
 
     const response = await fetch(`${config.apiBase}/v1/messages`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "x-api-key": config.apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-beta": config.betaHeader,
-        "content-type": "application/json"
+        'x-api-key': config.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': config.betaHeader,
+        'content-type': 'application/json',
       },
       body: JSON.stringify(requestBody),
-      redirect: "manual"  // Prevent redirects from carrying API key to untrusted hosts
+      redirect: 'manual', // Prevent redirects from carrying API key to untrusted hosts
     });
 
     if (!response.ok) {
@@ -218,28 +207,22 @@ Output concisely. No unnecessary explanations.`,
       usage: {
         inputTokens: data.usage.input_tokens || 0,
         outputTokens: data.usage.output_tokens || 0,
-        totalTokens: (data.usage.input_tokens || 0) + (data.usage.output_tokens || 0)
+        totalTokens: (data.usage.input_tokens || 0) + (data.usage.output_tokens || 0),
       },
-      response: data.content[0]?.text || "No response"
+      response: data.content[0]?.text || 'No response',
     };
   } catch (error) {
-    log(colors.red, "❌", `API call failed: ${error.message}`);
+    log(colors.red, '❌', `API call failed: ${error.message}`);
     throw error;
   }
 }
 
 async function migrateWithBudget(config) {
-  const {
-    sitePath,
-    exportFile,
-    oldUrl,
-    newUrl,
-    dryRun = false
-  } = config;
+  const { sitePath, exportFile, oldUrl, newUrl, dryRun = false } = config;
 
   // Validate inputs
   if (!sitePath || !exportFile || !oldUrl || !newUrl) {
-    throw new Error("Missing required arguments: sitePath, exportFile, oldUrl, newUrl");
+    throw new Error('Missing required arguments: sitePath, exportFile, oldUrl, newUrl');
   }
 
   if (!fs.existsSync(exportFile)) {
@@ -270,21 +253,19 @@ Keep output concise.`;
   return {
     ...result,
     fileSize,
-    budgetUtilization: result.usage.totalTokens > 0
-      ? ((result.usage.totalTokens / budget) * 100).toFixed(1)
-      : 0
+    budgetUtilization: result.usage.totalTokens > 0 ? ((result.usage.totalTokens / budget) * 100).toFixed(1) : 0,
   };
 }
 
 async function main() {
   // Parse arguments
   const args = process.argv.slice(2);
-  const isDryRun = args.includes("--dry-run");
+  const isDryRun = args.includes('--dry-run');
 
-  const mainArgs = args.filter(a => !a.startsWith("--"));
+  const mainArgs = args.filter((a) => !a.startsWith('--'));
 
   if (mainArgs.length < 4) {
-    console.error("Usage: node migrate-with-budget.js <site-path> <export-file> <old-url> <new-url> [--dry-run]");
+    console.error('Usage: node migrate-with-budget.js <site-path> <export-file> <old-url> <new-url> [--dry-run]');
     process.exit(1);
   }
 
@@ -292,25 +273,25 @@ async function main() {
 
   try {
     // Show banner
-    console.log("");
-    log(colors.blue, "╔════════════════════════════════╗", "");
-    log(colors.blue, "║  WP DB Migrate with Task Budget  ║", "");
-    log(colors.blue, "╚════════════════════════════════╝", "");
-    console.log("");
+    console.log('');
+    log(colors.blue, '╔════════════════════════════════╗', '');
+    log(colors.blue, '║  WP DB Migrate with Task Budget  ║', '');
+    log(colors.blue, '╚════════════════════════════════╝', '');
+    console.log('');
 
     // Detect complexity
     const complexity = getComplexity(exportFile);
     const fileSize = fs.statSync(exportFile).size;
     const budget = config.budgets[complexity];
 
-    log(colors.blue, "📊", `Complexity: ${complexity} (${formatBytes(fileSize)})`);
-    log(colors.blue, "💾", `Token Budget: ${budget} tokens`);
-    log(colors.blue, "🎯", `Effort Level: ${config.efforts[complexity]}`);
-    console.log("");
+    log(colors.blue, '📊', `Complexity: ${complexity} (${formatBytes(fileSize)})`);
+    log(colors.blue, '💾', `Token Budget: ${budget} tokens`);
+    log(colors.blue, '🎯', `Effort Level: ${config.efforts[complexity]}`);
+    console.log('');
 
     if (isDryRun) {
-      log(colors.yellow, "🔍", "DRY-RUN MODE (no changes will be made)");
-      console.log("");
+      log(colors.yellow, '🔍', 'DRY-RUN MODE (no changes will be made)');
+      console.log('');
     }
 
     // Perform migration
@@ -320,36 +301,35 @@ async function main() {
       oldUrl,
       newUrl,
       budgets: config.budgets,
-      dryRun: isDryRun
+      dryRun: isDryRun,
     });
 
     // Show results
-    console.log("");
+    console.log('');
     if (result.dryRun) {
-      log(colors.green, "✅", "DRY-RUN complete (no API calls made)");
+      log(colors.green, '✅', 'DRY-RUN complete (no API calls made)');
     } else {
-      log(colors.green, "✅", "Migration completed via Claude API");
-      console.log("");
-      log(colors.blue, "📊", `Tokens used: ${result.usage.totalTokens} / ${result.budget}`);
-      log(colors.blue, "📈", `Budget utilization: ${result.budgetUtilization}%`);
+      log(colors.green, '✅', 'Migration completed via Claude API');
+      console.log('');
+      log(colors.blue, '📊', `Tokens used: ${result.usage.totalTokens} / ${result.budget}`);
+      log(colors.blue, '📈', `Budget utilization: ${result.budgetUtilization}%`);
     }
 
-    console.log("");
-    log(colors.blue, "💡", "Response:");
-    console.log("");
+    console.log('');
+    log(colors.blue, '💡', 'Response:');
+    console.log('');
     console.log(result.response);
-    console.log("");
-
+    console.log('');
   } catch (error) {
-    log(colors.red, "❌", `Error: ${error.message}`);
+    log(colors.red, '❌', `Error: ${error.message}`);
     process.exit(1);
   }
 }
 
 // Run if called directly
 if (require.main === module) {
-  main().catch(error => {
-    log(colors.red, "❌", error.message);
+  main().catch((error) => {
+    log(colors.red, '❌', error.message);
     process.exit(1);
   });
 }

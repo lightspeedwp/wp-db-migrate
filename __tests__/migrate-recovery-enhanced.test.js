@@ -3,9 +3,8 @@
  * Advanced migration recovery with CLI flags
  */
 
-const { executeScript, createTempDir, removeTempDir, createMockStudioSite, writeTestFile } = require('./utils');
+const { executeScript, createTempDir, removeTempDir, createMockStudioSite } = require('./utils');
 const path = require('path');
-const fs = require('fs');
 
 describe('migrate-recovery-enhanced.sh', () => {
   let tempDir;
@@ -38,7 +37,7 @@ describe('migrate-recovery-enhanced.sh', () => {
     const result = executeScript('migrate-recovery-enhanced.sh', [
       '/nonexistent/site',
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should fail gracefully
@@ -51,7 +50,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--dry-run',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should execute in dry-run mode without making changes
@@ -64,7 +63,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--verbose',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should execute with verbose output
@@ -80,7 +79,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       logFile,
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should attempt to create log file
@@ -93,7 +92,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--force',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should skip confirmations with --force
@@ -106,7 +105,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--no-backup',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should skip backup creation
@@ -120,7 +119,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--verbose',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should handle combined flags
@@ -137,7 +136,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       logFile,
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should handle combined flags
@@ -151,7 +150,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--verbose',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should handle combined automation flags
@@ -171,7 +170,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--force',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     const duration = Date.now() - startTime;
@@ -187,7 +186,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--dry-run',
       sitePath,
       'http://old.staging.com',
-      'https://new.local'
+      'https://new.local',
     ]);
 
     expect(result).toBeDefined();
@@ -199,7 +198,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--verbose',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     const output = result.stdout + result.stderr;
@@ -216,7 +215,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--dry-run',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     expect(typeof result.code).toBe('number');
@@ -228,7 +227,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--force',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should complete execution
@@ -241,7 +240,7 @@ describe('migrate-recovery-enhanced.sh', () => {
       '--invalid-flag',
       sitePath,
       'https://old.com',
-      'https://new.com'
+      'https://new.com',
     ]);
 
     // Should handle gracefully
