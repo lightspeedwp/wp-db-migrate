@@ -4,7 +4,7 @@ Project-level configuration for Claude Code, Claude Skills, and Claude Agents.
 
 ## Structure
 
-```
+````bash
 .claude/
 ├── README.md              # This file
 ├── settings.json          # Project settings and configuration
@@ -14,7 +14,7 @@ Project-level configuration for Claude Code, Claude Skills, and Claude Agents.
 │   └── (skills linked from project)
 └── prompts/               # System prompts and agent instructions
     └── (custom prompts)
-```
+```bash
 
 ## Configuration Files
 
@@ -45,7 +45,7 @@ Main configuration file for this Claude Code project.
     }
   }
 }
-```
+```bash
 
 ## Agents
 
@@ -70,7 +70,7 @@ Configure Claude to work on wp-db-migrate development.
 ```bash
 # Claude Code will suggest this agent when appropriate
 # Or you can explicitly ask to use it
-```
+```bash
 
 ## Skills
 
@@ -86,7 +86,7 @@ Claude Skills extend Claude's capabilities for specific tasks.
 
 # With arguments
 /wp-db-migrate --help
-```
+```bash
 
 ## Prompts
 
@@ -121,14 +121,14 @@ The agent enforces 100% test coverage:
     "statements": 100
   }
 }
-```
+```bash
 
 Before committing, the agent verifies:
 ```bash
 npm run test:all    # All tests pass
 npm test            # Jest passes with coverage
 npm run test:bats   # BATS integration tests pass
-```
+```bash
 
 ## Integration with settings.json
 
@@ -138,7 +138,7 @@ npm run test:bats   # BATS integration tests pass
   "indentation": "spaces",
   "indentSize": 2
 }
-```
+```bash
 
 ### Git Workflow
 ```json
@@ -146,7 +146,7 @@ npm run test:bats   # BATS integration tests pass
   "branchPrefix": "wp-db",
   "commitFormat": "conventional"
 }
-```
+```bash
 
 Branch names follow pattern: `wp-db-{feature-name}`
 Commits follow convention: `type: description`
@@ -157,7 +157,7 @@ Commits follow convention: `type: description`
   "requiredTools": ["bash", "node", "npm", "git"],
   "restrictedOperations": ["force-push", "hard-reset"]
 }
-```
+```bash
 
 These settings are enforced when using agents.
 
@@ -173,7 +173,7 @@ These settings are enforced when using agents.
    "agents": {
      "enabled": ["wp-db-migrate-developer", "my-agent"]
    }
-   ```
+````
 
 ### Adding Project Skills
 
@@ -198,7 +198,7 @@ These settings are enforced when using agents.
 
 Ensure configuration is valid:
 
-```bash
+````bash
 # Validate JSON syntax
 node -e "JSON.parse(require('fs').readFileSync('.claude/settings.json'))"
 
@@ -207,7 +207,7 @@ ls -la .claude/agents/
 
 # Verify referenced skills
 ls -la .claude/skills/
-```
+```bash
 
 ## Related Files
 
@@ -240,3 +240,4 @@ For more information:
 - [Agent Guide](./agents/wp-db-migrate-developer.md) — Developer agent
 - [GitHub Configuration](./.github/README.md) — GitHub setup
 - [Claude Code Docs](https://claude.com/docs) — Official documentation
+````

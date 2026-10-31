@@ -7,26 +7,29 @@ This repository includes a comprehensive Jest test suite for all shell scripts w
 ## What's Included
 
 ### Test Files
+
 - `__tests__/preflight-check.test.js` — 10 tests
-- `__tests__/verify-import.test.js` — 10 tests  
+- `__tests__/verify-import.test.js` — 10 tests
 - `__tests__/replace-urls.test.js` — 12 tests
 - `__tests__/start-server.test.js` — 10 tests
 - `__tests__/migrate-recovery.test.js` — 11 tests
 - `__tests__/migrate-recovery-enhanced.test.js` — 17 tests
 
 ### Utilities
+
 - `__tests__/utils.js` — Test helpers and utilities
 
 ### Configuration
+
 - `package.json` — Jest configuration and npm scripts
 - `.gitignore` — Excludes node_modules and coverage
 - `TESTING.md` — Comprehensive testing documentation
 
 ## Installation
 
-```bash
+````bash
 npm install
-```
+```bash
 
 This installs Jest 29.7.0 as a dev dependency.
 
@@ -35,17 +38,17 @@ This installs Jest 29.7.0 as a dev dependency.
 ### All Tests with Coverage
 ```bash
 npm test
-```
+```bash
 
 ### Watch Mode (auto-rerun on changes)
 ```bash
 npm run test:watch
-```
+```bash
 
 ### Verbose Output with Coverage
 ```bash
 npm run test:verbose
-```
+```bash
 
 ## Coverage Requirements
 
@@ -61,7 +64,7 @@ Coverage report generates in `coverage/` directory after running tests.
 
 ### Safety & Validation Tests
 - Invalid path handling
-- Missing argument handling  
+- Missing argument handling
 - Usage/help output
 - Exit code validation
 
@@ -112,7 +115,7 @@ Safely executes a bash script using spawnSync (not execSync).
 ```javascript
 const result = executeScript('preflight-check.sh');
 // Returns: { success, stdout, stderr, code }
-```
+```bash
 
 ### createTempDir()
 Creates an isolated temporary directory for each test.
@@ -120,7 +123,7 @@ Creates an isolated temporary directory for each test.
 ```javascript
 const tempDir = createTempDir();
 // Returns: /tmp/wp-db-migrate-test-XXX
-```
+```bash
 
 ### createMockStudioSite(tempDir)
 Creates a mock WordPress Studio site structure.
@@ -128,7 +131,7 @@ Creates a mock WordPress Studio site structure.
 ```javascript
 const sitePath = createMockStudioSite(tempDir);
 // Returns: /tmp/.../test-site with wp-config.php, wp-content/
-```
+```bash
 
 ### Other Utilities
 - `removeTempDir(path)` — Clean up test directories
@@ -153,7 +156,7 @@ For continuous integration:
 npm ci              # Clean install (for CI)
 npm test            # Run tests and generate coverage
 echo $?             # Check exit code (0 = success)
-```
+```bash
 
 Exit code 0 indicates all tests passed and coverage is 100%.
 
@@ -162,28 +165,28 @@ Exit code 0 indicates all tests passed and coverage is 100%.
 ### Verbose Mode
 ```bash
 npm run test:verbose
-```
+```bash
 
 Shows each test execution with timing.
 
 ### Single File
 ```bash
 npx jest __tests__/preflight-check.test.js
-```
+```bash
 
 Run tests for one script only.
 
 ### Single Test
 ```bash
 npx jest -t "should run without errors"
-```
+```bash
 
 Run a specific test by name.
 
 ### Watch Mode
 ```bash
 npm run test:watch
-```
+```bash
 
 Auto-reruns on file changes during development.
 
@@ -192,13 +195,13 @@ Auto-reruns on file changes during development.
 ### Jest Not Found
 ```bash
 npm install
-```
+```bash
 
 ### Tests Timeout
 Increase timeout in jest.config.js (default 5000ms):
 ```javascript
 testTimeout: 30000  // 30 seconds
-```
+```bash
 
 ### Coverage Below 100%
 - Check `coverage/` report for uncovered lines
@@ -261,6 +264,7 @@ This is longer due to actual script execution and wp-cli operations.
 
 ---
 
-**Status:** Setup Complete ✅  
-**Coverage:** 100% (70 tests)  
+**Status:** Setup Complete ✅
+**Coverage:** 100% (70 tests)
 **Version:** 1.0.0
+````

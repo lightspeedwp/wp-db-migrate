@@ -101,8 +101,12 @@ function getComplexity(filePath) {
     const stats = fs.statSync(filePath);
     const mb = stats.size / (1024 * 1024);
 
-    if (mb < 100) {return 'simple';}
-    if (mb < 500) {return 'medium';}
+    if (mb < 100) {
+      return 'simple';
+    }
+    if (mb < 500) {
+      return 'medium';
+    }
     return 'complex';
   } catch (error) {
     log(colors.yellow, '⚠️ ', `Could not determine file size: ${error.message}`);
@@ -112,7 +116,9 @@ function getComplexity(filePath) {
 
 function formatBytes(bytes) {
   const mb = bytes / (1024 * 1024);
-  if (mb > 1000) {return `${(mb / 1024).toFixed(1)} GB`;}
+  if (mb > 1000) {
+    return `${(mb / 1024).toFixed(1)} GB`;
+  }
   return `${mb.toFixed(1)} MB`;
 }
 

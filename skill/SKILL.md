@@ -6,7 +6,7 @@ compatibility: Requires `studio` CLI (WordPress Studio), `sql-tool` for sanitiza
 
 # WordPress Database Migration (MySQL to SQLite Studio)
 
-Migrate a WordPress database from MySQL/MariaDB to SQLite in a WordPress Studio site. This skill handles the entire workflow: analyzing the export, suggesting smart table exclusions, sanitizing for SQLite compatibility, importing with safety gates, replacing URLs, and validating the result.
+Professional WordPress database migration skill: MySQL/MariaDB to SQLite for WordPress Studio
 
 ## When to Use This Skill
 
@@ -17,7 +17,7 @@ Migrate a WordPress database from MySQL/MariaDB to SQLite in a WordPress Studio 
 
 ## Overview of the Workflow
 
-```
+````bash
 1. Provide export file + target Studio site
 2. Skill analyzes the export
    └─ Shows size, table count, potential exclusions
@@ -31,7 +31,7 @@ Migrate a WordPress database from MySQL/MariaDB to SQLite in a WordPress Studio 
 8. Replacements applied
 9. Post-import validation
    └─ Site loads, row counts match, integrity check
-```
+```bash
 
 ## Input
 
@@ -158,13 +158,13 @@ If your import is slow, exclude large diagnostic/logging tables (they can be reb
 The export file path is invalid or not accessible. Verify:
 ```bash
 ls -lh /path/to/export.sql
-```
+```bash
 
 ### "Studio site path does not exist"
 The target Studio site path doesn't exist. Verify with:
 ```bash
 studio site list
-```
+```bash
 
 ### "Case statements followed by a semicolon are deprecated"
 This is a deprecation warning in WordPress itself (not your fault). It's safe to ignore.
@@ -190,24 +190,24 @@ If the skill encounters issues, you can run steps manually:
 **Extract export:**
 ```bash
 unzip export.sql.zip  # or gunzip export.sql.gz
-```
+```bash
 
 **Analyze export:**
 ```bash
 wc -l export.sql                    # Line count
 grep "CREATE TABLE" export.sql      # Table count
 grep "INSERT INTO" export.sql       # Record count (approximate)
-```
+```bash
 
 **Backup site:**
 ```bash
 studio backup create --path /path/to/studio/site
-```
+```bash
 
 **Import:**
 ```bash
 studio import export.sql --path /path/to/studio/site
-```
+```bash
 
 **Replace URLs (post-import):**
 Use a WordPress admin tool or plugin (e.g., Better Find and Replace) to search/replace in the database.
@@ -218,12 +218,12 @@ Use a WordPress admin tool or plugin (e.g., Better Find and Replace) to search/r
 
 User: "I want to bring our staging database down to my local Studio site so I can test the new plugin changes"
 
-```
+```bash
 Export file: ~/Downloads/staging-backup-2026-10-29.sql.gz
 Studio site: /Users/ash/Studio/my-project
 Exclusions: Use defaults (exclude logs/indexes)
 URL replacement: Auto-detect (staging.dev → my-project.local)
-```
+```bash
 
 Skill will:
 1. Extract and analyze the backup
@@ -238,12 +238,12 @@ Skill will:
 
 User: "Set up a Studio site with our production database, but exclude the actionscheduler table because it's huge"
 
-```
+```bash
 Export file: /backups/prod-2026-10-29.sql
 Studio site: /Users/ash/Studio/prod-local
 Exclusions: wp_actionscheduler_logs (skip), wp_actionscheduler_actions (skip)
 URL replacement: Manual (prod.example.com → prod.local)
-```
+```bash
 
 Skill will:
 1. Analyze export, note that actionscheduler tables are 500 MB combined
@@ -271,7 +271,7 @@ Before migrating, run the validation script to ensure all dependencies are insta
 
 ```bash
 ./scripts/preflight-check.sh
-```
+```bash
 
 This verifies:
 - ✅ WordPress Studio CLI (`studio` command)
@@ -285,7 +285,7 @@ If any checks fail, install the missing tool using the provided links.
 
 ## Decision Tree: Which Approach?
 
-```
+```bash
 Do you want to preview changes before applying them?
 ├─ YES → Use --dry-run flag
 │        migrate-recovery-enhanced.sh --dry-run /path/to/site "old" "new"
@@ -300,13 +300,13 @@ Do you want to preview changes before applying them?
          │
          └─ Automated (no prompts)?
             migrate-recovery-enhanced.sh --force /path/to/site "old" "new"
-```
+```bash
 
 ---
 
 ## Troubleshooting Flowchart
 
-```
+```bash
 ❌ Migration Failed
 
 ├─ Error during IMPORT phase?
@@ -349,7 +349,7 @@ Do you want to preview changes before applying them?
       ├─ Check: studio wp plugin status
       ├─ Check: studio wp option get siteurl
       └─ Check: WordPress logs in /path/to/site/wp-content/debug.log
-```
+```bash
 
 ---
 
@@ -358,7 +358,7 @@ Do you want to preview changes before applying them?
 ### Q: How long does a migration take?
 **A:** Depends on database size:
 - **<100 MB**: 1–2 minutes
-- **100 MB–1 GB**: 5–10 minutes  
+- **100 MB–1 GB**: 5–10 minutes
 - **>1 GB**: 15–30 minutes (or longer)
 
 Large `wp_postmeta` and `wp_actionscheduler_logs` tables slow things down. Exclude them to speed up.
@@ -367,7 +367,7 @@ Large `wp_postmeta` and `wp_actionscheduler_logs` tables slow things down. Exclu
 **A:** The database often imports successfully even if the server startup times out. Run:
 ```bash
 verify-import.sh /path/to/studio/site
-```
+```bash
 
 If post counts look good, the data is there!
 
@@ -376,7 +376,7 @@ If post counts look good, the data is there!
 ```bash
 studio backup list --path /path/to/studio/site
 studio backup restore <backup-id> --path /path/to/studio/site
-```
+```bash
 
 ### Q: Should I exclude large logging tables?
 **A:** Yes, usually. Tables like `wp_actionscheduler_logs`, `wp_redirection_*`, and `wp_searchwp_*`:
@@ -414,7 +414,7 @@ You choose in the analysis phase.
 mysqldump database wp_posts wp_postmeta wp_users > partial.sql
 
 # Then use the skill on the partial export
-```
+```bash
 
 ### Q: Is it safe to run while the site is live?
 **A:** No — the import replaces the entire database. Always:
@@ -446,7 +446,7 @@ migrate-recovery-enhanced.sh --force /path/to/site "old" "new"
 
 # Combine flags
 migrate-recovery-enhanced.sh --dry-run --verbose /path/to/site "old" "new"
-```
+```bash
 
 ---
 
@@ -466,7 +466,7 @@ source ./skill/scripts/lib-studio.sh
 studio_create_site "my-site" "~/Studio/my-site" "my-site.local"
 studio_backup_database "~/Studio/my-site"
 studio_replace_urls "~/Studio/my-site" "old-url.com" "new-url.com"
-```
+```bash
 
 **Available function categories:**
 - **Validation**: `check_studio_available`, `validate_site_path`, `site_exists`
@@ -488,7 +488,7 @@ A menu-driven interface for managing Studio sites without remembering commands:
 
 # Or for current directory
 ./skill/scripts/studio-site-manager.sh
-```
+```bash
 
 **Features:**
 - View site details, configuration, server status
@@ -522,7 +522,7 @@ Specialized script for database-focused tasks with migration integration:
 
 # Compare row counts before/after
 ./studio-db-operations.sh compare-counts ~/Studio/my-site export.sql
-```
+```bash
 
 **Key Operations:**
 - `backup` — Create recoverable backup
@@ -570,7 +570,7 @@ Sync staging to local development:
 # 6. Test in browser
 studio start --path ~/Studio/staging-dev
 # Visit: https://staging-dev.local
-```
+```bash
 
 ### Documentation
 
@@ -597,3 +597,4 @@ See **[STUDIO-CLI-GUIDE.md](../STUDIO-CLI-GUIDE.md)** for:
 
 *Last updated: 2026-10-29*
 *Version: 2.0.0 (with Studio CLI integration, site manager, and database operations)*
+````

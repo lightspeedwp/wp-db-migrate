@@ -5,6 +5,7 @@
 **Purpose:** Professional-grade WordPress database migration skill for Claude. Migrates databases from MySQL/MariaDB to SQLite in WordPress Studio with safety gates, validation, and rollback capability.
 
 **Tech Stack:**
+
 - Primary: Bash (shell scripts for migration automation)
 - Secondary: Node.js/JavaScript (Jest tests, CLI tools)
 - Testing: Jest (unit tests, 192 passing) + BATS (integration tests, 23 passing)
@@ -13,6 +14,7 @@
 ## Key Characteristics
 
 ### Safety First
+
 - Backup before import with auto-rollback
 - Dry-run mode to preview changes
 - Pre-flight dependency checks
@@ -20,6 +22,7 @@
 - Post-import validation
 
 ### Technology Constraints
+
 - **Bash compatibility:** 3.2+ (macOS and Linux)
 - **No external dependencies:** Scripts work standalone
 - **SQLite focus:** Sanitizes MySQL-specific syntax
@@ -27,7 +30,7 @@
 
 ## Project Structure
 
-```
+````bash
 skill/          - Claude skill (primary deliverable)
   ├── SKILL.md  - Complete documentation
   ├── scripts/  - Migration automation scripts
@@ -39,7 +42,7 @@ __tests__/      - Jest unit tests (100% coverage enforced)
 tests/          - BATS integration tests
 docs/           - Documentation guides
 plugin/         - Claude plugin manifest
-```
+```bash
 
 ## Development Workflow
 
@@ -73,7 +76,7 @@ plugin/         - Claude plugin manifest
 npm test              # Jest only
 npm run test:bats    # BATS only
 npm run test:all     # Both (required before commit)
-```
+```bash
 
 ### Migrate a Database
 ```bash
@@ -82,7 +85,7 @@ npm run test:all     # Both (required before commit)
   /path/to/studio/site "old-url" "new-url"
 ./skill/scripts/migrate-recovery.sh \
   /path/to/studio/site "old-url" "new-url"
-```
+```bash
 
 ### Update Documentation
 - Edit `skill/SKILL.md` (source of truth)
@@ -91,8 +94,8 @@ npm run test:all     # Both (required before commit)
 
 ## Team/Maintainer Info
 
-**Repo:** https://github.com/lightspeedwp/wp-db-migrate  
-**Type:** LightSpeed WP skill (WordPress + SQLite focused)  
+**Repo:** https://github.com/lightspeedwp/wp-db-migrate
+**Type:** LightSpeed WP skill (WordPress + SQLite focused)
 **Status:** Production-ready (v1.1.0)
 
 ## Important Notes for Claude Sessions
@@ -102,3 +105,4 @@ npm run test:all     # Both (required before commit)
 3. **Documentation first:** Update SKILL.md before changing scripts
 4. **Safety matters:** Changes affect database operations—extreme care needed
 5. **Mock WordPress:** Tests use mock Studio sites, not real databases
+````

@@ -8,20 +8,21 @@
 
 ## Test Suite Overview
 
-| Component | Tests | Coverage | Status |
-|-----------|-------|----------|--------|
-| preflight-check.sh | 10 | 100% | ✅ |
-| verify-import.sh | 10 | 100% | ✅ |
-| replace-urls.sh | 12 | 100% | ✅ |
-| start-server.sh | 10 | 100% | ✅ |
-| migrate-recovery.sh | 11 | 100% | ✅ |
-| migrate-recovery-enhanced.sh | 17 | 100% | ✅ |
-| **TOTAL** | **70** | **100%** | ✅ |
+| Component                    | Tests  | Coverage | Status |
+| ---------------------------- | ------ | -------- | ------ |
+| preflight-check.sh           | 10     | 100%     | ✅     |
+| verify-import.sh             | 10     | 100%     | ✅     |
+| replace-urls.sh              | 12     | 100%     | ✅     |
+| start-server.sh              | 10     | 100%     | ✅     |
+| migrate-recovery.sh          | 11     | 100%     | ✅     |
+| migrate-recovery-enhanced.sh | 17     | 100%     | ✅     |
+| **TOTAL**                    | **70** | **100%** | ✅     |
 
 ## What Was Delivered
 
 ### Test Files Created (1,584 lines)
-```
+
+````bash
 __tests__/
 ├── preflight-check.test.js (78 lines, 10 tests)
 ├── verify-import.test.js (94 lines, 10 tests)
@@ -30,7 +31,7 @@ __tests__/
 ├── migrate-recovery.test.js (128 lines, 11 tests)
 ├── migrate-recovery-enhanced.test.js (228 lines, 17 tests)
 └── utils.js (99 lines, reusable utilities)
-```
+```bash
 
 ### Test Utilities (`__tests__/utils.js`)
 - `executeScript()` — Safe bash script execution using spawnSync
@@ -232,14 +233,14 @@ npm run test:watch
 
 # Verbose output
 npm run test:verbose
-```
+```bash
 
 ### Continuous Integration
 ```bash
 npm ci              # Clean install
 npm test            # Run tests
 echo $?             # Should be 0 for success
-```
+```bash
 
 ## Key Features
 
@@ -260,7 +261,7 @@ echo $?             # Should be 0 for success
 ## Files Changed
 
 ### Added (11 files)
-```
+```bash
 __tests__/preflight-check.test.js
 __tests__/verify-import.test.js
 __tests__/replace-urls.test.js
@@ -272,7 +273,7 @@ package.json
 .gitignore
 TESTING.md
 JEST-SETUP.md
-```
+```bash
 
 ### Statistics
 - **Files Added:** 11
@@ -343,7 +344,8 @@ All scripts are fully tested across safety, functionality, edge cases, and perfo
 
 ---
 
-**Created by:** Claude Haiku 4.5  
-**Date:** 2026-10-29  
-**Repository:** https://github.com/lightspeedwp/wp-db-migrate  
+**Created by:** Claude Haiku 4.5
+**Date:** 2026-10-29
+**Repository:** https://github.com/lightspeedwp/wp-db-migrate
 **Commit:** aa09caa
+````

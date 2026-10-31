@@ -24,5 +24,17 @@
   "MD033": false,
 
   // Multiple spaces in code
-  "MD038": false
+  "MD038": false,
+
+  // Ordered list prefixes - too strict for complex docs
+  "MD029": false,
+
+  // Link fragments - documentation has custom anchors
+  "MD051": false,
+
+  // Table column style - allows compact formatting
+  "MD060": false,
+
+  // Blanks around fences - sometimes intentional
+  "MD031": false
 }

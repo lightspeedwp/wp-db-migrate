@@ -5,6 +5,7 @@ Complete step-by-step instructions for installing the WordPress database migrati
 ## Prerequisites
 
 Before installing, ensure you have:
+
 - ✅ Claude Code installed
 - ✅ Git (for cloning the repository)
 - ✅ Bash shell
@@ -12,10 +13,11 @@ Before installing, ensure you have:
 - ✅ WordPress CLI (`wp` command)
 
 **Check prerequisites:**
-```bash
+
+````bash
 which studio   # Should show path to studio CLI
 which wp       # Should show path to WordPress CLI
-```
+```bash
 
 If missing, install from:
 - [WordPress Studio CLI](https://developer.wordpress.com/docs/developer-tools/studio/cli/)
@@ -31,7 +33,7 @@ git clone https://github.com/lightspeedwp/wp-db-migrate.git
 
 # Or download as ZIP and extract
 # https://github.com/lightspeedwp/wp-db-migrate/archive/refs/heads/main.zip
-```
+```bash
 
 Note the path where you cloned it (e.g., `/Users/ash/work/wp-db-migrate` or `~/projects/wp-db-migrate`).
 
@@ -49,7 +51,7 @@ ln -s /path/to/wp-db-migrate ~/.claude/skills/wp-db-migrate
 
 # Verify the symlink
 ls -la ~/.claude/skills/wp-db-migrate
-```
+```bash
 
 **Result:** The skill is now available in Claude Code's `/wp-db-migrate` command.
 
@@ -64,7 +66,7 @@ ln -s /path/to/wp-db-migrate ./.claude/skills/wp-db-migrate
 
 # Verify the symlink
 ls -la .claude/skills/wp-db-migrate
-```
+```bash
 
 **Result:** The skill is available when working in this project via `/wp-db-migrate`.
 
@@ -78,7 +80,7 @@ cp -r /path/to/wp-db-migrate ~/.claude/skills/
 
 # For project-level
 cp -r /path/to/wp-db-migrate /your-project/.claude/skills/
-```
+```bash
 
 ### Verification
 
@@ -112,11 +114,11 @@ If the automatic method doesn't work:
 1. **Locate plugin manifest:**
    ```bash
    cat /path/to/wp-db-migrate/plugin/manifest.json
-   ```
+````
 
-2. **Copy the contents**
+1. **Copy the contents**
 
-3. **In Claude Code:**
+2. **In Claude Code:**
    - Settings → Plugins → Manual Install
    - Paste the manifest JSON
    - Click Install
@@ -134,14 +136,16 @@ After installation:
 
 ## Which Method Should I Use?
 
-### Use **Method 1 (Skill)** if you want:
+### Use **Method 1 (Skill)** if you want
+
 - ✅ Simple one-time setup
 - ✅ Available everywhere (all projects)
 - ✅ Uses standard Claude Code skill system
 - ✅ Easy to update (just pull repo changes)
 - ✅ Better for team/organizational use
 
-### Use **Method 2 (Plugin)** if you want:
+### Use **Method 2 (Plugin)** if you want
+
 - ✅ More isolated installation
 - ✅ Project-specific customization
 - ✅ To test before full installation
@@ -157,13 +161,13 @@ After installation:
 
 **Solution:** Verify the symlink path is correct:
 
-```bash
+````bash
 # Check symlink exists
 ls -la ~/.claude/skills/wp-db-migrate
 
 # If not, recreate it
 ln -s /correct/path/to/wp-db-migrate ~/.claude/skills/wp-db-migrate
-```
+```bash
 
 ### Error: "Repository isn't a marketplace"
 
@@ -184,7 +188,7 @@ chmod -R a+r /path/to/wp-db-migrate
 
 # Add execute on directories
 chmod -R a+x /path/to/wp-db-migrate
-```
+```bash
 
 ### Symlink doesn't work
 
@@ -196,7 +200,7 @@ rm ~/.claude/skills/wp-db-migrate
 
 # Copy the directory
 cp -r /path/to/wp-db-migrate ~/.claude/skills/
-```
+```bash
 
 ### Skill appears but says "Error loading"
 
@@ -207,7 +211,7 @@ cp -r /path/to/wp-db-migrate ~/.claude/skills/
 /path/to/wp-db-migrate/skill/scripts/preflight-check.sh
 
 # Install any missing tools
-```
+```bash
 
 ---
 
@@ -219,17 +223,17 @@ After successful installation:
 
 Simply type in any Claude Code chat:
 
-```
+```bash
 /wp-db-migrate
 
 I need to migrate my staging database to my local Studio site
-```
+```bash
 
 Or describe what you need:
 
-```
+```bash
 Migrate my WordPress database from staging to local development
-```
+```bash
 
 ### With Flags (If Using Enhanced Script)
 
@@ -242,7 +246,7 @@ Migrate my WordPress database from staging to local development
 
 # Force mode (skip confirmations)
 /wp-db-migrate --force /path/to/site "old-url" "new-url"
-```
+```bash
 
 ---
 
@@ -261,7 +265,7 @@ git pull origin main
 
 # Run tests to verify
 npm test
-```
+```bash
 
 ### For Copied Installations
 
@@ -277,7 +281,7 @@ cp -r wp-db-migrate-new ~/.claude/skills/wp-db-migrate
 
 # Clean up
 rm -rf wp-db-migrate-new
-```
+```bash
 
 ---
 
@@ -287,13 +291,13 @@ rm -rf wp-db-migrate-new
 
 ```bash
 rm ~/.claude/skills/wp-db-migrate
-```
+```bash
 
 ### Remove Copied Skill
 
 ```bash
 rm -rf ~/.claude/skills/wp-db-migrate
-```
+```bash
 
 ### Remove Plugin
 
@@ -317,7 +321,7 @@ ln -s /path/to/wp-db-migrate .github/skills/wp-db-migrate
 
 # Team members clone organization
 # Skill is automatically available via symlink
-```
+```bash
 
 ### Project-Specific Installation
 
@@ -329,7 +333,7 @@ mkdir -p .claude/skills
 ln -s /path/to/wp-db-migrate .claude/skills/wp-db-migrate
 
 # Only this project has access to the skill
-```
+```bash
 
 ---
 
@@ -352,23 +356,23 @@ If you encounter issues:
 1. **Check dependencies:**
    ```bash
    /path/to/wp-db-migrate/skill/scripts/preflight-check.sh
-   ```
+````
 
-2. **Review documentation:**
+1. **Review documentation:**
    - [SKILL.md](./skill/SKILL.md) — Main documentation
    - [TESTING.md](./TESTING.md) — Test information
    - [JEST-SETUP.md](./JEST-SETUP.md) — Testing setup
 
-3. **Check troubleshooting section above**
+2. **Check troubleshooting section above**
 
-4. **Review repository issues:**
+3. **Review repository issues:**
    https://github.com/lightspeedwp/wp-db-migrate/issues
 
 ---
 
 ## Quick Start After Installation
 
-```bash
+````bash
 # 1. Run preflight check to validate setup
 /wp-db-migrate --help
 
@@ -380,7 +384,7 @@ studio site list
 
 # 4. If dry-run succeeds, run full migration
 /wp-db-migrate /path/to/site "old-url.com" "new.local"
-```
+```bash
 
 ---
 
@@ -388,7 +392,7 @@ studio site list
 
 Important files in the repository:
 
-```
+```bash
 wp-db-migrate/
 ├── skill/
 │   ├── SKILL.md                 ← Main documentation
@@ -405,13 +409,13 @@ wp-db-migrate/
 ├── TESTING.md                   ← Test documentation
 ├── package.json                 ← Jest configuration
 └── __tests__/                   ← Test files
-```
+```bash
 
 ---
 
 **Installation Help:** For additional support, see the main [README.md](./README.md)
 
-**Last Updated:** 2026-10-29  
+**Last Updated:** 2026-10-29
 **Version:** 1.1.0
 
 ---
@@ -425,3 +429,4 @@ wp-db-migrate/
 | Plugin | Add manifest in Settings | Current project | Manual |
 
 **Recommended:** Skill with Symlink (easier updates, automatic availability)
+````

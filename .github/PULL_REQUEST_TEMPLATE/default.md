@@ -1,7 +1,9 @@
 ## Description
+
 Brief description of the changes in this PR.
 
 ## Type of Change
+
 - [ ] Bug fix (non-breaking change fixing an issue)
 - [ ] Feature (non-breaking change adding functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
@@ -10,23 +12,27 @@ Brief description of the changes in this PR.
 - [ ] Refactoring (no functional change)
 
 ## Related Issues
+
 Closes #, Related to #
 
 ## What Changed
+
 - Change 1
 - Change 2
 - Change 3
 
 ## Testing
+
 - [ ] All tests pass: `npm run test:all`
 - [ ] Added/updated tests for new functionality
 - [ ] Manual testing completed
 - [ ] Tested on macOS and/or Linux
 
 **Test Results:**
-```
+
+````bash
 Output from npm run test:all
-```
+```bash
 
 ## Documentation
 - [ ] Updated docs/README.md if needed
@@ -52,8 +58,9 @@ Does this PR introduce breaking changes?
 - [ ] Yes, breaking changes (describe below)
 
 **If yes, describe impact:**
-```
-```
+```bash
+```bash
 
 ## Additional Notes
 Any other information for reviewers?
+````

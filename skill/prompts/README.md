@@ -5,6 +5,7 @@ System instructions and Claude agent configuration files for the WordPress Datab
 ## Quick Overview
 
 These files configure how Claude agents interact with wp-db-migrate:
+
 - System prompts that define agent behavior
 - Skill instructions for Claude integration
 - GitHub-specific setup guidance
@@ -13,14 +14,17 @@ These files configure how Claude agents interact with wp-db-migrate:
 ## Files in This Directory
 
 ### [github-setup.md](github-setup.md)
+
 Configure GitHub integration with wp-db-migrate for CI/CD and automation.
 
 **When to use:**
+
 - Setting up automated database migrations in GitHub Actions
 - Configuring org-wide Claude agents for database work
 - Integrating with GitHub's workflow and repository structure
 
 **Covers:**
+
 - Monorepo and multi-skill repository structure
 - GitHub Actions workflow integration
 - Credential and secret management
@@ -29,16 +33,19 @@ Configure GitHub integration with wp-db-migrate for CI/CD and automation.
 ## How to Use These Prompts
 
 ### For a Single Project
+
 1. Copy the relevant prompt to `.claude/agents/` in your project
 2. Reference it in your `.claude/agents/agent-name.md`
 3. Customize for your repository structure
 
 ### For Organization-Wide Setup
+
 1. Place prompts in `.github/agents/` in your `.github` repository
 2. Enable them in organization settings
 3. All projects inherit the configuration
 
 ### In Claude Directly
+
 1. Copy prompt content into Claude's agent instructions
 2. Adjust paths and context for your repository
 3. Test with a small migration first
@@ -48,19 +55,24 @@ Configure GitHub integration with wp-db-migrate for CI/CD and automation.
 Each prompt is templated for common patterns. To customize:
 
 **Replace these placeholders:**
+
 - `{ORG_NAME}` → Your organization name
 - `{REPO_NAME}` → Your repository name
 - `{SKILL_PATH}` → Path to wp-db-migrate skill
 - `{STUDIO_PATH}` → Your Studio site path
 
 **Example:**
-```markdown
+
+````markdown
 # Before
+
 skill_location: {SKILL_PATH}/skill
 
 # After
+
 skill_location: /Users/ash/.claude/skills/wp-db-migrate/skill
-```
+
+````bash
 
 ## Adding New Prompts
 
@@ -93,7 +105,7 @@ Configure Claude agents for {purpose}.
 
 ## Example Workflows
 [...]
-```
+```bash
 
 ## Best Practices
 
@@ -108,3 +120,5 @@ Configure Claude agents for {purpose}.
 - [Main README](../../README.md) — Project overview
 - [skill/SKILL.md](../SKILL.md) — Complete skill documentation
 - [Installation Guide](../../docs/INSTALLATION.md) — Setup instructions
+```bash
+```bash

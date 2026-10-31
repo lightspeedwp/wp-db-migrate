@@ -1,6 +1,6 @@
 # External References
 
-Links, documentation, and resources for WordPress database migration, SQLite integration, and WordPress Studio workflows. Use this as a quick lookup guide.
+Schema references for wp-db-migrate skill components and database operations.
 
 ## WordPress Studio
 
@@ -68,6 +68,7 @@ Links, documentation, and resources for WordPress database migration, SQLite int
 ## Using This Folder
 
 Add new reference materials here as:
+
 - Markdown files documenting external resources
 - Links to official documentation
 - Quick reference guides

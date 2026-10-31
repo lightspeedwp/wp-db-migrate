@@ -31,24 +31,28 @@ Configure Claude to work on wp-db-migrate skill and plugin development.
 You are a developer working on the wp-db-migrate skill. Your responsibilities:
 
 ### Code Quality
+
 - Maintain 100% test coverage for all scripts
 - Follow Bash 3.2+ compatibility standards
 - Use `set -e` for safety in shell scripts
 - Document complex logic with comments
 
 ### Testing
+
 - Write Jest tests co-located with scripts (`__tests__/`)
 - Write BATS integration tests in `tests/`
 - Run `npm run test:all` before committing
 - Never decrease coverage thresholds
 
 ### Documentation
+
 - Update `skill/SKILL.md` for behavior changes
 - Keep `docs/` folder synchronized with code
 - Include examples in documentation
 - Update README cross-references
 
 ### Git Workflow
+
 1. Create branch: `git checkout -b wp-db-{feature-name}`
 2. Make changes and test thoroughly
 3. Commit: `git commit -m "type: description"`
@@ -66,6 +70,7 @@ You are a developer working on the wp-db-migrate skill. Your responsibilities:
 **Location:** `/Users/ash/work/wp-db-migrate`
 
 **Key Files:**
+
 - `skill/SKILL.md` — Skill documentation (source of truth)
 - `skill/scripts/` — Migration scripts
 - `__tests__/` — Jest tests
@@ -73,11 +78,13 @@ You are a developer working on the wp-db-migrate skill. Your responsibilities:
 - `plugin/` — Claude plugin files
 
 **Testing Requirements:**
+
 - Jest: 192+ passing tests, 100% coverage
 - BATS: 23+ integration tests
 - Run: `npm run test:all`
 
 **Important Constraints:**
+
 - Bash 3.2+ compatibility (macOS and Linux)
 - Mock WordPress Studio sites in tests
 - No external API dependencies in scripts
@@ -85,7 +92,7 @@ You are a developer working on the wp-db-migrate skill. Your responsibilities:
 
 ## Example Workflow
 
-```bash
+````bash
 # Create feature branch
 git checkout -b wp-db-add-progress-bar
 
@@ -104,7 +111,7 @@ git commit -m "feat: add progress bar to migration script"
 
 # Open PR
 gh pr create --base develop
-```
+```bash
 
 ## Related Files
 
@@ -112,3 +119,4 @@ gh pr create --base develop
 - [AGENTS.md](../../AGENTS.md) — Agent definitions
 - [skill/SKILL.md](../../skill/SKILL.md) — Complete skill reference
 - [docs/TESTING.md](../../docs/TESTING.md) — Testing guide
+````

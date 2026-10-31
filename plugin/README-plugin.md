@@ -23,7 +23,7 @@ cp -r wp-db-migrate-plugin ~/.claude/plugins/
 
 # Or add to your organization
 cp -r wp-db-migrate-plugin /path/to/your/org/.github/plugins/
-```
+```bash
 
 ### Option 2: Use the Skill Directly
 The skill is available at `/Users/ash/.github/skills/wp-db-migrate/` and is symlinked to all Claude Code projects.
@@ -31,13 +31,13 @@ The skill is available at `/Users/ash/.github/skills/wp-db-migrate/` and is syml
 ## Usage
 
 ### Invoke in Claude
-```
+```bash
 /wp-db-migrate
 
 or
 
 Use the skill directly in any chat with: "Migrate my WordPress database"
-```
+```bash
 
 ### Command Line Scripts
 The plugin includes ready-to-use CLI scripts:
@@ -50,7 +50,7 @@ migrate-recovery.sh /path/to/studio/site "https://old-url.com" "https://new-url.
 verify-import.sh /path/to/studio/site
 replace-urls.sh /path/to/studio/site "https://old.com" "https://new.local"
 start-server.sh /path/to/studio/site
-```
+```bash
 
 ## What It Does
 
@@ -94,7 +94,7 @@ Export file: ~/Downloads/staging-backup.sql.gz
 Studio site: /Users/ash/Studio/my-project
 Exclusions: Use defaults (exclude logs/indexes)
 URL replacement: Auto-detect
-```
+```bash
 
 ### Production Database with Custom Exclusions
 ```bash
@@ -104,7 +104,7 @@ Export file: /backups/prod-2026-10-29.sql
 Studio site: /Users/ash/Studio/prod-local
 Exclusions: wp_actionscheduler_logs, wp_searchwp_*
 URL replacement: Manual (prod.example.com → prod.local)
-```
+```bash
 
 ## Scripts Included
 
@@ -116,7 +116,7 @@ URL replacement: Manual (prod.example.com → prod.local)
 All scripts are self-documenting; run with no arguments for usage:
 ```bash
 ./scripts/migrate-recovery.sh
-```
+```bash
 
 ## Adding to Your PATH
 
@@ -124,7 +124,7 @@ For access from anywhere:
 ```bash
 # Add to ~/.zshrc or ~/.bash_profile
 export PATH="$PATH:/Users/ash/.claude/skills/wp-db-migrate/scripts"
-```
+```bash
 
 ## Requirements
 
@@ -139,7 +139,7 @@ export PATH="$PATH:/Users/ash/.claude/skills/wp-db-migrate/scripts"
 Large databases can take 5-30 minutes. The data is usually imported even if the server startup times out. Run:
 ```bash
 verify-import.sh /path/to/site
-```
+```bash
 
 ### URL replacement doesn't work
 Some serialized options may have encoding issues. Use a WordPress plugin (Better Find and Replace) for manual fixes post-import.

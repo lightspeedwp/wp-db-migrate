@@ -4,14 +4,14 @@ Diagrams, templates, screenshots, and other media files for the WordPress Databa
 
 ## Folder Structure
 
-```
+````bash
 assets/
 ├── README.md              # This file
 ├── diagrams/              # Architecture and workflow diagrams
 ├── screenshots/           # UI screenshots and examples
 ├── templates/             # Configuration templates
 └── media/                 # Logos, icons, and other media
-```
+```bash
 
 ## Usage Guidelines
 
@@ -59,7 +59,7 @@ Logos, icons, badges, and brand assets.
 
 ## Asset Naming Convention
 
-```
+```bash
 {type}-{description}-{version}.{ext}
 
 Examples:
@@ -67,7 +67,7 @@ Examples:
 - screenshot-preflight-check-v2.png
 - template-env-example.txt
 - logo-wp-db-migrate.svg
-```
+```bash
 
 ## Embedding Assets in Documentation
 
@@ -78,13 +78,13 @@ Examples:
 
 Or with dimensions:
 ![Alt text](../assets/screenshots/example.png){width=400}
-```
+```bash
 
 ### Linking to Assets
 
 ```markdown
 [Download template](../assets/templates/config-example.yml)
-```
+```bash
 
 ## Performance Considerations
 
@@ -109,3 +109,4 @@ Or with dimensions:
 ---
 
 **Note:** All assets should align with the project's branding and style guidelines. See the main README for project branding information.
+````

@@ -5,6 +5,7 @@ End-to-end shell script testing using BATS (Bash Automated Testing System).
 ## What This Directory Contains
 
 Integration tests that verify the wp-db-migrate CLI scripts work correctly in real-world scenarios. These tests:
+
 - Execute actual migration scripts in a controlled environment
 - Verify all migration phases (analysis, sanitization, import, URL replacement, validation)
 - Test error handling and edge cases
@@ -22,45 +23,46 @@ Integration tests that verify the wp-db-migrate CLI scripts work correctly in re
 ### Install BATS
 
 **macOS:**
+
 ```bash
 brew install bats-core
-```
+```bash
 
 **Linux (Ubuntu/Debian):**
 ```bash
 apt-get install bats
-```
+```bash
 
 **From source:**
 ```bash
 git clone https://github.com/bats-core/bats-core.git
 cd bats-core
 ./install.sh /usr/local/
-```
+```bash
 
 ### Run All Tests
 
 ```bash
 npm run test:bats
-```
+```bash
 
 ### Run a Single Test File
 
 ```bash
 bats tests/integration.bats
-```
+```bash
 
 ### Run with Verbose Output
 
 ```bash
 bats --verbose tests/integration.bats
-```
+```bash
 
 ### Run Specific Tests by Name
 
 ```bash
 bats tests/integration.bats --filter "preflight"
-```
+```bash
 
 ## Test Structure
 
@@ -75,7 +77,7 @@ BATS tests follow this pattern:
   [ "$status" -eq 0 ]
   [[ "$output" == *"expected text"* ]]
 }
-```
+```bash
 
 ### Common Test Assertions
 
@@ -102,7 +104,7 @@ Run both test suites:
 
 ```bash
 npm run test:all
-```
+```bash
 
 This runs:
 1. Jest unit tests (in `__tests__/`)
@@ -125,7 +127,7 @@ Example:
   [ "$status" -ne 0 ]
   [[ "$output" == *"Error"* ]]
 }
-```
+```bash
 
 ## Troubleshooting
 
@@ -133,13 +135,13 @@ Example:
 ```bash
 bats --version  # Check if installed
 which bats      # Verify location
-```
+```bash
 
 ### Test Fails: "command not found"
 Ensure scripts are executable:
 ```bash
 chmod +x skill/scripts/*.sh
-```
+```bash
 
 ### Mock Fixture Issues
 Check that `setup()` function creates the mock WordPress Studio site correctly. See the fixture definition in `integration.bats`.

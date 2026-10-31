@@ -1,10 +1,13 @@
 # WordPress Database Migration (MySQL → SQLite Studio)
 
-A professional-grade skill for migrating WordPress databases from MySQL/MariaDB to SQLite in WordPress Studio. Handles sanitization, safe imports, URL replacement, and comprehensive validation.
+Professional-grade WordPress database migration skill: MySQL/MariaDB → SQLite in WordPress
+Studio. Handles sanitization, safe imports, URL replacement, and comprehensive validation.
 
 ## What Problem Does This Solve?
 
-You need to bring production or staging database backups into local WordPress Studio sites for development and testing. This skill automates the entire workflow:
+Bring production/staging database backups into local WordPress Studio sites for development and
+testing. This skill automates the entire workflow:
+
 - Analyzes your database export for size and compatibility
 - Sanitizes it for SQLite (removes MySQL-only syntax)
 - Safely imports with backup and rollback capability
@@ -13,7 +16,7 @@ You need to bring production or staging database backups into local WordPress St
 
 ## 🚀 Quick Start
 
-```bash
+````bash
 # 1. Check dependencies
 ./skill/scripts/preflight-check.sh
 
@@ -24,7 +27,7 @@ You need to bring production or staging database backups into local WordPress St
 # 3. Run migration
 ./skill/scripts/migrate-recovery.sh \
   /path/to/studio/site "https://old-url.com" "https://new-url.local"
-```
+```bash
 
 ## 📦 What's Included
 
@@ -47,7 +50,7 @@ You need to bring production or staging database backups into local WordPress St
 
 ## 📁 Project Structure
 
-```
+```bash
 wp-db-migrate/
 ├── README.md               # Main project overview (this file)
 ├── CLAUDE.md              # Claude Code instructions
@@ -99,7 +102,7 @@ wp-db-migrate/
 │   └── README.md         # Asset guidelines
 │
 └── package.json         # Node.js dependencies
-```
+```bash
 
 ## ✨ Key Features
 
@@ -154,29 +157,33 @@ Start with the [docs/README.md](docs/README.md) for a complete documentation ind
 1. Add to `.claude/skills/` in your project:
    ```bash
    ln -s /path/to/wp-db-migrate/skill ~/.claude/skills/wp-db-migrate
-   ```
+````
 
-2. Or copy to your `.github/skills/`:
+1. Or copy to your `.github/skills/`:
+
    ```bash
    cp -r skill /path/to/your/org/.github/skills/wp-db-migrate
    ```
 
 ### As a Claude Plugin
+
 1. Install the plugin from `/plugin/` into Claude's plugin system
 2. Enable it in your Claude settings
 3. Use `/wp-db-migrate` command in any chat
 
 ### CLI Scripts Only
+
 Add scripts to your PATH:
-```bash
+
+````bash
 export PATH="$PATH:/path/to/wp-db-migrate/skill/scripts"
-```
+```bash
 
 Then run from anywhere:
 ```bash
 preflight-check.sh
 migrate-recovery.sh /path/to/site "old-url" "new-url"
-```
+```bash
 
 ## 💡 Usage Examples
 
@@ -186,7 +193,7 @@ migrate-recovery.sh /path/to/site "old-url" "new-url"
   /Users/ash/Studio/my-project \
   "https://staging.dev" \
   "https://my-project.local"
-```
+```bash
 
 ### Example 2: Dry-Run Preview
 ```bash
@@ -194,7 +201,7 @@ migrate-recovery.sh /path/to/site "old-url" "new-url"
   /Users/ash/Studio/my-project \
   "https://old.com" \
   "https://new.local"
-```
+```bash
 
 ### Example 3: Verbose with Logging
 ```bash
@@ -202,7 +209,7 @@ migrate-recovery.sh /path/to/site "old-url" "new-url"
   /Users/ash/Studio/prod-local \
   "https://production.com" \
   "https://prod.local"
-```
+```bash
 
 ### Example 4: CI/CD Automation
 ```bash
@@ -211,11 +218,11 @@ migrate-recovery.sh /path/to/site "old-url" "new-url"
   /Users/ash/Studio/ci-test \
   "https://staging.com" \
   "https://ci-test.local"
-```
+```bash
 
 ## 🎯 Workflow Phases
 
-```
+```bash
 1. Analyze Export
    ├─ Detect tables, sizes, URLs
    └─ Suggest exclusions
@@ -239,7 +246,7 @@ migrate-recovery.sh /path/to/site "old-url" "new-url"
    ├─ Row counts match
    ├─ Database integrity
    └─ URLs correct
-```
+```bash
 
 ## 📊 Performance
 
@@ -286,7 +293,7 @@ See `skill/SKILL.md` for 11 complete FAQ answers.
 --force                # Skip prompts (CI/CD)
 --no-backup            # Skip backup (dangerous)
 --help                 # Show help
-```
+```bash
 
 ### Configuration
 Planned for future:
@@ -340,3 +347,4 @@ MIT License — see `LICENSE` file
 ---
 
 **Ready to migrate?** Start with `./skill/scripts/preflight-check.sh` to validate your setup.
+````

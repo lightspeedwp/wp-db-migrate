@@ -1,15 +1,18 @@
 # Test Case: Custom Table Exclusions
 
-User has a production database backup but wants to exclude specific tables (like search indexes and logs) to speed up the import process.
+Custom exclusion evaluation for migration safety
 
 ## Scenario
+
 - **Source**: Production backup (2 GB SQL export with large search index + logs)
 - **Target**: New Studio site at `/Users/ash/Studio/prod-testing`
 - **Custom request**: Exclude all SearchWP, actionscheduler, and redirection tables
 - **Goal**: Import production data efficiently without diagnostics/search overhead
 
 ## Task
+
 Migrate the production database with user-specified table exclusions:
+
 1. Analyze the export
 2. User specifies which tables to exclude (SearchWP, actionscheduler_logs, redirection tables)
 3. Skill confirms the exclusions will reduce import size significantly
@@ -20,6 +23,7 @@ Migrate the production database with user-specified table exclusions:
 8. Verify import success
 
 ## Success Criteria
+
 - Skill accepts user-specified exclusion list
 - Shows impact (how much data is being excluded)
 - Import completes without the excluded tables

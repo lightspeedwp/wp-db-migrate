@@ -9,9 +9,11 @@ This document tracks the high-impact polish improvements applied to the skill an
 ## ✅ Completed Improvements
 
 ### 1. Pre-Flight Checks Script ✨
+
 **File:** `scripts/preflight-check.sh`
 
 Validates all dependencies before migration:
+
 - ✅ Checks for WordPress Studio CLI
 - ✅ Checks for WordPress CLI
 - ✅ Checks for required tools (bash, grep, sed)
@@ -20,9 +22,10 @@ Validates all dependencies before migration:
 - ✅ Provides install links if missing
 
 **Usage:**
-```bash
+
+````bash
 ./scripts/preflight-check.sh
-```
+```bash
 
 ---
 
@@ -61,7 +64,7 @@ Extended version of the standard script with:
 
 # Combine flags
 ./scripts/migrate-recovery-enhanced.sh --dry-run --verbose /path/to/site "old-url" "new-url"
-```
+```bash
 
 ---
 
@@ -154,7 +157,7 @@ Extended version of the standard script with:
 Run pre-flight check:
 ```bash
 ./scripts/preflight-check.sh
-```
+```bash
 
 ### Want to Preview?
 Use dry-run mode:
@@ -163,7 +166,7 @@ Use dry-run mode:
   /Users/ash/Studio/my-site \
   "https://old.com" \
   "https://new.local"
-```
+```bash
 
 ### Need Detailed Logging?
 Use verbose with log file:
@@ -172,7 +175,7 @@ Use verbose with log file:
   /Users/ash/Studio/my-site \
   "https://old.com" \
   "https://new.local"
-```
+```bash
 
 ### Automate in CI/CD?
 Use force mode:
@@ -181,7 +184,7 @@ Use force mode:
   /Users/ash/Studio/my-site \
   "https://old.com" \
   "https://new.local"
-```
+```bash
 
 ### Stuck?
 Check the troubleshooting flowchart in SKILL.md or see FAQ.
@@ -245,3 +248,4 @@ If users report issues:
 
 *Last updated: 2026-10-29*
 *Maintained by: Claude Haiku 4.5*
+````

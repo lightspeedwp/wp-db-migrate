@@ -5,19 +5,20 @@ Advanced performance optimizations including Studio CLI automation, structured p
 ## Part 1: Studio CLI Automation
 
 ### Current Flow (Manual)
-```
+
+````bash
 1. User provides existing Studio site path
 2. Skill imports database
 3. Skill validates
-```
+```bash
 
 ### Optimized Flow (Automated)
-```
+```bash
 1. User specifies domain/name
 2. Skill creates new site automatically
 3. Skill imports database
 4. Skill validates
-```
+```bash
 
 ### Implementation: Auto-Create Site Script
 
@@ -61,12 +62,12 @@ echo "📥 Starting database migration..."
 
 echo ""
 echo "✅ Site ready at: https://$NEW_URL"
-```
+```bash
 
 **Usage:**
 ```bash
 ./scripts/create-and-migrate.sh my-staging backup.sql.gz staging.example.com staging.local
-```
+```bash
 
 **Benefits:**
 - ⚡ Skips manual site creation (40% time savings)
@@ -121,7 +122,7 @@ fi
 
 # Cleanup
 rm -rf /tmp/wp-backup-repo
-```
+```bash
 
 ## Smart Defaults
 
@@ -129,7 +130,7 @@ rm -rf /tmp/wp-backup-repo
 - **Private repos:** Use SSH or PAT
 - **Detect backups:** Search for .sql, .sql.gz, .sql.zip
 - **Error handling:** Show available files if path wrong
-```
+```bash
 
 ### Implementation in Skill
 
@@ -141,11 +142,11 @@ Update `SKILL.md` to include:
 ### Input
 
 **GitHub Backup:**
-```
+```bash
 Repository: https://github.com/org/repo
 Branch: main
 File: backups/production-2026-10-29.sql.gz
-```
+```bash
 
 ### Skill Action
 
@@ -154,7 +155,7 @@ The skill will:
 2. Locate the backup file
 3. Automatically create + migrate in one command
 4. Clean up temporary files
-```
+```bash
 
 **Time Savings:**
 - ⚡ Clone only what's needed (depth 1)
@@ -216,7 +217,7 @@ async function migrateWithBudget(config) {
   const response = await client.messages.create({
     model: "claude-opus-4-1",
     max_tokens: 4096,
-    
+
     // Task budget configuration
     output_config: {
       effort: complexity === "complex" ? "high" : "medium",
@@ -296,7 +297,7 @@ async function main() {
 }
 
 main();
-```
+```bash
 
 **Usage:**
 ```bash
@@ -306,7 +307,7 @@ npm install @anthropic-ai/sdk
 # Run migration with budgets
 ANTHROPIC_API_KEY=sk-... node skill/api/migrate-with-budget.js \
   /path/to/site backup.sql.gz old.com new.local
-```
+```bash
 
 ### Budget Strategy
 
@@ -342,34 +343,43 @@ ANTHROPIC_API_KEY=sk-... node skill/api/migrate-with-budget.js \
   staging.local \
   --from-github \
   --auto-budget
-```
+```bash
 
 ### What Happens (Auto)
 
 1. **GitHub Setup** (Structured Prompt)
-   ```
-   Cloning: org/repo@main
-   Searching for: prod.sql.gz
-   ✅ Found at: releases/backup/prod.sql.gz
-   ```
+````
+
+Cloning: org/repo@main
+Searching for: prod.sql.gz
+✅ Found at: releases/backup/prod.sql.gz
+
+````text
 
 2. **Site Creation** (Studio CLI)
-   ```
-   🚀 Creating: my-staging
-   ✅ Ready at: ~/Studio/my-staging
-   ```
+```text
+
+🚀 Creating: my-staging
+✅ Ready at: ~/Studio/my-staging
+
+````
 
 3. **Database Migration** (With Budget)
-   ```
+
+   ```text
+
    📊 Complexity: medium
    💾 Budget: 64000 tokens
    ⚡ Running migration...
    ✅ Validated
+
    ```
 
 4. **Cleanup** (Automatic)
-   ```
+   ```text
+
    🧹 Cleaned temp files
+
    ```
 
 **Total time:** ~5 minutes (vs 20+ manual)
@@ -379,16 +389,19 @@ ANTHROPIC_API_KEY=sk-... node skill/api/migrate-with-budget.js \
 ## Implementation Priority
 
 ### High Impact (Do First)
+
 1. ✅ Create auto-create site script
 2. ✅ Add structured GitHub prompts
 3. ✅ Update skill documentation
 
 ### Medium Impact (Do Next)
+
 4. Add task budget wrapper
 5. Create complexity detection
 6. Add performance benchmarks
 
 ### Lower Priority
+
 7. Advanced caching
 8. Parallel processing
 9. Cloud storage integration
@@ -397,12 +410,12 @@ ANTHROPIC_API_KEY=sk-... node skill/api/migrate-with-budget.js \
 
 ## Performance Gains
 
-| Optimization | Time Saved | Complexity |
-|--------------|-----------|-----------|
-| Auto-create site | ~5 min | Low |
-| Structured prompts | ~3 min | Low |
-| Task budgets | ~2 min | Medium |
-| Combined | ~10 min | Medium |
+| Optimization       | Time Saved | Complexity |
+| ------------------ | ---------- | ---------- |
+| Auto-create site   | ~5 min     | Low        |
+| Structured prompts | ~3 min     | Low        |
+| Task budgets       | ~2 min     | Medium     |
+| Combined           | ~10 min    | Medium     |
 
 **From:** 20+ minutes (manual)  
 **To:** ~5 minutes (optimized)  
@@ -425,19 +438,19 @@ ANTHROPIC_API_KEY=sk-... node skill/api/migrate-with-budget.js \
 
 Create `.env` for local testing:
 
-```bash
+````bash
 ANTHROPIC_API_KEY=sk-your-api-key
 TASK_BUDGET_SIMPLE=32000
 TASK_BUDGET_MEDIUM=64000
 TASK_BUDGET_COMPLEX=128000
 AUTO_CREATE_SITE=true
 AUTO_DETECT_COMPLEXITY=true
-```
+```bash
 
 ---
 
-**Status:** Ready to implement  
-**Est. Implementation Time:** 2-3 hours  
+**Status:** Ready to implement
+**Est. Implementation Time:** 2-3 hours
 **Performance Gain:** 4x faster migrations ⚡
 
 Would you like me to implement these optimizations? I can:
@@ -445,3 +458,4 @@ Would you like me to implement these optimizations? I can:
 2. Add structured prompts
 3. Build the task budget wrapper
 4. Update all documentation
+````

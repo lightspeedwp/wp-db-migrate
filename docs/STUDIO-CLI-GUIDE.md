@@ -3,9 +3,9 @@ title: WordPress Studio CLI Guide for Database Migrations
 description: Complete guide to using the WordPress Studio CLI with wp-db-migrate skill for database operations, site management, and migrations.
 ---
 
-# WordPress Studio CLI Guide
+## WordPress Studio CLI Guide
 
-Comprehensive guide for integrating WordPress Studio CLI with the `wp-db-migrate` skill for managing WordPress sites, databases, and migrations.
+Complete guide to WordPress Studio CLI for database operations and site management
 
 ## Table of Contents
 
@@ -27,36 +27,40 @@ Comprehensive guide for integrating WordPress Studio CLI with the `wp-db-migrate
 Before using Studio CLI with the wp-db-migrate skill, install:
 
 1. **WordPress Studio CLI**
+
    ```bash
    curl -fsSL https://developer.wordpress.com/studio/cli/install.sh | bash
    ```
+
    Or see full instructions: https://developer.wordpress.com/docs/developer-tools/studio/cli/
 
 2. **WordPress CLI**
+
    ```bash
    curl -fsSL https://wp-cli.org/installer.sh | bash
    ```
 
 3. **Bash 4+** (macOS ships with Bash 3, update with Homebrew)
+
    ```bash
    brew install bash
    ```
 
 ### Verify Installation
 
-```bash
+````bash
 # Check all required tools
 ./skill/scripts/preflight-check.sh
-```
+```bash
 
 Expected output:
-```
+```bash
 ✅ WordPress Studio CLI
 ✅ WordPress CLI (wp)
 ✅ Bash shell
 ✅ grep, sed
 ✅ All checks passed! You're ready to migrate.
-```
+```bash
 
 ---
 
@@ -66,7 +70,7 @@ Expected output:
 
 ```bash
 studio <command> [subcommand] [options] [--path <site-path>]
-```
+```bash
 
 ### Key Commands Quick Reference
 
@@ -92,7 +96,7 @@ studio <command> --path /path/to/site
 # Show help for any command
 studio <command> --help
 studio wp <command> --help
-```
+```bash
 
 ---
 
@@ -108,7 +112,7 @@ source ./skill/scripts/lib-studio.sh
 studio_create_site "my-site" "/Users/ash/Studio/my-site" "my-site.local"
 studio_backup_database "/Users/ash/Studio/my-site"
 studio_replace_urls "/Users/ash/Studio/my-site" "old.dev" "new.dev"
-```
+```bash
 
 ### Available Functions
 
@@ -123,7 +127,7 @@ validate_site_path "/path/to/site"
 
 # Check if path contains a Studio site
 site_exists "/path/to/site"
-```
+```bash
 
 #### Site Management
 
@@ -145,7 +149,7 @@ studio_create_site "site-name" "/path/to/site" "domain.local"
 
 # Delete site
 studio_delete_site "/path/to/site" false  # true = also delete files
-```
+```bash
 
 #### Server Management
 
@@ -156,7 +160,7 @@ studio_stop_server "/path/to/site"
 
 # Get status
 studio_server_status "/path/to/site"
-```
+```bash
 
 #### Database Operations
 
@@ -175,7 +179,7 @@ studio_replace_urls "/path/to/site" "old-url.com" "new-url.com"
 
 # Get table row counts
 studio_get_table_counts "/path/to/site"
-```
+```bash
 
 #### Plugin & Theme Management
 
@@ -188,7 +192,7 @@ studio_list_themes "/path/to/site"
 studio_activate_plugin "hello-dolly" "/path/to/site"
 studio_deactivate_plugin "hello-dolly" "/path/to/site"
 studio_activate_theme "twentytwentyfour" "/path/to/site"
-```
+```bash
 
 #### Configuration
 
@@ -199,7 +203,7 @@ studio_get_config "/path/to/site"
 # Set versions
 studio_set_wp_version "6.4.3" "/path/to/site"
 studio_set_php_version "8.2" "/path/to/site"
-```
+```bash
 
 #### WP-CLI Passthrough
 
@@ -207,7 +211,7 @@ studio_set_php_version "8.2" "/path/to/site"
 # Run any WP-CLI command through Studio
 studio_wp "/path/to/site" plugin list
 studio_wp "/path/to/site" db query "SELECT COUNT(*) FROM wp_posts"
-```
+```bash
 
 #### Logging Functions
 
@@ -220,7 +224,7 @@ log_warning "⚠️  Be careful"
 log_error "❌ Something failed"
 log_debug "🔍 Debug info (if STUDIO_DEBUG=true)"
 log_section "=== Major Section ==="
-```
+```bash
 
 ---
 
@@ -236,7 +240,7 @@ The `studio-site-manager.sh` script provides a menu-driven interface for common 
 
 # For a specific site
 ./skill/scripts/studio-site-manager.sh /Users/ash/Studio/my-site
-```
+```bash
 
 ### Available Options
 
@@ -262,7 +266,7 @@ The menu includes:
 # Choose option 7 (Backup database)
 # Follow the prompts
 # Backup created: backup-20261029-143022.sql
-```
+```bash
 
 ---
 
@@ -280,7 +284,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Export database (for processing)
 ./studio-db-operations.sh export /path/to/site [output-file]
-```
+```bash
 
 #### Restore & Import
 
@@ -290,7 +294,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Preview before applying
 ./studio-db-operations.sh restore --dry-run /path/to/site backup.sql
-```
+```bash
 
 #### Pre-Migration
 
@@ -300,7 +304,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Complete pre-migration checks (backup + counts + integrity)
 ./studio-db-operations.sh pre-migrate-check /path/to/site
-```
+```bash
 
 #### Post-Migration Verification
 
@@ -310,7 +314,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Complete verification with row count comparison
 ./studio-db-operations.sh post-migrate-verify /path/to/site export.sql old.dev new.dev
-```
+```bash
 
 #### URL Management
 
@@ -323,7 +327,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Skip confirmation
 ./studio-db-operations.sh replace-urls /path/to/site old-url.com new-url.com --no-confirm
-```
+```bash
 
 #### Analysis & Comparison
 
@@ -333,7 +337,7 @@ The `studio-db-operations.sh` script handles database-specific tasks with integr
 
 # Compare current vs original counts
 ./studio-db-operations.sh compare-counts /path/to/site original-export.sql
-```
+```bash
 
 ---
 
@@ -370,7 +374,7 @@ studio create --name staging-test --path ~/Studio/staging-test
 # 6. Verify site loads
 studio start --path ~/Studio/staging-test
 # Open https://staging-test.local in browser
-```
+```bash
 
 ### Workflow 2: Local Development with Real Data
 
@@ -404,7 +408,7 @@ gunzip -l prod-2026-10-29.sql.gz  # Check uncompressed size
 # 7. Start working
 cd ~/Studio/prod-dev
 # Edit code, test features
-```
+```bash
 
 ### Workflow 3: Backup Before Feature Testing
 
@@ -423,7 +427,7 @@ cd ~/Studio/prod-dev
 ./studio-db-operations.sh restore ~/Studio/my-site backup-20261029-143022.sql
 
 # 5. Try again
-```
+```bash
 
 ### Workflow 4: Export for Staging Review
 
@@ -442,7 +446,7 @@ cd ~/Studio/prod-dev
 # 4. Test on staging, get feedback
 
 # 5. If issues, export again and re-test
-```
+```bash
 
 ---
 
@@ -462,7 +466,7 @@ studio --help
 
 # If still not found, add to PATH
 export PATH="$HOME/.studio/bin:$PATH"
-```
+```bash
 
 ### "Not a valid WordPress Studio site"
 
@@ -478,7 +482,7 @@ studio create --name my-site --path /path/to/site
 
 # Verify
 studio status --path /path/to/site
-```
+```bash
 
 ### "Import failed: Error in table wp_postmeta"
 
@@ -498,7 +502,7 @@ studio status --path /path/to/site
   --exclude "wp_postmeta"
 
 # 3. If still fails, try smaller batches or contact support
-```
+```bash
 
 ### "URL replacement didn't work"
 
@@ -518,7 +522,7 @@ studio wp option get home --path /path/to/site
 
 # 4. Check again
 studio wp option get siteurl --path /path/to/site
-```
+```bash
 
 ### "Database corruption detected"
 
@@ -537,7 +541,7 @@ studio stop --path /path/to/site
 
 # 4. Try import again with smaller table exclusions
 # Or contact support with backup file
-```
+```bash
 
 ### "Too slow to start server"
 
@@ -555,7 +559,7 @@ studio start --path /path/to/site
 studio wp plugin activate plugin-name --path /path/to/site
 
 # 4. Find which plugin is causing slowness, deactivate it
-```
+```bash
 
 ---
 
@@ -569,7 +573,7 @@ export STUDIO_DEBUG=true
 
 # Custom Studio path (if not in default location)
 export STUDIO_PATH="/path/to/studio"
-```
+```bash
 
 ### Common Flag Combinations
 
@@ -583,7 +587,7 @@ export STUDIO_PATH="/path/to/studio"
 
 # Restore without asking
 ./studio-db-operations.sh restore /path/to/site backup.sql --no-confirm
-```
+```bash
 
 ### File Locations
 
@@ -617,36 +621,39 @@ export STUDIO_PATH="/path/to/studio"
 1. **Always backup before migrations**
    ```bash
    ./studio-db-operations.sh backup /path/to/site pre-migration.sql
-   ```
+````
 
-2. **Use dry-run for URL replacements**
+1. **Use dry-run for URL replacements**
+
    ```bash
    ./studio-db-operations.sh dry-run-replace /path/to/site old.com new.local
    ```
 
-3. **Compare row counts before/after**
+2. **Compare row counts before/after**
+
    ```bash
    ./studio-db-operations.sh table-counts /path/to/site
    ```
 
-4. **Keep backups organized**
+3. **Keep backups organized**
+
    ```bash
    # Backup to timestamped file
    ./studio-db-operations.sh backup /path/to/site \
      backups/backup-$(date +%Y%m%d-%H%M%S).sql
    ```
 
-5. **Test on staging first**
+4. **Test on staging first**
    - Migrate to staging Studio site
    - Verify thoroughly
    - Then migrate production
 
-6. **Document your workflow**
+5. **Document your workflow**
    - Keep notes of backup files
    - Record URL mappings
    - Log any issues
 
 ---
 
-*Last updated: 2026-10-29*
-*For issues or questions, see [Troubleshooting](#troubleshooting) or check the skill SKILL.md*
+_Last updated: 2026-10-29_
+_For issues or questions, see [Troubleshooting](#troubleshooting) or check the skill SKILL.md_

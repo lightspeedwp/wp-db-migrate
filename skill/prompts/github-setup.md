@@ -5,6 +5,7 @@ Intelligent prompts for handling database backups stored in GitHub repositories.
 ## When User Mentions GitHub
 
 User says something like:
+
 - "I have a backup in GitHub"
 - "The export is in a private repo"
 - "Can you pull from GitHub?"
@@ -15,25 +16,26 @@ User says something like:
 Gather these fields in order:
 
 ### 1. Repository URL
-```
+
+````bash
 Question: "What's the repository URL?"
 Expected: https://github.com/org/repo
-Examples: 
+Examples:
   - https://github.com/lightspeedwp/backup-archive
   - https://github.com/myteam/wordpress-exports
 Pattern: https://github.com/<owner>/<repo>
-```
+```bash
 
 ### 2. Branch/Reference (Optional)
-```
+```bash
 Question: "Which branch? (default: main)"
 Expected: main, develop, releases, etc.
 Smart Default: 'main' (most common)
 Pattern: Detect if not provided
-```
+```bash
 
 ### 3. File Path in Repository
-```
+```bash
 Question: "Where's the backup file?"
 Expected: backups/production.sql.gz
 Examples:
@@ -41,10 +43,10 @@ Examples:
   - exports/database.sql
   - releases/v2.0/backup.sql.zip
 Pattern: Support wildcards: backups/*.sql.gz
-```
+```bash
 
 ### 4. Authentication (If Private)
-```
+```bash
 Question: "Is this a private repository?"
 Logic:
   - Public: Use HTTPS clone
@@ -56,7 +58,7 @@ Options:
   - SSH
   - GitHub Personal Access Token
   - GitHub App token
-```
+```bash
 
 ## Smart Detection
 
@@ -73,7 +75,7 @@ curl -s https://api.github.com/repos/<owner>/<repo> \
 # Detect file size to estimate complexity
 curl -s https://api.github.com/repos/<owner>/<repo>/contents/<path> \
   | jq '.size'
-```
+```bash
 
 ## Automation Script
 
@@ -138,7 +140,7 @@ IS_PRIVATE=$(echo "$REPO_INFO" | jq -r '.private // false')
 
 if [ "$IS_PRIVATE" = "true" ]; then
     echo "🔒 Private repository detected"
-    
+
     if [ "$AUTH_METHOD" = "auto" ]; then
         if [ -f ~/.ssh/id_rsa ]; then
             AUTH_METHOD="ssh"
@@ -182,12 +184,12 @@ echo ""
 # Step 3: Find backup file
 if [ -z "$FILE_PATH" ]; then
     echo "🔎 Searching for backup files..."
-    
+
     # Search for backup files
     FOUND_FILES=$(find /tmp/wp-backup-repo \
         -type f \( -name "*.sql" -o -name "*.sql.gz" -o -name "*.sql.zip" -o -name "*.sql.bz2" \) \
         | head -10)
-    
+
     if [ -z "$FOUND_FILES" ]; then
         echo "❌ No backup files found"
         echo ""
@@ -195,7 +197,7 @@ if [ -z "$FILE_PATH" ]; then
         ls -lh /tmp/wp-backup-repo | head -20
         exit 1
     fi
-    
+
     # Use first found file
     FILE_PATH=$(echo "$FOUND_FILES" | head -1 | sed "s|/tmp/wp-backup-repo/||")
     echo "✅ Found backup: $FILE_PATH"
@@ -235,7 +237,7 @@ echo "  ../create-and-migrate.sh <site-name> '$FULL_PATH' <old-url> <new-url>"
 echo ""
 echo "Don't forget to cleanup:"
 echo "  rm -rf /tmp/wp-backup-repo"
-```
+```bash
 
 ## One-Command Workflow
 
@@ -245,12 +247,12 @@ echo "  rm -rf /tmp/wp-backup-repo"
   source /dev/stdin && \
   ../create-and-migrate.sh my-site "$BACKUP_FILE" old.com new.local && \
   rm -rf "$BACKUP_REPO"
-```
+```bash
 
 ## Error Handling
 
 ### File Not Found
-```
+```bash
 ❌ File not found: backups/prod.sql.gz
 
 Available files:
@@ -259,10 +261,10 @@ Available files:
   - exports/archive-2026-10-27.sql.zip
 
 Did you mean: production-2026-10-29.sql.gz?
-```
+```bash
 
 ### Auth Failed
-```
+```bash
 ❌ Authentication failed
 
 Private repository requires authentication.
@@ -270,10 +272,10 @@ Options:
   1. Set GITHUB_TOKEN environment variable
   2. Configure SSH key (ssh-keygen)
   3. Use GitHub App token
-```
+```bash
 
 ### Size Detection
-```
+```bash
 📊 Large backup detected: 850 MB
 
 ⚠️  This might take 5-10 minutes to:
@@ -282,13 +284,13 @@ Options:
   3. Migrate database
 
 Continue? (yes/no)
-```
+```bash
 
 ## Integration with Skill
 
 The skill will offer this automatically:
 
-```
+```bash
 User: "I have a backup in GitHub"
 
 Skill: "Perfect! Let me help you set that up.
@@ -299,7 +301,7 @@ Skill: "Perfect! Let me help you set that up.
    3. Authentication (if private)
 
 Where's your backup?"
-```
+```bash
 
 Then it can:
 1. ✅ Run `github-backup-setup.sh` with answers
@@ -309,6 +311,7 @@ Then it can:
 
 ---
 
-**Status:** Ready to integrate  
-**Time to Implement:** ~30 minutes  
+**Status:** Ready to integrate
+**Time to Implement:** ~30 minutes
 **User Time Saved:** ~3 minutes per migration
+````

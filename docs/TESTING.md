@@ -4,38 +4,39 @@ Comprehensive Jest test suite with 100% code coverage for all migration scripts.
 
 ## Test Overview
 
-| Script | Tests | Status |
-|--------|-------|--------|
-| `preflight-check.sh` | 10 | ✅ Passing |
-| `verify-import.sh` | 10 | ✅ Passing |
-| `replace-urls.sh` | 12 | ✅ Passing |
-| `start-server.sh` | 10 | ✅ Passing |
-| `migrate-recovery.sh` | 11 | ✅ Passing |
-| `migrate-recovery-enhanced.sh` | 17 | ✅ Passing |
+| Script                         | Tests | Status     |
+| ------------------------------ | ----- | ---------- |
+| `preflight-check.sh`           | 10    | ✅ Passing |
+| `verify-import.sh`             | 10    | ✅ Passing |
+| `replace-urls.sh`              | 12    | ✅ Passing |
+| `start-server.sh`              | 10    | ✅ Passing |
+| `migrate-recovery.sh`          | 11    | ✅ Passing |
+| `migrate-recovery-enhanced.sh` | 17    | ✅ Passing |
 
 **Total: 70 Tests — 100% Coverage**
 
 ## Running Tests
 
 ### Install Dependencies
-```bash
+
+````bash
 npm install
-```
+```bash
 
 ### Run All Tests
 ```bash
 npm test
-```
+```bash
 
 ### Run Tests in Watch Mode
 ```bash
 npm run test:watch
-```
+```bash
 
 ### Run with Verbose Output
 ```bash
 npm run test:verbose
-```
+```bash
 
 ## Test Coverage
 
@@ -192,7 +193,7 @@ npm test
 
 # Check exit code
 echo $?  # Should be 0 for success
-```
+```bash
 
 ## Development Workflow
 
@@ -266,6 +267,7 @@ Typical test execution times:
 
 ---
 
-**Coverage:** 100% (70 tests, all passing)  
-**Last Updated:** 2026-10-29  
+**Coverage:** 100% (70 tests, all passing)
+**Last Updated:** 2026-10-29
 **Maintained by:** Claude Haiku 4.5
+````
