@@ -171,19 +171,36 @@ Mergify automates PR merging based on configurable rules.
    - Rules are evaluated for each PR
    - Merge happens automatically when conditions match
 
+### Security Considerations
+
+**Why all rules require checks + review:**
+- Prevents supply chain attacks through malicious test commits
+- Ensures human verification even for "minor" changes
+- Maintains code quality and security standards
+- Complies with branch protection best practices
+
+**Restrictions in place:**
+- All auto-merge rules require passing Tests + Lint checks
+- Documentation auto-merge restricted to dependabot only
+- Test-only changes require 1 human approval
+- No exceptions for draft PRs or locked issues
+
 ### Merge Rules Explained
 
-**Rule 1: Documentation Updates**
+**Rule 1: Documentation Updates (Dependabot Only)**
 ```yaml
-files~=^docs/
+author: dependabot[bot]
+-files~=^(?!docs/)  # Ensures ONLY docs/ changes
 ```
-Auto-merges PRs that only modify files in the `docs/` folder, even without review.
+Auto-merges PRs from Dependabot that only modify documentation. Restricted to dependabot to prevent abuse.
 
-**Rule 2: Test Updates**
+**Rule 2: Test Updates (Develop Branch Only)**
 ```yaml
-files~=^(__tests__|tests)/
+-files~=^(?!(__tests__|tests)/)  # Ensures ONLY test changes
+"#approved-reviews-by>=1"        # Requires 1 approval
+base=develop                      # Only on develop, not main
 ```
-Auto-merges PRs that only update tests, as long as all checks pass.
+Auto-merges test-only PRs on develop branch after human review. Main branch requires approval (see Rule 3).
 
 **Rule 3: Approved PRs (main branch)**
 ```yaml

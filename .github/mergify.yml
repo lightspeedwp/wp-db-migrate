@@ -1,8 +1,8 @@
 pull_request_rules:
-  - name: Automatic merge for documentation updates
+  - name: Automatic merge for documentation updates (dependabot only)
     conditions:
       - author: dependabot[bot]
-      - files~=^docs/
+      - -files~=^(?!docs/)
       - check-success=Tests
       - check-success=Lint & Format
     actions:
@@ -11,11 +11,13 @@ pull_request_rules:
         commit_message: title+body
         delete_head_branch: true
 
-  - name: Automatic merge for passing tests (no review required for minor changes)
+  - name: Automatic merge for test-only changes on develop (with review)
     conditions:
       - check-success=Tests
       - check-success=Lint & Format
-      - files~=^(__tests__|tests)/
+      - -files~=^(?!(__tests__|tests)/)
+      - "#approved-reviews-by>=1"
+      - base=develop
       - -draft
     actions:
       merge:
