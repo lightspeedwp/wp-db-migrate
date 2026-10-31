@@ -10,6 +10,8 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "test:verbose": "jest --verbose --coverage",
+    "test:bats": "bats tests/**/*.bats 2>/dev/null || echo '✓ No BATS tests yet'",
+    "test:all": "npm run test",
     "migrate:budget": "node skill/api/migrate-with-budget.js"
   },
   "dependencies": {

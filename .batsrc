@@ -1,0 +1,8 @@
+# BATS configuration for wp-db-migrate
+# https://bats-core.readthedocs.io/
+
+# Enable detailed error output
+--report=tap
+
+# Run tests verbosely
+--verbose
