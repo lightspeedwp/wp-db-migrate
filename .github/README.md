@@ -183,7 +183,17 @@ Mergify automates PR merging based on configurable rules.
 - All auto-merge rules require passing Tests + Lint checks
 - Documentation auto-merge restricted to dependabot only
 - Test-only changes require 1 human approval
+- **All approval-based merges blocked if `#changes-requested-reviews-by > 0`**
+- **Reviews automatically dismissed when new commits pushed** (prevents stale approvals)
 - No exceptions for draft PRs or locked issues
+- Locked, blocked, or wip labels prevent auto-merge
+
+**What prevents:**
+- ✅ Stale approvals auto-merging after code changes
+- ✅ Merging when reviewers request changes
+- ✅ Supply chain attacks via test commits
+- ✅ Bypassing review requirements
+- ✅ Code changes sneaking through as "minor"
 
 ### Merge Rules Explained
 
