@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "shellformat.shell-format",
+    "redhat.vscode-yaml",
+    "ms-vscode.makefile-tools",
+    "ms-vscode.vscode-github-issue-notebooks"
+  ]
+}

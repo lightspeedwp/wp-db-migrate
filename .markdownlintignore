@@ -1,0 +1,13 @@
+# Files to skip markdown linting
+
+node_modules
+.git
+coverage
+dist
+build
+
+# Generated files
+CHANGELOG.md
+
+# Vendor
+plugin/

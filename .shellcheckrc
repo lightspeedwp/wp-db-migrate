@@ -1,0 +1,8 @@
+# ShellCheck configuration for wp-db-migrate
+# https://www.shellcheck.net/
+
+# Disable specific warnings if needed
+# disable=SC2086,SC2181
+
+# Source directive
+# source-path=SOURCEPATH

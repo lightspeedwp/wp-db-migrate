@@ -15,11 +15,13 @@ logs/
 .DS_Store
 Thumbs.db
 
-# IDE
-.vscode/
+# IDE (exclude personal settings, keep org settings)
 .idea/
+.vscode/settings.local.json
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
 
 # Temporary files
 *.tmp

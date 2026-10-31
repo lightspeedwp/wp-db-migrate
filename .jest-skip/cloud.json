@@ -1,0 +1,9 @@
+{
+  "description": "Skip cloud-specific tests in local environments",
+  "tests": [
+    "cloud-sync",
+    "remote-execution",
+    "cloud-storage"
+  ],
+  "condition": "!process.env.CI && !process.env.CLOUD_ENABLED"
+}

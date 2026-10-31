@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Production
+dist
+build
+coverage
+
+# Misc
+.DS_Store
+.env.local
+.env.*.local
+
+# Project specific
+skill/scripts/
+plugin/
+__tests__/
+tests/
+
+# Git
+.git
+.gitignore

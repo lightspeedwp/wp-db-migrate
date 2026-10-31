@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "cloud": {
+    "enabled": true,
+    "timeout": 3600,
+    "memory": 2048,
+    "cpu": 2
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "NPM_CONFIG_LOGLEVEL": "warn"
+  },
+  "resources": {
+    "max_concurrent_jobs": 3,
+    "storage_gb": 10
+  },
+  "tasks": {
+    "test": {
+      "enabled": true,
+      "timeout": 1800,
+      "memory": 1024
+    },
+    "lint": {
+      "enabled": true,
+      "timeout": 600
+    },
+    "build": {
+      "enabled": false
+    }
+  }
+}

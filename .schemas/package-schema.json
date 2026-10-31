@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "wp-db-migrate package.json schema",
+  "type": "object",
+  "required": ["name", "version", "description", "main", "scripts", "keywords", "author", "license"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^wp-db-migrate$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "scripts": {
+      "type": "object",
+      "required": ["test", "test:watch", "test:all"],
+      "properties": {
+        "test": {
+          "type": "string",
+          "enum": ["jest --coverage"]
+        },
+        "test:watch": {
+          "type": "string",
+          "enum": ["jest --watch"]
+        },
+        "test:bats": {
+          "type": "string"
+        },
+        "test:all": {
+          "type": "string"
+        }
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "author": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string",
+      "enum": ["MIT"]
+    }
+  }
+}
