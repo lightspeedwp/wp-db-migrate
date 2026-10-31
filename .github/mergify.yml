@@ -17,19 +17,24 @@ pull_request_rules:
       - check-success=Lint & Format
       - -files~=^(?!(__tests__|tests)/)
       - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
       - base=develop
       - -draft
+      - "-locked"
+      - "-label=blocked"
+      - "-label=wip"
     actions:
       merge:
         method: squash
         commit_message: title+body
         delete_head_branch: true
 
-  - name: Auto-merge approved PRs with all checks passing
+  - name: Auto-merge approved PRs with all checks passing (main branch)
     conditions:
       - check-success=Tests
       - check-success=Lint & Format
       - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
       - "-draft"
       - "-locked"
       - "-label=blocked"
@@ -46,7 +51,11 @@ pull_request_rules:
       - check-success=Tests
       - check-success=Lint & Format
       - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
       - "-draft"
+      - "-locked"
+      - "-label=blocked"
+      - "-label=wip"
       - base=develop
     actions:
       merge:
@@ -63,8 +72,7 @@ pull_request_rules:
           - "@lightspeedwp/maintainers"
 
   - name: Dismiss reviews if commits were pushed
-    conditions:
-      - base=main
+    conditions: []
     actions:
       dismiss_reviews:
         approved: true
