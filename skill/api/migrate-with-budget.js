@@ -341,3 +341,4 @@ if (require.main === module) {
 }
 
 module.exports = { migrateWithBudget, getComplexity };
+// Test commit to verify hooks
