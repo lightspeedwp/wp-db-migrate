@@ -8,6 +8,276 @@ compatibility: Requires `studio` CLI (WordPress Studio), `sql-tool` for sanitiza
 
 Professional WordPress database migration skill: MySQL/MariaDB to SQLite for WordPress Studio
 
+## Quick Start (Phase 2: One-Command Orchestration)
+
+For the fastest workflow, use the **wp-migrate-clone-to-studio.sh** script:
+
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site
+```
+
+This single command orchestrates the entire migration process:
+
+1. **Export** database from dev/staging (via SSH)
+2. **Analyze** database structure and suggest table exclusions
+3. **Compress** for faster transfer (70–80% size reduction)
+4. **Import** with parallel processing (3–5x faster)
+5. **Finalize** with URL replacement and validation
+
+**Performance:** 35–45 min manual process → **10–15 min** automated
+
+### One-Command Options
+
+```bash
+# Dry-run mode (preview without changes)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --dry-run
+
+# Skip compression (faster on fast networks)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --no-compress
+
+# Use sequential import instead of parallel
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --no-parallel
+
+# Custom parallelism (default: auto-detect CPU count)
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --jobs 4
+
+# Exclude specific tables
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.dev \
+  --to ~/Studio/my-site \
+  --exclude-tables wp_actionscheduler_logs,wp_postmeta
+```
+
+Run `./skill/scripts/wp-migrate-clone-to-studio.sh --help` for all options.
+
+### Configuration Profiles (Phase 3.4)
+
+Avoid typing the same options repeatedly by saving them to a `.wp-db-migrate.conf` file:
+
+**Create `.wp-db-migrate.conf` in your project:**
+
+```bash
+# .wp-db-migrate.conf
+FROM_URL=https://staging.example.com
+TO_PATH=~/Studio/my-site
+EXCLUDE_TABLES=wp_actionscheduler_logs,wp_cache
+COMPRESS=true
+PARALLEL_JOBS=4
+DRY_RUN=false
+VERBOSE=false
+```
+
+**Use the config file:**
+
+```bash
+# Auto-detect and load .wp-db-migrate.conf from current directory
+./skill/scripts/wp-migrate-clone-to-studio.sh --use-config
+
+# Or specify a config file explicitly
+./skill/scripts/wp-migrate-clone-to-studio.sh --config /path/to/.wp-db-migrate.conf
+```
+
+**Command-line args override config:**
+
+```bash
+# Load config but override with CLI arg
+./skill/scripts/wp-migrate-clone-to-studio.sh --use-config --jobs 8
+```
+
+**Config file search paths:**
+
+1. Specified path: `--config /path/to/file`
+2. Current directory: `./.wp-db-migrate.conf`
+3. Home directory: `~/.wp-db-migrate.conf`
+
+**Available config keys:**
+
+- `FROM_URL` — Source site URL
+- `TO_PATH` — Target Studio site path
+- `SSH_HOST` — SSH host for remote export (Phase 3)
+- `SSH_USER` — SSH user for remote export (Phase 3)
+- `WP_PATH` — Remote WordPress path (Phase 3)
+- `EXCLUDE_TABLES` — Tables to exclude (comma-separated)
+- `COMPRESS` — Enable compression (true/false)
+- `PARALLEL` — Enable parallel import (true/false)
+- `JOBS` — Number of parallel jobs
+- `DRY_RUN` — Preview mode (true/false)
+- `VERBOSE` — Verbose output (true/false)
+
+### Remote SSH Export (Phase 3.1)
+
+Automatically export databases from remote dev/staging servers via SSH:
+
+**Basic SSH export:**
+
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site \
+  --ssh-host staging.example.com \
+  --ssh-user deploy \
+  --wp-path /var/www/html
+```
+
+**SSH export with custom key:**
+
+```bash
+./skill/scripts/wp-migrate-clone-to-studio.sh \
+  --from https://staging.example.com \
+  --to ~/Studio/my-site \
+  --ssh-host staging.example.com \
+  --ssh-user deploy \
+  --wp-path /var/www/html \
+  --ssh-key ~/.ssh/staging_key \
+  --ssh-port 2222
+```
+
+**SSH configuration options:**
+
+- `--ssh-host HOST` — SSH hostname or IP address
+- `--ssh-user USER` — SSH username (default: deploy)
+- `--ssh-port PORT` — SSH port (default: 22)
+- `--ssh-key PATH` — Path to SSH private key (optional, uses SSH agent if not provided)
+- `--wp-path PATH` — Remote WordPress installation path (e.g., /var/www/html)
+
+**How it works:**
+
+1. Tests SSH connection to remote host
+2. Verifies WordPress installation exists at specified path
+3. Checks WP-CLI is available on remote server
+4. Runs `wp db export` remotely, streaming output to local file
+5. Continues with compression and import workflow
+
+**Save SSH config in .wp-db-migrate.conf:**
+
+```bash
+SSH_HOST=staging.example.com
+SSH_USER=deploy
+SSH_PORT=22
+WP_PATH=/var/www/html
+```
+
+### Studio API Validation (Phase 3.3)
+
+Automatic validation of WordPress Studio sites before and after database import:
+
+**Pre-import validation:**
+
+- Verifies Studio site directory exists
+- Checks wp-config.php is present
+- Confirms wp-content directory structure
+- Validates WordPress installation
+
+**Post-import validation:**
+
+- Verifies database tables were imported
+- Validates database integrity
+- Checks WordPress can access the database
+- Generates site report with table count
+
+**Validation workflow:**
+The script automatically runs validation after database import when wp-cli is available:
+
+```bash
+Stage 5: Validate Import
+✓ Studio installation verified
+✓ Database verified (45 tables)
+✓ Database check passed
+```
+
+**Skip validation:**
+Validation is skipped if wp-cli is not available (allowing dry-runs without full Studio setup):
+
+```bash
+Stage 5: Validate Import
+⠷ Validating import in Studio site
+✓ Validation skipped (wp-cli not available)
+```
+
+**Manual validation:**
+You can manually validate a Studio site after import:
+
+```bash
+studio_pre_import_check ~/Studio/my-site
+studio_post_import_check ~/Studio/my-site
+studio_generate_report ~/Studio/my-site
+```
+
+### Progress Tracking (Phase 3.2)
+
+The migration script includes real-time progress tracking and visual feedback:
+
+**Visual Elements:**
+
+- 🔵 **Stage headers** — Shows numbered stages (1-5) with labels
+- ⏳ **Spinners** — Animated spinners for indeterminate operations
+- 📊 **Progress bars** — Percentage-based progress for measured operations
+- ⏱️ **Timing information** — Elapsed time for each stage and total migration
+
+**Example output:**
+
+```
+╭──────────────────────────────────╮
+│ Stage 1: Export Database         │
+╰──────────────────────────────────╯
+⠧ Exporting database from https://staging.example.com
+✓ Export ready
+
+╭──────────────────────────────────╮
+│ Stage 2: Analyze & Optimize      │
+╰──────────────────────────────────╯
+⠼ Analyzing database structure
+✓ Analysis complete
+
+╭──────────────────────────────────╮
+│ Stage 3: Compress                │
+╰──────────────────────────────────╯
+⠦ Compressing database (gzip)
+✓ Compression complete
+
+╭──────────────────────────────────╮
+│ Stage 4: Import                  │
+╰──────────────────────────────────╯
+⠇ Importing database with 4 parallel processes
+✓ Import complete
+
+╭──────────────────────────────────╮
+│ Stage 5: Finalize                │
+╰──────────────────────────────────╯
+✓ Database imported
+
+✓ Database migration completed in 5m 42s
+```
+
+**Progress tracking functions** (for advanced use):
+
+- `stage_start <num> <label>` — Display stage header
+- `stage_complete` — Mark stage as complete
+- `spinner_start <message>` — Start animated spinner
+- `spinner_complete <message>` — Complete spinner with checkmark
+- `progress_start <label> <total>` — Initialize progress bar
+- `progress_update <current>` — Update progress percentage
+- `progress_complete <message>` — Mark progress complete
+- `show_timing <start_time> <label>` — Display elapsed time
+
+## Full Workflow (Manual Steps)
+
+For more control or troubleshooting, follow the detailed phases below:
+
 ## When to Use This Skill
 
 - **Syncing live to local:** You have a production or staging backup and want to bring it into a local Studio site for testing

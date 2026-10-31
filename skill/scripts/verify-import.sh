@@ -5,9 +5,10 @@
 set -e
 
 if [ -z "$1" ]; then
-    echo "Usage: $0 /path/to/studio/site"
+    echo "Usage: $0 ~/.studio/sites/site-name"
     echo ""
-    echo "Example: $0 /Users/ash/Studio/the-safari-partners"
+    echo "Example: $0 ~/.studio/sites/my-project"
+    echo "         $0 ~/.studio/sites/another-site"
     exit 1
 fi
 

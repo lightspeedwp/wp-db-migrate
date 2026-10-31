@@ -8,10 +8,19 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
-    echo "Usage: $0 /path/to/studio/site \"https://old-domain.com\" \"https://new-domain.local\""
+    echo "Usage: $0 ~/.studio/sites/site-name \"https://source-domain.com\" \"https://local-domain.local\""
     echo ""
-    echo "Example:"
-    echo "  $0 /Users/ash/Studio/the-safari-partners \"https://thesafaripartners.lightspeedwp.dev\" \"https://thesafaripartners.local\""
+    echo "Examples:"
+    echo "  # Migrate from staging to local"
+    echo "  $0 ~/.studio/sites/my-project \"https://staging.example.com\" \"https://my-project.local\""
+    echo ""
+    echo "  # Migrate from production to local"
+    echo "  $0 ~/.studio/sites/my-project \"https://example.com\" \"https://my-project.local\""
+    echo ""
+    echo "  # Migrate with SSH (from remote server)"
+    echo "  cd ~/.claude/skills/wp-db-migrate"
+    echo "  ./skill/scripts/migrate-recovery.sh ~/.studio/sites/my-project \"https://example.com\" \"https://my-project.local\" \\"
+    echo "    --ssh-host staging.example.com --ssh-user deploy --ssh-key ~/.ssh/deploy_key"
     exit 1
 fi
 

@@ -5,10 +5,11 @@
 set -e
 
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
-    echo "Usage: $0 /path/to/studio/site \"https://old-domain.com\" \"https://new-domain.local\""
+    echo "Usage: $0 ~/.studio/sites/site-name \"https://source-domain.com\" \"https://local-domain.local\""
     echo ""
-    echo "Example:"
-    echo "  $0 /Users/ash/Studio/the-safari-partners \"https://thesafaripartners.lightspeedwp.dev\" \"https://thesafaripartners.local\""
+    echo "Examples:"
+    echo "  $0 ~/.studio/sites/my-project \"https://staging.example.com\" \"https://my-project.local\""
+    echo "  $0 ~/.studio/sites/my-project \"https://production.example.com\" \"https://my-project.local\""
     exit 1
 fi
 

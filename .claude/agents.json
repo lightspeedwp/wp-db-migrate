@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "agents": [
+    {
+      "id": "wp-db-migrate",
+      "name": "WordPress Database Migrator",
+      "description": "Migrates WordPress databases from MySQL/MariaDB to SQLite for WordPress Studio",
+      "type": "skill",
+      "path": "skill/",
+      "main": "SKILL.md",
+      "capabilities": [
+        "database-export",
+        "database-sanitization",
+        "database-import",
+        "url-replacement",
+        "validation",
+        "error-recovery"
+      ],
+      "tools": [
+        {
+          "name": "migrate-recovery.sh",
+          "description": "Complete migration workflow with confirmations",
+          "path": "skill/scripts/migrate-recovery.sh"
+        },
+        {
+          "name": "migrate-recovery-enhanced.sh",
+          "description": "Advanced migration with dry-run, verbose, and force modes",
+          "path": "skill/scripts/migrate-recovery-enhanced.sh"
+        },
+        {
+          "name": "preflight-check.sh",
+          "description": "Verify all dependencies are installed",
+          "path": "skill/scripts/preflight-check.sh"
+        },
+        {
+          "name": "verify-import.sh",
+          "description": "Validate that import succeeded",
+          "path": "skill/scripts/verify-import.sh"
+        },
+        {
+          "name": "replace-urls.sh",
+          "description": "Replace URLs in database",
+          "path": "skill/scripts/replace-urls.sh"
+        }
+      ]
+    }
+  ],
+  "relatedSkills": [
+    {
+      "name": "ls-hosting-sync-live-to-staging",
+      "description": "Export database from production/staging",
+      "usage": "Before migration: use to get database backup"
+    },
+    {
+      "name": "ls-hosting-fetch-tools",
+      "description": "Download plugins and themes",
+      "usage": "Before migration: use to get plugins/themes"
+    },
+    {
+      "name": "ls-hosting-deploy-full-site",
+      "description": "Deploy changes back to staging/production",
+      "usage": "After local development: deploy changes"
+    },
+    {
+      "name": "wp-plugin-development",
+      "description": "WordPress plugin development assistance",
+      "usage": "During development: use for plugin-specific help"
+    },
+    {
+      "name": "wp-block-development",
+      "description": "Gutenberg block development",
+      "usage": "During development: use for block-specific help"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Basic Migration",
+      "description": "Migrate staging database to local WordPress Studio site",
+      "steps": [
+        "Run preflight check",
+        "Use ls-hosting-sync-live-to-staging to get database",
+        "Run migrate-recovery.sh with site path and URLs",
+        "Verify import succeeded",
+        "Configure media paths in wp-config.php"
+      ]
+    },
+    {
+      "name": "Large Database Migration",
+      "description": "Migrate large databases with table exclusion",
+      "steps": [
+        "Run preflight check",
+        "Get database backup from production",
+        "Run preflight-check to analyze size",
+        "Run migrate-recovery.sh with --exclude-tables",
+        "Verify import and validate data"
+      ]
+    },
+    {
+      "name": "Complete End-to-End Workflow",
+      "description": "Full production to local to staging workflow",
+      "steps": [
+        "Use ls-hosting-sync-live-to-staging to get database",
+        "Use ls-hosting-fetch-tools to get plugins/themes",
+        "Run wp-db-migrate to import to local",
+        "Develop locally using WordPress agent skills",
+        "Use ls-hosting-deploy-full-site to deploy changes"
+      ]
+    }
+  ]
+}

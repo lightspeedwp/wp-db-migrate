@@ -18,7 +18,6 @@ CREATE_BACKUP=true
 VERBOSE=false
 LOG_FILE=""
 FORCE=false
-TEMP_LOG=""
 
 # Color codes
 RED='\033[0;31m'
@@ -83,20 +82,20 @@ OPTIONS:
 
 EXAMPLES:
   # Normal workflow with confirmations
-  ./migrate-recovery-enhanced.sh /Users/ash/Studio/my-site \
-    "https://old.com" "https://new.local"
+  ./migrate-recovery-enhanced.sh ~/.studio/sites/my-project \
+    "https://staging.example.com" "https://my-project.local"
 
-  # Dry-run to preview
-  ./migrate-recovery-enhanced.sh --dry-run /Users/ash/Studio/my-site \
-    "https://old.com" "https://new.local"
+  # Dry-run to preview changes
+  ./migrate-recovery-enhanced.sh --dry-run ~/.studio/sites/my-project \
+    "https://staging.example.com" "https://my-project.local"
 
   # Verbose with logging
   ./migrate-recovery-enhanced.sh --verbose --log-file recovery.log \
-    /Users/ash/Studio/my-site "https://old.com" "https://new.local"
+    ~/.studio/sites/my-project "https://staging.example.com" "https://my-project.local"
 
-  # Force mode (no prompts)
-  ./migrate-recovery-enhanced.sh --force /Users/ash/Studio/my-site \
-    "https://old.com" "https://new.local"
+  # Force mode (no prompts, safe for CI/CD)
+  ./migrate-recovery-enhanced.sh --force ~/.studio/sites/my-project \
+    "https://staging.example.com" "https://my-project.local"
 EOF
 }
 
@@ -125,9 +124,8 @@ confirm() {
     fi
 
     local prompt="$1"
-    local response
 
-    read -p "$(echo -e ${YELLOW}$prompt${NC}) (y/n) " -n 1 -r
+    read -p "$(echo -e "${YELLOW}${prompt}${NC}") (y/n) " -n 1 -r
     echo
     [[ $REPLY =~ ^[Yy]$ ]]
 }
@@ -148,7 +146,6 @@ main() {
 
     # Setup logging
     if [ -n "$LOG_FILE" ]; then
-        TEMP_LOG="$LOG_FILE"
         echo "=== Migration Log $(date '+%Y-%m-%d %H:%M:%S') ===" > "$LOG_FILE"
     fi
 
