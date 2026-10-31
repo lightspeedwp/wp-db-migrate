@@ -17,7 +17,7 @@ describe('start-server.sh', () => {
   });
 
   test('should output usage without arguments', () => {
-    const _result = executeScript('start-server.sh', []);
+    const result = executeScript('start-server.sh', []);
     const output = result.stdout + result.stderr;
 
     // Should provide usage information or handle gracefully
@@ -25,7 +25,7 @@ describe('start-server.sh', () => {
   });
 
   test('should fail with invalid site path', () => {
-    const _result = executeScript('start-server.sh', ['/nonexistent/site']);
+    const result = executeScript('start-server.sh', ['/nonexistent/site']);
 
     // Should fail gracefully with invalid path
     expect(result.code).not.toBe(0);
@@ -33,7 +33,7 @@ describe('start-server.sh', () => {
 
   test('should handle valid site path', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
 
     // Should execute
     expect(result).toBeDefined();
@@ -42,7 +42,7 @@ describe('start-server.sh', () => {
   test('should not run indefinitely', () => {
     const sitePath = createMockStudioSite(tempDir);
     const startTime = Date.now();
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
     const duration = Date.now() - startTime;
 
     // Should complete or timeout (but not hang forever)
@@ -50,7 +50,7 @@ describe('start-server.sh', () => {
   });
 
   test('should show help when requested', () => {
-    const _result = executeScript('start-server.sh', ['--help']);
+    const result = executeScript('start-server.sh', ['--help']);
     const output = result.stdout + result.stderr;
 
     if (result.code === 0 || output.includes('Usage') || output.includes('USAGE')) {
@@ -60,7 +60,7 @@ describe('start-server.sh', () => {
 
   test('should handle paths with spaces', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
 
     // Should handle the path correctly
     expect(result).toBeDefined();
@@ -68,7 +68,7 @@ describe('start-server.sh', () => {
 
   test('should provide startup information', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
     const output = result.stdout + result.stderr;
 
     // May output server information or be silent
@@ -77,7 +77,7 @@ describe('start-server.sh', () => {
 
   test('should return appropriate exit code', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
 
     // Exit code should be numeric
     expect(typeof result.code).toBe('number');
@@ -85,7 +85,7 @@ describe('start-server.sh', () => {
 
   test('should not crash on execution', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', [sitePath]);
+    const result = executeScript('start-server.sh', [sitePath]);
 
     // Should complete execution
     expect(result.success !== undefined).toBe(true);
@@ -103,7 +103,7 @@ describe('start-server.sh', () => {
 
   test('should handle verbose flag if supported', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('start-server.sh', ['--verbose', sitePath]);
+    const result = executeScript('start-server.sh', ['--verbose', sitePath]);
 
     // Should handle verbose flag gracefully
     expect(result).toBeDefined();

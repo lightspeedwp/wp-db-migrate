@@ -17,18 +17,18 @@ describe('verify-import.sh', () => {
   });
 
   test('should output usage without arguments', () => {
-    const _result = executeScript('verify-import.sh', []);
+    const result = executeScript('verify-import.sh', []);
     // Script should handle missing arguments
     expect(result.stdout + result.stderr).toBeTruthy();
   });
 
   test('should fail gracefully with invalid path', () => {
-    const _result = executeScript('verify-import.sh', ['/nonexistent/path']);
+    const result = executeScript('verify-import.sh', ['/nonexistent/path']);
     expect(result.code).not.toBe(0);
   });
 
   test('should show help when requested', () => {
-    const _result = executeScript('verify-import.sh', ['--help']);
+    const result = executeScript('verify-import.sh', ['--help']);
     const output = result.stdout + result.stderr;
 
     // Should provide help information
@@ -39,7 +39,7 @@ describe('verify-import.sh', () => {
 
   test('should handle valid site path', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
 
     // Should not crash
     expect(result).toBeDefined();
@@ -48,7 +48,7 @@ describe('verify-import.sh', () => {
   test('should not hang on execution', () => {
     const sitePath = createMockStudioSite(tempDir);
     const startTime = Date.now();
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
     const duration = Date.now() - startTime;
 
     // Should complete within 30 seconds
@@ -57,7 +57,7 @@ describe('verify-import.sh', () => {
 
   test('should provide verification output', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
     const output = result.stdout + result.stderr;
 
     // Should output something
@@ -68,7 +68,7 @@ describe('verify-import.sh', () => {
 
   test('should validate database integrity when possible', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
 
     // Script should attempt verification
     expect(result).toBeDefined();
@@ -77,7 +77,7 @@ describe('verify-import.sh', () => {
   test('should handle special characters in path', () => {
     // Create site with spaces in path
     const specialPath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [specialPath]);
+    const result = executeScript('verify-import.sh', [specialPath]);
 
     // Should handle the path correctly
     expect(result).toBeDefined();
@@ -85,7 +85,7 @@ describe('verify-import.sh', () => {
 
   test('should return appropriate exit code', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
 
     // Exit code should be numeric
     expect(typeof result.code).toBe('number');
@@ -93,7 +93,7 @@ describe('verify-import.sh', () => {
 
   test('should complete without timeout', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath]);
+    const result = executeScript('verify-import.sh', [sitePath]);
 
     // Should complete execution
     expect(result.success !== undefined).toBe(true);
@@ -101,7 +101,7 @@ describe('verify-import.sh', () => {
 
   test('should handle multiple arguments gracefully', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('verify-import.sh', [sitePath, '--verbose']);
+    const result = executeScript('verify-import.sh', [sitePath, '--verbose']);
 
     // Should handle extra arguments
     expect(result).toBeDefined();

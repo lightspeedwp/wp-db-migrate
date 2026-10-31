@@ -1,0 +1,168 @@
+# CodeRabbit Configuration
+# AI-powered code review automation for GitHub
+
+# Review settings
+reviews:
+  # Enable automatic reviews on PRs
+  auto_review: true
+  auto_review_on_fork: false
+
+  # Enable review of draft PRs
+  review_drafts: false
+
+  # Maximum number of changes to review (prevents timeout on large PRs)
+  max_files_to_review: 150
+
+# Models and rules
+model: gpt-4o
+temperature: 1.0
+
+# Paths to skip in review
+paths_to_skip:
+  - node_modules/
+  - coverage/
+  - .git/
+  - .jest-skip/
+  - .vscode/
+  - dist/
+  - build/
+  - __pycache__/
+
+# File patterns to include/exclude
+include_paths:
+  - '**/*.js'
+  - '**/*.cjs'
+  - '**/*.mjs'
+  - '**/*.json'
+  - '**/*.md'
+  - '**/*.sh'
+  - '**/*.yml'
+  - '**/*.yaml'
+
+exclude_paths:
+  - '**/*.test.js'
+  - '**/__tests__/**'
+  - '**/node_modules/**'
+  - '**/coverage/**'
+  - '**/.jest-skip/**'
+
+# Review rules
+review_rules:
+  # Check for code quality issues
+  review_code_quality: true
+
+  # Check for security vulnerabilities
+  review_security: true
+
+  # Check for performance issues
+  review_performance: true
+
+  # Check for documentation quality
+  review_documentation: true
+
+# Comment settings
+comment_settings:
+  # Generate summary comment on every review
+  generate_summary_comment: true
+
+  # Add inline comments for issues found
+  add_inline_comments: true
+
+  # Use emoji in comments
+  use_emoji: true
+
+# Tone and style
+tone: professional
+output_format: detailed
+
+# Specific linting rules
+linting_rules:
+  javascript:
+    - eslint
+    - prettier
+  markdown:
+    - markdownlint
+  shell:
+    - shellcheck
+  yaml:
+    - yamllint
+
+# Summarization settings
+summarization:
+  # Generate PR description summary
+  generate_pr_summary: true
+
+  # Maximum summary length
+  max_summary_length: 500
+
+# Integration with existing tools
+integrations:
+  # Link to GitHub Actions CI/CD
+  link_ci: true
+
+  # Reference related issues
+  link_issues: true
+
+# Reviewable settings
+review_bot:
+  # Enable CodeRabbit to auto-approve if no issues found
+  auto_approve_on_success: false
+
+  # Require specific approval patterns
+  require_approval: true
+
+# Branch-specific rules
+branch_rules:
+  main:
+    # Stricter review for main branch
+    review_level: strict
+    require_review: true
+
+  develop:
+    review_level: standard
+    require_review: true
+
+  'wp-db-*':
+    review_level: standard
+    require_review: false
+
+# Comment settings for different contexts
+contexts:
+  security_issues:
+    emoji: '🔒'
+    priority: high
+
+  performance_issues:
+    emoji: '⚡'
+    priority: medium
+
+  code_quality:
+    emoji: '✨'
+    priority: medium
+
+  documentation:
+    emoji: '📚'
+    priority: low
+
+# Custom instructions for CodeRabbit
+custom_instructions: |
+  # WordPress Database Migration Code Review Guidelines
+
+  ## Focus Areas
+  1. Database compatibility and safety
+  2. Shell script correctness and error handling
+  3. Markdown documentation completeness
+  4. JavaScript/Node.js best practices
+  5. Security and data protection
+
+  ## Key Concerns
+  - Backup and rollback capabilities
+  - Data integrity validation
+  - Error messages and user guidance
+  - Cross-platform compatibility (macOS/Linux/WSL)
+
+  ## Quality Standards
+  - All code must follow ESLint rules
+  - All markdown must pass markdownlint
+  - Shell scripts must pass ShellCheck
+  - Documentation must be clear and complete

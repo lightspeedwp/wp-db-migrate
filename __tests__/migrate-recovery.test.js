@@ -17,7 +17,7 @@ describe('migrate-recovery.sh', () => {
   });
 
   test('should output usage without arguments', () => {
-    const _result = executeScript('migrate-recovery.sh', []);
+    const result = executeScript('migrate-recovery.sh', []);
     const output = result.stdout + result.stderr;
 
     // Should provide usage information
@@ -25,7 +25,7 @@ describe('migrate-recovery.sh', () => {
   });
 
   test('should fail with invalid site path', () => {
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       '/nonexistent/site',
       'https://old.com',
       'https://new.com',
@@ -37,7 +37,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should handle valid arguments', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -50,7 +50,7 @@ describe('migrate-recovery.sh', () => {
   test('should complete workflow execution', () => {
     const sitePath = createMockStudioSite(tempDir);
     const startTime = Date.now();
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -62,7 +62,7 @@ describe('migrate-recovery.sh', () => {
   });
 
   test('should show help when requested', () => {
-    const _result = executeScript('migrate-recovery.sh', ['--help']);
+    const result = executeScript('migrate-recovery.sh', ['--help']);
     const output = result.stdout + result.stderr;
 
     if (result.code === 0 || output.includes('Usage') || output.includes('USAGE')) {
@@ -72,7 +72,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should handle different URL schemes', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'http://staging.example.com',
       'https://site.local',
@@ -83,7 +83,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should handle URLs with subpaths', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://example.com/wp',
       'https://local.test',
@@ -94,7 +94,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should provide workflow output', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -110,7 +110,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should return appropriate exit code', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -121,7 +121,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should not crash on execution', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -133,7 +133,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should orchestrate multiple phases', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.com',
       'https://new.com',
@@ -145,7 +145,7 @@ describe('migrate-recovery.sh', () => {
 
   test('should handle special characters in URLs', () => {
     const sitePath = createMockStudioSite(tempDir);
-    const _result = executeScript('migrate-recovery.sh', [
+    const result = executeScript('migrate-recovery.sh', [
       sitePath,
       'https://old.example.com?id=123',
       'https://new.local',
