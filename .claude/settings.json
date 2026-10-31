@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "projectName": "wp-db-migrate",
+  "projectDescription": "WordPress database migration skill for Claude",
+  "defaultModel": "claude-opus-5-5",
+  "codeStyle": {
+    "indentation": "spaces",
+    "indentSize": 2,
+    "lineLength": 120,
+    "trailingComma": "es5"
+  },
+  "testing": {
+    "framework": "jest",
+    "coverage": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    },
+    "integration": {
+      "framework": "bats",
+      "command": "npm run test:bats"
+    },
+    "commands": {
+      "unit": "npm test",
+      "watch": "npm run test:watch",
+      "coverage": "npm test -- --coverage",
+      "integration": "npm run test:bats",
+      "all": "npm run test:all"
+    }
+  },
+  "git": {
+    "branchPrefix": "wp-db",
+    "commitFormat": "conventional",
+    "hooks": {
+      "preCommit": "npm run lint",
+      "prePush": "npm test"
+    }
+  },
+  "permissions": {
+    "allowedDomains": ["github.com", "api.github.com"],
+    "requiredTools": ["bash", "node", "npm", "git"],
+    "restrictedOperations": ["force-push", "hard-reset"]
+  },
+  "documentation": {
+    "location": "docs/",
+    "readmeLocation": "README.md",
+    "structure": {
+      "rootDocs": ["README.md", "CLAUDE.md", "AGENTS.md", "CHANGELOG.md"],
+      "guidedFolders": {
+        "docs": "Documentation and guides",
+        "skill": "Claude skill implementation",
+        "plugin": "Claude plugin manifest",
+        "tests": "Integration tests",
+        "__tests__": "Unit tests",
+        "references": "External resources",
+        "assets": "Media and templates"
+      }
+    }
+  },
+  "skills": {
+    "location": ".claude/skills",
+    "enabled": ["wp-db-migrate"]
+  },
+  "agents": {
+    "location": ".claude/agents",
+    "enabled": []
+  }
+}

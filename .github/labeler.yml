@@ -1,0 +1,82 @@
+# GitHub Labeler Configuration
+# Automatically apply labels based on changed files
+
+# Code changes
+"code":
+  - skill/scripts/**/*.sh
+  - skill/api/**
+  - plugin/**
+
+# Tests
+"tests":
+  - __tests__/**
+  - tests/**
+  - "*.test.js"
+  - "*.bats"
+
+# Documentation
+"documentation":
+  - docs/**
+  - README.md
+  - "*.md"
+
+# Configuration
+"configuration":
+  - .claude/**
+  - .github/**
+  - package.json
+  - jest.config.js
+  - ".claude/**"
+
+# Dependencies
+"dependencies":
+  - package.json
+  - package-lock.json
+
+# Skill & Plugin
+"skill":
+  - skill/SKILL.md
+  - skill/IMPROVEMENTS.md
+  - skill/prompts/**
+  - skill/scripts/**
+
+"plugin":
+  - plugin/**
+  - manifest.json
+
+# Types of changes
+"type: feature":
+  - skill/scripts/**
+  - skill/api/**
+
+"type: bug":
+  - skill/scripts/**
+  - skill/api/**
+
+"type: enhancement":
+  - docs/**
+  - skill/IMPROVEMENTS.md
+
+"type: documentation":
+  - "**/*.md"
+  - docs/**
+
+"type: testing":
+  - __tests__/**
+  - tests/**
+
+# Areas
+"area: migration":
+  - skill/scripts/migrate-*.sh
+  - skill/scripts/lib-studio.sh
+
+"area: validation":
+  - skill/scripts/verify-*.sh
+  - skill/scripts/preflight-*.sh
+
+"area: cli":
+  - skill/scripts/**/*.sh
+
+"area: studio":
+  - docs/STUDIO-CLI-GUIDE.md
+  - skill/scripts/studio-*.sh
